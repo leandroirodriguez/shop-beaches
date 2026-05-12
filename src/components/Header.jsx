@@ -4,7 +4,7 @@ import logo from '../assets/logo.svg'
 export default function Header() {
   return (
     <header className="sticky top-0 z-40 bg-surface/95 backdrop-blur border-b border-outline-variant/40">
-      <div className="max-w-[1140px] mx-auto px-5 md:px-16 h-16 md:h-20 flex items-center">
+      <div className="max-w-[1140px] mx-auto px-5 md:px-16 h-20 md:h-24 flex items-center">
         {/* Spacer for symmetric centering of the logo */}
         <div className="flex-1" />
 
@@ -12,7 +12,7 @@ export default function Header() {
           <img
             src={logo}
             alt="Beaches OBGYN"
-            className="block h-12 md:h-14 w-auto"
+            className="block h-14 md:h-16 w-auto"
           />
         </Link>
 

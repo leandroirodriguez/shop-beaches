@@ -21,6 +21,8 @@ export default function AdminProductNew() {
   const [rawFeatures, setRawFeatures] = useState('')
   const [rawPrice, setRawPrice] = useState('')
   const [rawImageUrls, setRawImageUrls] = useState('')
+  const [rawRating, setRawRating] = useState('')
+  const [rawReviewCount, setRawReviewCount] = useState('')
 
   const [phase, setPhase] = useState('idle') // idle | fetching | working | ready | saving
   const [fetchError, setFetchError] = useState('')
@@ -77,6 +79,8 @@ export default function AdminProductNew() {
       setRawFeatures((payload.features || []).join('\n'))
       setRawPrice(payload.price || '')
       setRawImageUrls((payload.images || []).join('\n'))
+      if (payload.rating != null) setRawRating(String(payload.rating))
+      if (payload.review_count != null) setRawReviewCount(String(payload.review_count))
       setPhase('idle')
     } catch (err) {
       setFetchError(err.message)
@@ -109,6 +113,8 @@ export default function AdminProductNew() {
           raw_features: rawFeatures,
           raw_price: rawPrice,
           raw_image_urls: rawImageUrls,
+          raw_rating: rawRating,
+          raw_review_count: rawReviewCount,
         }),
       })
       const payload = await r.json()
@@ -153,6 +159,8 @@ export default function AdminProductNew() {
       amazon_title: amazon.title,
       amazon_price: amazon.price,
       amazon_image_urls: amazon.images,
+      rating: amazon.rating,
+      review_count: amazon.review_count,
       display_title: draft.display_title,
       short_description: draft.short_description,
       provider_note: draft.provider_note,
@@ -267,7 +275,7 @@ export default function AdminProductNew() {
             />
           </label>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <label className="block">
               <span className="font-label text-xs tracking-wider uppercase text-on-surface-variant">
                 Price
@@ -277,6 +285,32 @@ export default function AdminProductNew() {
                 value={rawPrice}
                 onChange={e => setRawPrice(e.target.value)}
                 placeholder="$34.00"
+                className="input mt-2"
+                disabled={phase === 'working'}
+              />
+            </label>
+            <label className="block">
+              <span className="font-label text-xs tracking-wider uppercase text-on-surface-variant">
+                Star Rating (0–5)
+              </span>
+              <input
+                type="text"
+                value={rawRating}
+                onChange={e => setRawRating(e.target.value)}
+                placeholder="4.8"
+                className="input mt-2"
+                disabled={phase === 'working'}
+              />
+            </label>
+            <label className="block">
+              <span className="font-label text-xs tracking-wider uppercase text-on-surface-variant">
+                # of Reviews
+              </span>
+              <input
+                type="text"
+                value={rawReviewCount}
+                onChange={e => setRawReviewCount(e.target.value)}
+                placeholder="124"
                 className="input mt-2"
                 disabled={phase === 'working'}
               />

@@ -73,6 +73,8 @@ export default async function handler(req, res) {
     raw_features,
     raw_price,
     raw_image_urls,
+    raw_rating,
+    raw_review_count,
   } = req.body || {}
 
   if (!amazon_url) return res.status(400).json({ error: 'amazon_url is required' })
@@ -118,6 +120,12 @@ Write the curated page for this product.`
     .map(s => s.trim())
     .filter(s => s.length > 0)
 
+  // Parse rating + review_count tolerantly: accept "4.8", "4.8 out of 5",
+  // "124", "1,234 ratings" etc. Return null if not parseable so we omit
+  // the StarRow on the public page rather than showing 0.
+  const rating = parseRating(raw_rating)
+  const reviewCount = parseReviewCount(raw_review_count)
+
   return res.status(200).json({
     success: true,
     amazon: {
@@ -126,7 +134,21 @@ Write the curated page for this product.`
       title: raw_title,
       price: raw_price || '',
       images,
+      rating,
+      review_count: reviewCount,
     },
     draft,
   })
+}
+
+function parseRating(raw) {
+  if (raw == null || raw === '') return null
+  const n = parseFloat(String(raw).replace(/[^\d.]/g, ''))
+  return Number.isFinite(n) && n > 0 && n <= 5 ? n : null
+}
+
+function parseReviewCount(raw) {
+  if (raw == null || raw === '') return null
+  const n = parseInt(String(raw).replace(/[^\d]/g, ''), 10)
+  return Number.isFinite(n) && n >= 0 ? n : null
 }

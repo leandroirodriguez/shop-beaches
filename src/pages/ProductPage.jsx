@@ -3,8 +3,11 @@ import { Link, useParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import logo from '../assets/logo.svg'
 
-function StarRow({ rating = 4.8, count }) {
+function StarRow({ rating, count }) {
+  if (rating == null) return null
   const filled = Math.round(rating)
+  const formatted = Number.isInteger(rating) ? rating : rating.toFixed(1)
+  const formattedCount = count != null ? count.toLocaleString() : null
   return (
     <div className="flex items-center gap-2 text-sm text-on-surface-variant">
       <div className="flex">
@@ -20,7 +23,9 @@ function StarRow({ rating = 4.8, count }) {
           </svg>
         ))}
       </div>
-      {count != null && <span>({rating}/5 · {count} Patients)</span>}
+      <span>
+        {formatted}/5{formattedCount ? ` · ${formattedCount} reviews` : ''}
+      </span>
     </div>
   )
 }
@@ -115,7 +120,7 @@ export default function ProductPage() {
 
         {/* Summary column */}
         <div className="mt-8 md:mt-0">
-          <StarRow rating={4.8} count={124} />
+          <StarRow rating={p.rating} count={p.review_count} />
           <h1 className="font-headline text-3xl md:text-4xl text-on-surface mt-3 leading-tight">{p.display_title}</h1>
           {p.amazon_price && (
             <p className="font-headline text-2xl md:text-3xl text-primary mt-3">{p.amazon_price}</p>

@@ -91,6 +91,8 @@ CREATE TABLE IF NOT EXISTS products (
   amazon_title TEXT,                  -- raw title from Amazon
   amazon_price TEXT,                  -- captured at ingest time; can drift
   amazon_image_urls TEXT[],           -- primary + gallery
+  rating NUMERIC,                     -- e.g. 4.8 (out of 5)
+  review_count INTEGER,               -- e.g. 124
 
   -- Curated content (Claude-generated, you edit)
   display_title TEXT NOT NULL,        -- what we show on the card / detail page

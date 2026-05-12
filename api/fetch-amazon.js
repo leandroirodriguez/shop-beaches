@@ -122,6 +122,8 @@ async function getItems(asins) {
         'itemInfo.title',
         'itemInfo.features',
         'offersV2.listings.price',
+        'customerReviews.count',
+        'customerReviews.starRating',
       ],
     }),
   })
@@ -149,6 +151,8 @@ function flattenItem(item) {
     features: item.itemInfo?.features?.displayValues || [],
     price: item.offersV2?.listings?.[0]?.price?.money?.displayAmount || '',
     images: [primary, ...variants].filter(Boolean),
+    rating: item.customerReviews?.starRating?.value ?? null,
+    review_count: item.customerReviews?.count ?? null,
   }
 }
 

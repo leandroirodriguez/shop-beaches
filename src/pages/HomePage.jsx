@@ -26,43 +26,78 @@ function CurvedDivider({ tone = 'surface-container-low', flipY = false }) {
   )
 }
 
+function CategorySkeleton() {
+  return (
+    <div className="rounded-xl bg-[#fdf1f5] shadow-lift overflow-hidden animate-pulse">
+      <div className="aspect-[16/10] bg-secondary-container/40" />
+      <div className="p-5">
+        <div className="h-5 bg-secondary-container/40 rounded w-1/2 mb-3" />
+        <div className="h-3 bg-secondary-container/40 rounded w-full mb-2" />
+        <div className="h-3 bg-secondary-container/40 rounded w-4/5" />
+      </div>
+    </div>
+  )
+}
+
+function ProductSkeleton() {
+  return (
+    <div className="rounded-xl bg-surface-container-low shadow-lift overflow-hidden animate-pulse">
+      <div className="aspect-square bg-surface-container-lowest" />
+      <div className="p-5">
+        <div className="h-2 bg-surface-container-high rounded w-1/3 mb-3" />
+        <div className="h-4 bg-surface-container-high rounded w-3/4 mb-2" />
+        <div className="h-4 bg-surface-container-high rounded w-1/4" />
+      </div>
+    </div>
+  )
+}
+
+function PostSkeleton() {
+  return (
+    <div className="animate-pulse">
+      <div className="aspect-[16/9] bg-surface-container-low rounded-xl mb-4" />
+      <div className="h-5 bg-surface-container-low rounded w-3/4 mb-3" />
+      <div className="h-3 bg-surface-container-low rounded w-full mb-2" />
+      <div className="h-3 bg-surface-container-low rounded w-5/6" />
+    </div>
+  )
+}
+
 export default function HomePage() {
-  const [categories, setCategories] = useState([])
-  const [featuredProducts, setFeaturedProducts] = useState([])
-  const [recentPosts, setRecentPosts] = useState([])
-  const [status, setStatus] = useState('loading')
+  // Each query has its own state so they render independently as data
+  // arrives — no single slow query blocks the rest. `null` means loading,
+  // `[]` means loaded-but-empty, populated array means we have data.
+  const [categories, setCategories] = useState(null)
+  const [categoriesError, setCategoriesError] = useState('')
+  const [featuredProducts, setFeaturedProducts] = useState(null)
+  const [recentPosts, setRecentPosts] = useState(null)
 
   useEffect(() => {
-    async function load() {
-      const [cats, prods, posts] = await Promise.all([
-        supabase
-          .from('categories')
-          .select('id, slug, name, description, hero_image_url')
-          .order('display_order'),
-        supabase
-          .from('products')
-          .select('id, slug, display_title, amazon_image_urls, amazon_price, badge')
-          .eq('published', true)
-          .order('is_top_recommendation', { ascending: false })
-          .order('created_at', { ascending: false })
-          .limit(3),
-        supabase
-          .from('blog_posts')
-          .select('id, slug, title, excerpt, cover_url, published_at')
-          .eq('published', true)
-          .order('published_at', { ascending: false })
-          .limit(2),
-      ])
-      if (cats.error) {
-        setStatus(`error: ${cats.error.message}`)
-        return
-      }
-      setCategories(cats.data || [])
-      setFeaturedProducts(prods.data || [])
-      setRecentPosts(posts.data || [])
-      setStatus('ok')
-    }
-    load()
+    supabase
+      .from('categories')
+      .select('id, slug, name, description, hero_image_url')
+      .order('display_order')
+      .then(({ data, error }) => {
+        if (error) setCategoriesError(error.message)
+        setCategories(data || [])
+      })
+
+    supabase
+      .from('products')
+      .select('id, slug, display_title, amazon_image_urls, amazon_price, badge')
+      .eq('published', true)
+      .order('is_top_recommendation', { ascending: false })
+      .order('created_at', { ascending: false })
+      .limit(3)
+      .then(({ data }) => setFeaturedProducts(data || []))
+
+    supabase
+      .from('blog_posts')
+      .select('id, slug, title, excerpt, cover_url, published_at')
+      .eq('published', true)
+      .order('published_at', { ascending: false })
+      .limit(2)
+      .then(({ data }) => setRecentPosts(data || []))
   }, [])
 
   return (
@@ -80,7 +115,7 @@ export default function HomePage() {
             Professional recommendations tailored for every stage of your health journey.
           </p>
           <Link
-            to={featuredProducts[0] ? `/product/${featuredProducts[0].slug}` : '/category/pregnancy'}
+            to={featuredProducts?.[0] ? `/product/${featuredProducts[0].slug}` : '/category/pregnancy'}
             className="mt-7 inline-flex items-center justify-center px-8 py-3.5 rounded-md bg-primary text-on-primary font-label text-sm tracking-wider uppercase shadow-lift hover:bg-primary-container transition"
           >
             Shop Now
@@ -99,45 +134,44 @@ export default function HomePage() {
             <p className="text-on-surface-variant mt-2">Explore wellness by category</p>
           </div>
 
-          {status === 'loading' && (
-            <p className="mt-8 text-on-surface-variant text-center">Loading categories…</p>
-          )}
-          {status !== 'ok' && status !== 'loading' && (
+          {categoriesError && (
             <div className="mt-8 p-4 rounded-md bg-error-container text-on-error-container text-sm">
-              <strong>Supabase wiring check:</strong> {status}
+              <strong>Supabase wiring check:</strong> {categoriesError}
             </div>
           )}
-          {status === 'ok' && (
-            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {categories.map(c => (
-                <Link
-                  key={c.id}
-                  to={`/category/${c.slug}`}
-                  className="group relative block rounded-xl bg-[#fdf1f5] shadow-lift overflow-hidden transition hover:-translate-y-0.5 hover:shadow-md"
-                >
-                  {c.hero_image_url ? (
-                    <div className="aspect-[16/10] overflow-hidden">
-                      <img
-                        src={c.hero_image_url}
-                        alt=""
-                        className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
-                      />
-                    </div>
-                  ) : (
-                    <div className="aspect-[16/10] bg-surface-container grid place-items-center">
-                      <span className="font-label text-xs tracking-[0.15em] uppercase text-on-surface-variant/60">
-                        Imagery coming soon
-                      </span>
-                    </div>
-                  )}
-                  <div className="p-5">
-                    <h3 className="font-headline text-xl text-on-surface">{c.name}</h3>
-                    <p className="text-on-surface-variant text-sm mt-2 line-clamp-2">{c.description}</p>
+
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {categories === null && !categoriesError &&
+              Array.from({ length: 6 }).map((_, i) => <CategorySkeleton key={i} />)}
+
+            {categories && categories.map(c => (
+              <Link
+                key={c.id}
+                to={`/category/${c.slug}`}
+                className="group relative block rounded-xl bg-[#fdf1f5] shadow-lift overflow-hidden transition hover:-translate-y-0.5 hover:shadow-md"
+              >
+                {c.hero_image_url ? (
+                  <div className="aspect-[16/10] overflow-hidden">
+                    <img
+                      src={c.hero_image_url}
+                      alt=""
+                      className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+                    />
                   </div>
-                </Link>
-              ))}
-            </div>
-          )}
+                ) : (
+                  <div className="aspect-[16/10] bg-surface-container grid place-items-center">
+                    <span className="font-label text-xs tracking-[0.15em] uppercase text-on-surface-variant/60">
+                      Imagery coming soon
+                    </span>
+                  </div>
+                )}
+                <div className="p-5">
+                  <h3 className="font-headline text-xl text-on-surface">{c.name}</h3>
+                  <p className="text-on-surface-variant text-sm mt-2 line-clamp-2">{c.description}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
 
         {/* Curve back out to the base surface */}
@@ -146,15 +180,18 @@ export default function HomePage() {
 
       {/* Everything below sits on the base surface */}
       <main className="max-w-[1140px] mx-auto px-5 md:px-16 pb-24">
-        {/* Featured products */}
-        {featuredProducts.length > 0 && (
+        {/* Featured products — render skeletons while loading, hide section entirely if loaded-empty */}
+        {(featuredProducts === null || featuredProducts.length > 0) && (
           <section className="pt-12 md:pt-16">
             <div className="text-center md:text-left">
               <h2 className="font-headline text-3xl md:text-4xl text-on-surface">Featured Picks</h2>
               <p className="text-on-surface-variant mt-2">Our team's recent recommendations</p>
             </div>
             <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-5">
-              {featuredProducts.map(p => (
+              {featuredProducts === null &&
+                Array.from({ length: 3 }).map((_, i) => <ProductSkeleton key={i} />)}
+
+              {featuredProducts && featuredProducts.map(p => (
                 <Link
                   key={p.id}
                   to={`/product/${p.slug}`}
@@ -198,7 +235,7 @@ export default function HomePage() {
         </section>
 
         {/* Recent posts */}
-        {recentPosts.length > 0 && (
+        {(recentPosts === null || recentPosts.length > 0) && (
           <section className="mt-16 md:mt-24">
             <div className="flex items-center justify-between flex-wrap gap-2">
               <h2 className="font-headline text-3xl md:text-4xl text-on-surface">Educational Resources</h2>
@@ -207,7 +244,10 @@ export default function HomePage() {
               </Link>
             </div>
             <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
-              {recentPosts.map(p => (
+              {recentPosts === null &&
+                Array.from({ length: 2 }).map((_, i) => <PostSkeleton key={i} />)}
+
+              {recentPosts && recentPosts.map(p => (
                 <article key={p.id} className="group">
                   {p.cover_url && (
                     <Link to={`/blog/${p.slug}`} className="block overflow-hidden rounded-xl">

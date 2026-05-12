@@ -113,7 +113,7 @@ export default function HomePage() {
                 <Link
                   key={c.id}
                   to={`/category/${c.slug}`}
-                  className="group relative block rounded-xl bg-surface-container-lowest shadow-lift overflow-hidden transition hover:-translate-y-0.5 hover:shadow-md"
+                  className="group relative block rounded-xl bg-[#fdf1f5] shadow-lift overflow-hidden transition hover:-translate-y-0.5 hover:shadow-md"
                 >
                   {c.hero_image_url ? (
                     <div className="aspect-[16/10] overflow-hidden">

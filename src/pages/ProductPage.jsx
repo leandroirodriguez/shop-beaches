@@ -35,11 +35,20 @@ export default function ProductPage() {
   const [product, setProduct] = useState(null)
   const [status, setStatus] = useState('loading')
   const [activeImage, setActiveImage] = useState(0)
+  const [relatedProducts, setRelatedProducts] = useState(null)
+  const [recentPosts, setRecentPosts] = useState(null)
 
   useEffect(() => {
+    // Reset state when navigating between products
+    setProduct(null)
+    setStatus('loading')
+    setActiveImage(0)
+    setRelatedProducts(null)
+    setRecentPosts(null)
+
     supabase
       .from('products')
-      .select('*, category:categories(name, slug)')
+      .select('*, category:categories(id, name, slug)')
       .eq('slug', slug)
       .eq('published', true)
       .maybeSingle()
@@ -47,9 +56,34 @@ export default function ProductPage() {
         if (error) { setStatus('error'); return }
         if (!data) { setStatus('not-found'); return }
         setProduct(data)
-        setActiveImage(0)
         setStatus('ok')
+
+        // Fire related-products query as soon as we know the category
+        const catId = data.category_id || data.category?.id
+        if (catId) {
+          supabase
+            .from('products')
+            .select('id, slug, display_title, amazon_image_urls, amazon_price, badge')
+            .eq('published', true)
+            .eq('category_id', catId)
+            .neq('id', data.id)
+            .order('is_top_recommendation', { ascending: false })
+            .order('created_at', { ascending: false })
+            .limit(3)
+            .then(({ data: related }) => setRelatedProducts(related || []))
+        } else {
+          setRelatedProducts([])
+        }
       })
+
+    // Recent posts in parallel — doesn't depend on the product
+    supabase
+      .from('blog_posts')
+      .select('id, slug, title, excerpt, cover_url, published_at')
+      .eq('published', true)
+      .order('published_at', { ascending: false })
+      .limit(2)
+      .then(({ data }) => setRecentPosts(data || []))
   }, [slug])
 
   if (status === 'loading') {
@@ -144,42 +178,56 @@ export default function ProductPage() {
         </div>
       </div>
 
-      {/* Below the top grid: full-width sections with a constrained readable width */}
+      {/* Narrow readable column for the provider note + how to use */}
       <div className="md:max-w-[760px] md:mx-auto">
-        {/* Why We Recommend This */}
+        {/* Why We Recommend This — refined */}
         {p.provider_note && (
-          <section className="mt-10 md:mt-20 rounded-xl bg-primary text-on-primary p-6 md:p-8">
-            <div className="flex items-start gap-3 mb-4">
-              <div className="w-9 h-9 rounded-md bg-primary-container grid place-items-center shrink-0">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-                </svg>
+          <section className="relative mt-10 md:mt-20 rounded-2xl bg-primary text-on-primary p-7 md:p-12 overflow-hidden">
+            {/* OBGYN Approved stamp — top right on desktop */}
+            <div
+              className="hidden md:flex absolute top-7 right-7 w-24 h-24 rounded-full border-2 border-primary-fixed-dim/40 items-center justify-center"
+              style={{ transform: 'rotate(8deg)' }}
+              aria-hidden="true"
+            >
+              <div className="text-center font-label text-[9px] tracking-[0.2em] uppercase text-primary-fixed-dim/80 leading-[1.4]">
+                OBGYN<br />
+                <span className="inline-block text-base leading-none my-0.5">✦</span><br />
+                Approved
               </div>
-              <h2 className="font-headline text-2xl leading-tight">Why We Recommend This</h2>
             </div>
-            <blockquote className="italic text-primary-fixed-dim leading-relaxed">"{p.provider_note}"</blockquote>
-            <div className="mt-4 pt-4 border-t border-primary-container">
-              <p className="font-label text-[11px] tracking-[0.15em] uppercase text-primary-fixed-dim">
-                — The Beaches OBGYN Team
-              </p>
-            </div>
+
+            <p className="font-label text-[10px] tracking-[0.25em] uppercase text-primary-fixed-dim md:max-w-[70%]">
+              Why We Recommend This
+            </p>
+
+            <blockquote className="mt-4 md:mt-5 font-headline text-xl md:text-3xl leading-[1.3] italic text-on-primary md:max-w-[70%]">
+              <span className="font-headline text-3xl md:text-5xl leading-none align-text-top text-primary-fixed-dim mr-1.5">"</span>
+              {p.provider_note}
+            </blockquote>
+
+            <p className="mt-6 font-label text-[11px] tracking-[0.2em] uppercase text-primary-fixed-dim">
+              — The Beaches OBGYN Team
+            </p>
+
             {Array.isArray(p.key_benefits) && p.key_benefits.length > 0 && (
-              <ul className="mt-5 space-y-3">
-                {p.key_benefits.map((b, i) => (
-                  <li key={i} className="flex items-start gap-3">
-                    <span className="mt-0.5 w-5 h-5 rounded-full bg-secondary-container text-on-secondary-container grid place-items-center shrink-0">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                        <polyline points="20 6 9 17 4 12" />
-                      </svg>
-                    </span>
-                    <span>
-                      <span className="font-semibold">{b.title}</span>
-                      <span className="text-primary-fixed-dim"> — {b.body}</span>
-                    </span>
-                  </li>
-                ))}
-              </ul>
+              <>
+                <div className="mt-8 mb-6 h-px bg-primary-container/60" />
+                <ul className="space-y-4">
+                  {p.key_benefits.map((b, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <span className="mt-0.5 w-5 h-5 rounded-full bg-secondary-container text-on-secondary-container grid place-items-center shrink-0">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                      </span>
+                      <span>
+                        <span className="font-semibold">{b.title}</span>
+                        <span className="text-primary-fixed-dim"> — {b.body}</span>
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </>
             )}
           </section>
         )}
@@ -204,6 +252,80 @@ export default function ProductPage() {
           </section>
         )}
       </div>
+
+      {/* Full-width: You May Also Like + Recommended Reading */}
+      {relatedProducts && relatedProducts.length > 0 && (
+        <section className="mt-16 md:mt-24">
+          <h2 className="font-headline text-2xl md:text-3xl text-on-surface">You May Also Like</h2>
+          <p className="text-on-surface-variant mt-2">
+            More from {p.category?.name || 'this category'}
+          </p>
+          <div className="mt-6 grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5">
+            {relatedProducts.map(rp => (
+              <Link
+                key={rp.id}
+                to={`/product/${rp.slug}`}
+                className="group block rounded-xl bg-surface-container-low shadow-lift overflow-hidden transition hover:-translate-y-0.5 hover:shadow-md"
+              >
+                {rp.amazon_image_urls?.[0] && (
+                  <img
+                    src={rp.amazon_image_urls[0]}
+                    alt={rp.display_title}
+                    className="w-full aspect-square object-contain p-4 bg-surface-container-lowest transition duration-500 group-hover:scale-[1.03]"
+                  />
+                )}
+                <div className="p-4 md:p-5">
+                  {rp.badge && (
+                    <span className="inline-block font-label text-[10px] tracking-[0.15em] uppercase text-secondary mb-2">
+                      {rp.badge}
+                    </span>
+                  )}
+                  <h3 className="font-headline text-base md:text-lg text-on-surface leading-snug">
+                    {rp.display_title}
+                  </h3>
+                  {rp.amazon_price && (
+                    <p className="font-headline text-sm md:text-base text-primary mt-1">{rp.amazon_price}</p>
+                  )}
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {recentPosts && recentPosts.length > 0 && (
+        <section className="mt-16 md:mt-24">
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <h2 className="font-headline text-2xl md:text-3xl text-on-surface">Recommended Reading</h2>
+            <Link to="/blog" className="font-label text-xs tracking-wider uppercase text-primary hover:underline">
+              View All →
+            </Link>
+          </div>
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+            {recentPosts.map(post => (
+              <article key={post.id} className="group">
+                {post.cover_url && (
+                  <Link to={`/blog/${post.slug}`} className="block overflow-hidden rounded-xl">
+                    <img
+                      src={post.cover_url}
+                      alt=""
+                      className="w-full aspect-[16/9] object-cover transition duration-500 group-hover:scale-105"
+                    />
+                  </Link>
+                )}
+                <Link to={`/blog/${post.slug}`} className="hover:underline">
+                  <h3 className="font-headline text-lg md:text-xl text-on-surface leading-snug mt-3">
+                    {post.title}
+                  </h3>
+                </Link>
+                {post.excerpt && (
+                  <p className="text-on-surface-variant text-sm mt-2 line-clamp-2">{post.excerpt}</p>
+                )}
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Footer */}
       <footer className="mt-16 pt-8 border-t border-outline-variant/40 flex flex-col items-center text-center md:max-w-[760px] md:mx-auto">

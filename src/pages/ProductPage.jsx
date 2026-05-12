@@ -205,7 +205,7 @@ export default function ProductPage() {
         <img
           src={logo}
           alt="Beaches OBGYN"
-          className="h-12 md:h-14 w-auto mx-auto"
+          className="block h-16 md:h-20 w-auto mx-auto"
         />
         <p className="mt-6 text-[10px] tracking-wider uppercase text-on-surface-variant leading-relaxed">
           These statements have not been evaluated by the Food and Drug Administration.

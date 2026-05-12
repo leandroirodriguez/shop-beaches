@@ -35,22 +35,15 @@ You'll do these once. Most steps are external accounts; the code is already in p
 ### 4. Fill in `.env`
 
 1. Copy `.env.example` to `.env`
-2. **Supabase:** dashboard → **Settings → API** → copy "Project URL" → `VITE_SUPABASE_URL`. Copy "anon public" key → `VITE_SUPABASE_ANON_KEY`. Copy "service_role" key → `SUPABASE_SERVICE_ROLE_KEY` (keep this one secret).
+2. **Supabase:** dashboard → **Settings → API** → copy "Project URL" → `VITE_SUPABASE_URL`. Copy the **publishable** key (`sb_publishable_...`) → `VITE_SUPABASE_ANON_KEY`. Copy the **secret** key (`sb_secret_...`) → `SUPABASE_SERVICE_ROLE_KEY` (keep this one private).
 3. **Anthropic:** <https://console.anthropic.com> → Settings → API Keys → Create Key → paste into `ANTHROPIC_API_KEY`.
-4. **Amazon PA-API:** see "Get PA-API credentials" below.
+4. **Amazon Partner Tag:** <https://affiliate-program.amazon.com> → top-right menu → **Manage Your Tracking IDs**. Copy the tag (looks like `beachesobgyn-20`) into `AMAZON_PARTNER_TAG`. That's all we need from Amazon right now.
 
-### Get PA-API credentials
+### About Amazon API integration
 
-1. Sign in at <https://affiliate-program.amazon.com>
-2. Top nav: **Tools → Product Advertising API**
-3. Click **Manage Your Credentials** (available because you've made qualifying sales)
-4. **Add Credentials** → Amazon shows an Access Key and a Secret Key
-5. **Copy the Secret Key now** — Amazon will never show it again
-6. Find your Partner Tag under **Account Settings → Manage Your Tracking IDs** (something like `beachesobgyn-20`)
-7. Paste into `.env`:
-   - `AMAZON_ACCESS_KEY`
-   - `AMAZON_SECRET_KEY`
-   - `AMAZON_PARTNER_TAG`
+The admin's "Add Product" flow currently uses **manual paste mode**: you paste the Amazon listing's title, bullets, price, and image URLs; Claude rewrites them into the curated voice.
+
+Why not automated? Amazon retired the old Product Advertising API (PA-API) on **May 15, 2026**, replacing it with the **Creators API** which uses OAuth 2.0 (Client ID + Secret instead of Access Key + Secret Key). Integrating the new API is a TODO — when it ships, the admin will accept just the Amazon URL and pull title/images/price/bullets automatically.
 
 ### 5. Run locally
 

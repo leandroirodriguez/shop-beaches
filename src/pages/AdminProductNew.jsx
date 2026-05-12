@@ -17,9 +17,14 @@ export default function AdminProductNew() {
   const navigate = useNavigate()
 
   const [amazonUrl, setAmazonUrl] = useState('')
+  const [rawTitle, setRawTitle] = useState('')
+  const [rawFeatures, setRawFeatures] = useState('')
+  const [rawPrice, setRawPrice] = useState('')
+  const [rawImageUrls, setRawImageUrls] = useState('')
+
   const [phase, setPhase] = useState('idle') // idle | working | ready | saving
   const [error, setError] = useState('')
-  const [amazon, setAmazon] = useState(null) // PA-API payload
+  const [amazon, setAmazon] = useState(null)
   const [draft, setDraft] = useState(null)
   const [categories, setCategories] = useState([])
 
@@ -56,7 +61,13 @@ export default function AdminProductNew() {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${session.access_token}`,
         },
-        body: JSON.stringify({ amazon_url: amazonUrl }),
+        body: JSON.stringify({
+          amazon_url: amazonUrl,
+          raw_title: rawTitle,
+          raw_features: rawFeatures,
+          raw_price: rawPrice,
+          raw_image_urls: rawImageUrls,
+        }),
       })
       const payload = await r.json()
       if (!r.ok) {
@@ -125,13 +136,25 @@ export default function AdminProductNew() {
       <main className="max-w-[960px] mx-auto px-5 md:px-10 py-6 pb-32">
         <h1 className="font-headline text-3xl text-on-surface">Add New Product</h1>
         <p className="text-on-surface-variant mt-1">
-          Paste an Amazon product URL. AI will draft the curated page from the listing.
+          Paste the Amazon listing details. AI will rewrite into the curated voice.
         </p>
 
-        <form onSubmit={handleGenerate} className="mt-8 rounded-xl bg-surface-container-low p-6 shadow-lift">
+        <details className="mt-4 rounded-md bg-secondary-container/30 text-on-secondary-container p-3 text-sm">
+          <summary className="cursor-pointer font-semibold">How to gather the fields from Amazon</summary>
+          <ol className="mt-2 list-decimal list-inside space-y-1">
+            <li>Open the product page on Amazon.</li>
+            <li>Copy the URL from your browser bar into <strong>Amazon URL</strong>.</li>
+            <li>Copy the listing title into <strong>Title</strong>.</li>
+            <li>Copy the bullet points under "About this item" into <strong>Features</strong>, one per line.</li>
+            <li>Copy the price (e.g. "$34.00") into <strong>Price</strong>.</li>
+            <li>For each product image, right-click → <strong>Copy image address</strong>. Paste each on its own line in <strong>Image URLs</strong>.</li>
+          </ol>
+        </details>
+
+        <form onSubmit={handleGenerate} className="mt-6 rounded-xl bg-surface-container-low p-6 shadow-lift space-y-4">
           <label className="block">
             <span className="font-label text-xs tracking-wider uppercase text-on-surface-variant">
-              Amazon Product URL
+              Amazon Product URL <Required />
             </span>
             <input
               type="url"
@@ -144,26 +167,88 @@ export default function AdminProductNew() {
             />
           </label>
 
+          <label className="block">
+            <span className="font-label text-xs tracking-wider uppercase text-on-surface-variant">
+              Title <Required />
+            </span>
+            <input
+              type="text"
+              required
+              value={rawTitle}
+              onChange={e => setRawTitle(e.target.value)}
+              placeholder="Exact title from the Amazon listing"
+              className="input mt-2"
+              disabled={phase === 'working'}
+            />
+          </label>
+
+          <label className="block">
+            <span className="font-label text-xs tracking-wider uppercase text-on-surface-variant">
+              Features (one bullet per line)
+            </span>
+            <textarea
+              rows={6}
+              value={rawFeatures}
+              onChange={e => setRawFeatures(e.target.value)}
+              placeholder={"- Hormonal balance support\n- Bioperine for absorption\n- Non-GMO, Gluten-Free"}
+              className="input mt-2 font-mono text-sm"
+              disabled={phase === 'working'}
+            />
+          </label>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <label className="block">
+              <span className="font-label text-xs tracking-wider uppercase text-on-surface-variant">
+                Price
+              </span>
+              <input
+                type="text"
+                value={rawPrice}
+                onChange={e => setRawPrice(e.target.value)}
+                placeholder="$34.00"
+                className="input mt-2"
+                disabled={phase === 'working'}
+              />
+            </label>
+          </div>
+
+          <label className="block">
+            <span className="font-label text-xs tracking-wider uppercase text-on-surface-variant">
+              Image URLs (one per line)
+            </span>
+            <textarea
+              rows={4}
+              value={rawImageUrls}
+              onChange={e => setRawImageUrls(e.target.value)}
+              placeholder={"https://m.media-amazon.com/images/I/...jpg\nhttps://m.media-amazon.com/images/I/...jpg"}
+              className="input mt-2 font-mono text-xs"
+              disabled={phase === 'working'}
+            />
+            <span className="block text-[11px] text-on-surface-variant mt-1">
+              On Amazon: right-click any product photo → "Copy image address".
+            </span>
+          </label>
+
           {error && (
-            <p className="mt-4 text-sm text-on-error-container bg-error-container rounded-md px-3 py-2">
+            <p className="text-sm text-on-error-container bg-error-container rounded-md px-3 py-2">
               {error}
             </p>
           )}
 
-          <div className="mt-5 flex items-center gap-3">
+          <div className="flex items-center gap-3">
             <button
               type="submit"
               disabled={phase === 'working' || phase === 'saving'}
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-primary text-on-primary font-label text-sm tracking-wider uppercase shadow-lift hover:bg-primary-container transition disabled:opacity-60"
             >
               {phase === 'working' ? (
-                <><Spinner /> Fetching + generating…</>
+                <><Spinner /> Generating curated copy…</>
               ) : (
                 <>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M5 12h14M13 5l7 7-7 7" />
                   </svg>
-                  {draft ? 'Regenerate' : 'Fetch & Generate'}
+                  {draft ? 'Regenerate' : 'Generate Curated Copy'}
                 </>
               )}
             </button>
@@ -333,6 +418,9 @@ export default function AdminProductNew() {
   )
 }
 
+function Required() {
+  return <span className="text-error">*</span>
+}
 function Section({ title, children }) {
   return (
     <section className="rounded-xl bg-surface-container-low p-6 shadow-lift">

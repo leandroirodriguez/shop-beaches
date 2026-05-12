@@ -1,6 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk'
 import { createClient } from '@supabase/supabase-js'
-import amazonPaapi from 'amazon-paapi'
 
 const claude = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
@@ -8,25 +7,6 @@ const supabase = createClient(
   process.env.VITE_SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY
 )
-
-const PA_API_COMMON = {
-  AccessKey: process.env.AMAZON_ACCESS_KEY,
-  SecretKey: process.env.AMAZON_SECRET_KEY,
-  PartnerTag: process.env.AMAZON_PARTNER_TAG,
-  PartnerType: 'Associates',
-  Marketplace: 'www.amazon.com',
-}
-
-const PA_API_RESOURCES = [
-  'Images.Primary.Large',
-  'Images.Variants.Large',
-  'ItemInfo.Title',
-  'ItemInfo.ByLineInfo',
-  'ItemInfo.ProductInfo',
-  'ItemInfo.Features',
-  'ItemInfo.ContentInfo',
-  'Offers.Listings.Price',
-]
 
 const SYSTEM_PROMPT = `You are writing curated product copy for Beaches OBGYN, a women's health practice. The shop surfaces Amazon products our doctors recommend — never products we sell ourselves.
 
@@ -62,30 +42,8 @@ function parseAsin(url) {
 }
 
 function buildAffiliateUrl(asin) {
-  return `https://www.amazon.com/dp/${asin}?tag=${process.env.AMAZON_PARTNER_TAG}`
-}
-
-function flattenPaapiItem(item) {
-  const info = item.ItemInfo || {}
-  const features = info.Features?.DisplayValues || []
-  const title = info.Title?.DisplayValue || ''
-  const brand = info.ByLineInfo?.Brand?.DisplayValue || ''
-  const price =
-    item.Offers?.Listings?.[0]?.Price?.DisplayAmount ||
-    item.Offers?.Listings?.[0]?.Price?.Amount?.toString() ||
-    ''
-  const primary = item.Images?.Primary?.Large?.URL
-  const variants = (item.Images?.Variants || [])
-    .map(v => v.Large?.URL)
-    .filter(Boolean)
-  return {
-    asin: item.ASIN,
-    title,
-    brand,
-    features,
-    price,
-    images: [primary, ...variants].filter(Boolean),
-  }
+  const tag = process.env.AMAZON_PARTNER_TAG
+  return `https://www.amazon.com/dp/${asin}${tag ? `?tag=${tag}` : ''}`
 }
 
 export default async function handler(req, res) {
@@ -106,39 +64,36 @@ export default async function handler(req, res) {
     .single()
   if (!profile?.is_admin) return res.status(403).json({ error: 'Admin access required' })
 
-  // Parse + validate input
-  const { amazon_url } = req.body || {}
+  // Manual-paste mode: admin provides everything from the Amazon listing.
+  // PA-API is being retired May 15, 2026 in favor of OAuth-based Creators API;
+  // we'll add automated fetching once that integration is built.
+  const {
+    amazon_url,
+    raw_title,
+    raw_features,
+    raw_price,
+    raw_image_urls,
+  } = req.body || {}
+
   if (!amazon_url) return res.status(400).json({ error: 'amazon_url is required' })
+  if (!raw_title) return res.status(400).json({ error: 'raw_title is required' })
 
   const asin = parseAsin(amazon_url)
   if (!asin) return res.status(400).json({ error: 'Could not parse ASIN from URL' })
 
-  // 1) Fetch from Amazon PA-API
-  let amazon
-  try {
-    const data = await amazonPaapi.GetItems(PA_API_COMMON, {
-      ItemIds: [asin],
-      Resources: PA_API_RESOURCES,
-    })
-    const item = data?.ItemsResult?.Items?.[0]
-    if (!item) {
-      const errs = data?.Errors?.map(e => e.Message).join('; ')
-      return res.status(502).json({ error: `Amazon returned no item${errs ? `: ${errs}` : ''}` })
-    }
-    amazon = flattenPaapiItem(item)
-  } catch (err) {
-    return res.status(502).json({ error: `PA-API call failed: ${err.message}` })
-  }
-
-  // 2) Generate curated copy with Claude
+  // Generate curated copy with Claude
   let draft
   try {
-    const prompt = `Amazon listing details (raw):
-Title: ${amazon.title}
-Brand: ${amazon.brand}
-Price: ${amazon.price}
-Features:
-${amazon.features.map(f => `- ${f}`).join('\n')}
+    const featuresList = (raw_features || '')
+      .split('\n')
+      .map(s => s.trim().replace(/^[-•*]\s*/, ''))
+      .filter(Boolean)
+
+    const prompt = `Amazon listing details (raw, pasted by editor):
+Title: ${raw_title}
+Price: ${raw_price || 'not provided'}
+Features / bullets:
+${featuresList.length ? featuresList.map(f => `- ${f}`).join('\n') : '(none provided)'}
 
 Write the curated page for this product.`
 
@@ -157,16 +112,20 @@ Write the curated page for this product.`
     return res.status(500).json({ error: `Claude call failed: ${err.message}` })
   }
 
-  // 3) Return combined payload (don't persist yet — admin reviews + saves)
+  // Normalize image URLs (newline-separated input → array)
+  const images = (raw_image_urls || '')
+    .split(/\r?\n/)
+    .map(s => s.trim())
+    .filter(s => s.length > 0)
+
   return res.status(200).json({
     success: true,
     amazon: {
       asin,
       url: buildAffiliateUrl(asin),
-      title: amazon.title,
-      brand: amazon.brand,
-      price: amazon.price,
-      images: amazon.images,
+      title: raw_title,
+      price: raw_price || '',
+      images,
     },
     draft,
   })

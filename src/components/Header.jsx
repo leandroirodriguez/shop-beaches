@@ -1,14 +1,16 @@
 import { Link } from 'react-router-dom'
+import logo from '../assets/logo.svg'
 
 export default function Header() {
   return (
     <header className="sticky top-0 z-40 bg-surface/95 backdrop-blur border-b border-outline-variant/40">
       <div className="max-w-[1140px] mx-auto px-5 md:px-16 h-14 flex items-center justify-between">
-        <Link
-          to="/"
-          className="font-headline text-xl text-on-surface"
-        >
-          Beaches OBGYN
+        <Link to="/" aria-label="Beaches OBGYN home">
+          <img
+            src={logo}
+            alt="Beaches OBGYN"
+            className="h-7 md:h-8 w-auto"
+          />
         </Link>
         <nav className="flex items-center gap-1">
           <button

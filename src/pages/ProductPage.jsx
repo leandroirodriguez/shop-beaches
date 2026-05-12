@@ -201,11 +201,11 @@ export default function ProductPage() {
       </div>
 
       {/* Footer */}
-      <footer className="mt-16 pt-8 border-t border-outline-variant/40 text-center md:max-w-[760px] md:mx-auto">
+      <footer className="mt-16 pt-8 border-t border-outline-variant/40 flex flex-col items-center text-center md:max-w-[760px] md:mx-auto">
         <img
           src={logo}
           alt="Beaches OBGYN"
-          className="block h-16 md:h-20 w-auto mx-auto"
+          className="h-16 md:h-20 w-auto"
         />
         <p className="mt-6 text-[10px] tracking-wider uppercase text-on-surface-variant leading-relaxed">
           These statements have not been evaluated by the Food and Drug Administration.

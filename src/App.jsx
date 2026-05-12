@@ -10,6 +10,8 @@ import AdminDashboard from './pages/AdminDashboard'
 import AdminProducts from './pages/AdminProducts'
 import AdminProductNew from './pages/AdminProductNew'
 import AdminProductEdit from './pages/AdminProductEdit'
+import AdminCategories from './pages/AdminCategories'
+import AdminCategoryEdit from './pages/AdminCategoryEdit'
 import AdminBlog from './pages/AdminBlog'
 import AdminBlogNew from './pages/AdminBlogNew'
 
@@ -32,6 +34,8 @@ export default function App() {
         <Route path="/admin/products" element={<AdminProducts />} />
         <Route path="/admin/products/new" element={<AdminProductNew />} />
         <Route path="/admin/products/:id/edit" element={<AdminProductEdit />} />
+        <Route path="/admin/categories" element={<AdminCategories />} />
+        <Route path="/admin/categories/:id/edit" element={<AdminCategoryEdit />} />
         <Route path="/admin/blog" element={<AdminBlog />} />
         <Route path="/admin/blog/new" element={<AdminBlogNew />} />
       </Routes>

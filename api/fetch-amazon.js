@@ -36,12 +36,18 @@ function parseAsin(url) {
   return m ? m[1].toUpperCase() : null
 }
 
+// Accept both "3.1" and "v3.1" (Amazon's UI shows the v-prefixed form
+// but the SDK and token-endpoint switch keys are the bare number).
+function normalizeVersion(raw) {
+  return (raw || '3.1').replace(/^v/i, '')
+}
+
 async function getAccessToken() {
   if (cachedToken && Date.now() < cachedTokenExpiresAt) return cachedToken
 
-  const version = process.env.AMAZON_CREDENTIAL_VERSION || '3.1'
+  const version = normalizeVersion(process.env.AMAZON_CREDENTIAL_VERSION)
   const endpoint = TOKEN_ENDPOINTS[version]
-  if (!endpoint) throw new Error(`Unsupported AMAZON_CREDENTIAL_VERSION: ${version}`)
+  if (!endpoint) throw new Error(`Unsupported AMAZON_CREDENTIAL_VERSION: ${version} (set to e.g. "3.1")`)
 
   const isLwa = version.startsWith('3.')
   const credentialId = process.env.AMAZON_CREDENTIAL_ID
@@ -93,7 +99,7 @@ async function getAccessToken() {
 
 async function getItems(asins) {
   const token = await getAccessToken()
-  const version = process.env.AMAZON_CREDENTIAL_VERSION || '3.1'
+  const version = normalizeVersion(process.env.AMAZON_CREDENTIAL_VERSION)
   const isLwa = version.startsWith('3.')
 
   const authValue = isLwa

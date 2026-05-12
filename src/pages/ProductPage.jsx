@@ -75,7 +75,7 @@ export default function ProductPage() {
       <div className="md:grid md:grid-cols-2 md:gap-12 md:items-start md:mt-8">
         {/* Image gallery (sticks on desktop scroll) */}
         <div className="md:sticky md:top-20">
-          <div className="relative mt-4 md:mt-0 rounded-xl overflow-hidden bg-surface-container-low">
+          <div className="relative mt-4 md:mt-0 rounded-xl overflow-hidden bg-surface-container-lowest">
             {p.badge && (
               <span className="absolute top-4 left-4 z-10 inline-flex items-center px-3 py-1 rounded-md bg-secondary text-on-secondary font-label text-[11px] tracking-[0.12em] uppercase">
                 {p.badge}
@@ -99,7 +99,7 @@ export default function ProductPage() {
                   onClick={() => setActiveImage(i)}
                   aria-label={`Show image ${i + 1}`}
                   aria-pressed={activeImage === i}
-                  className={`aspect-square rounded-md overflow-hidden bg-surface-container-low border-2 transition ${
+                  className={`aspect-square rounded-md overflow-hidden bg-surface-container-lowest border-2 transition ${
                     activeImage === i
                       ? 'border-primary'
                       : 'border-outline-variant/40 hover:border-outline'

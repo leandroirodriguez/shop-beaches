@@ -1,0 +1,362 @@
+import { useEffect, useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import AdminLayout from '../components/AdminLayout'
+import { supabase } from '../lib/supabase'
+import { useAdminGuard } from '../hooks/useAdminGuard'
+
+function slugify(s) {
+  return s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 80)
+}
+
+export default function AdminProductNew() {
+  const verified = useAdminGuard()
+  const navigate = useNavigate()
+
+  const [amazonUrl, setAmazonUrl] = useState('')
+  const [phase, setPhase] = useState('idle') // idle | working | ready | saving
+  const [error, setError] = useState('')
+  const [amazon, setAmazon] = useState(null) // PA-API payload
+  const [draft, setDraft] = useState(null)
+  const [categories, setCategories] = useState([])
+
+  useEffect(() => {
+    if (!verified) return
+    supabase
+      .from('categories')
+      .select('id, slug, name')
+      .order('display_order')
+      .then(({ data }) => setCategories(data || []))
+  }, [verified])
+
+  const selectedCategory = useMemo(
+    () => categories.find(c => c.slug === draft?.suggested_category_slug),
+    [categories, draft]
+  )
+
+  async function handleGenerate(e) {
+    e.preventDefault()
+    setError('')
+    setPhase('working')
+
+    const { data: { session } } = await supabase.auth.getSession()
+    if (!session) {
+      setError('Session expired. Please sign in again.')
+      setPhase('idle')
+      return
+    }
+
+    try {
+      const r = await fetch('/api/generate-product', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({ amazon_url: amazonUrl }),
+      })
+      const payload = await r.json()
+      if (!r.ok) {
+        setError(payload.error || `Request failed (${r.status})`)
+        setPhase('idle')
+        return
+      }
+      setAmazon(payload.amazon)
+      setDraft(payload.draft)
+      setPhase('ready')
+    } catch (err) {
+      setError(err.message)
+      setPhase('idle')
+    }
+  }
+
+  function updateDraft(patch) { setDraft(d => ({ ...d, ...patch })) }
+  function updateBenefit(i, patch) {
+    setDraft(d => ({
+      ...d,
+      key_benefits: d.key_benefits.map((b, idx) => (idx === i ? { ...b, ...patch } : b)),
+    }))
+  }
+  function updateStep(i, patch) {
+    setDraft(d => ({
+      ...d,
+      how_to_use: d.how_to_use.map((s, idx) => (idx === i ? { ...s, ...patch } : s)),
+    }))
+  }
+
+  async function handleSave(publish) {
+    setError('')
+    setPhase('saving')
+    const slug = slugify(draft.display_title)
+
+    const { error: insertError } = await supabase.from('products').insert({
+      slug,
+      category_id: selectedCategory?.id || null,
+      amazon_url: amazon.url,
+      amazon_asin: amazon.asin,
+      amazon_title: amazon.title,
+      amazon_price: amazon.price,
+      amazon_image_urls: amazon.images,
+      display_title: draft.display_title,
+      short_description: draft.short_description,
+      provider_note: draft.provider_note,
+      key_benefits: draft.key_benefits,
+      how_to_use: draft.how_to_use,
+      tags: draft.tags || [],
+      badge: draft.badge || null,
+      published: publish,
+    })
+
+    if (insertError) {
+      setError(insertError.message)
+      setPhase('ready')
+      return
+    }
+    navigate('/admin/products')
+  }
+
+  if (!verified) return null
+
+  return (
+    <AdminLayout backTo="/admin/products" backLabel="All Products">
+      <main className="max-w-[960px] mx-auto px-5 md:px-10 py-6 pb-32">
+        <h1 className="font-headline text-3xl text-on-surface">Add New Product</h1>
+        <p className="text-on-surface-variant mt-1">
+          Paste an Amazon product URL. AI will draft the curated page from the listing.
+        </p>
+
+        <form onSubmit={handleGenerate} className="mt-8 rounded-xl bg-surface-container-low p-6 shadow-lift">
+          <label className="block">
+            <span className="font-label text-xs tracking-wider uppercase text-on-surface-variant">
+              Amazon Product URL
+            </span>
+            <input
+              type="url"
+              required
+              value={amazonUrl}
+              onChange={e => setAmazonUrl(e.target.value)}
+              placeholder="https://www.amazon.com/dp/B07PXGQC1Q"
+              className="input mt-2 font-mono text-sm"
+              disabled={phase === 'working'}
+            />
+          </label>
+
+          {error && (
+            <p className="mt-4 text-sm text-on-error-container bg-error-container rounded-md px-3 py-2">
+              {error}
+            </p>
+          )}
+
+          <div className="mt-5 flex items-center gap-3">
+            <button
+              type="submit"
+              disabled={phase === 'working' || phase === 'saving'}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-primary text-on-primary font-label text-sm tracking-wider uppercase shadow-lift hover:bg-primary-container transition disabled:opacity-60"
+            >
+              {phase === 'working' ? (
+                <><Spinner /> Fetching + generating…</>
+              ) : (
+                <>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M5 12h14M13 5l7 7-7 7" />
+                  </svg>
+                  {draft ? 'Regenerate' : 'Fetch & Generate'}
+                </>
+              )}
+            </button>
+            {draft && (
+              <span className="font-label text-[10px] tracking-wider uppercase text-secondary">
+                Draft ready below
+              </span>
+            )}
+          </div>
+        </form>
+
+        {draft && amazon && (
+          <div className="mt-8 space-y-6">
+            {amazon.images?.[0] && (
+              <div className="grid grid-cols-4 gap-3">
+                {amazon.images.slice(0, 4).map((src, i) => (
+                  <div key={i} className="aspect-square rounded-md overflow-hidden bg-surface-container">
+                    <img src={src} alt="" className="w-full h-full object-cover" />
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <Section title="Basics">
+              <Row>
+                <Field label="Display Title">
+                  <input
+                    type="text"
+                    value={draft.display_title}
+                    onChange={e => updateDraft({ display_title: e.target.value })}
+                    className="input"
+                  />
+                </Field>
+                <Field label="Price (display)">
+                  <input
+                    type="text"
+                    value={amazon.price}
+                    readOnly
+                    className="input opacity-80"
+                  />
+                </Field>
+              </Row>
+              <Row>
+                <Field label="Category">
+                  <select
+                    value={draft.suggested_category_slug || ''}
+                    onChange={e => updateDraft({ suggested_category_slug: e.target.value })}
+                    className="input"
+                  >
+                    <option value="">— Select category —</option>
+                    {categories.map(c => (
+                      <option key={c.slug} value={c.slug}>{c.name}</option>
+                    ))}
+                  </select>
+                </Field>
+                <Field label="Badge (optional)">
+                  <input
+                    type="text"
+                    value={draft.badge || ''}
+                    onChange={e => updateDraft({ badge: e.target.value })}
+                    placeholder="OBGYN APPROVED, TOP RECOMMENDATION…"
+                    className="input"
+                  />
+                </Field>
+              </Row>
+              <Field label="Short Description">
+                <textarea
+                  rows={3}
+                  value={draft.short_description}
+                  onChange={e => updateDraft({ short_description: e.target.value })}
+                  className="input"
+                />
+              </Field>
+            </Section>
+
+            <Section title="Why We Recommend This">
+              <Field label="Provider's Note">
+                <textarea
+                  rows={5}
+                  value={draft.provider_note}
+                  onChange={e => updateDraft({ provider_note: e.target.value })}
+                  className="input italic"
+                />
+              </Field>
+              <div className="space-y-3 mt-3">
+                <p className="font-label text-xs tracking-wider uppercase text-on-surface-variant">
+                  Key Benefits
+                </p>
+                {draft.key_benefits.map((b, i) => (
+                  <div key={i} className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <input
+                      type="text"
+                      value={b.title}
+                      onChange={e => updateBenefit(i, { title: e.target.value })}
+                      className="input font-semibold"
+                    />
+                    <input
+                      type="text"
+                      value={b.body}
+                      onChange={e => updateBenefit(i, { body: e.target.value })}
+                      className="input md:col-span-2"
+                    />
+                  </div>
+                ))}
+              </div>
+            </Section>
+
+            <Section title="How to Use">
+              <div className="space-y-4">
+                {draft.how_to_use.map((s, i) => (
+                  <div key={i} className="flex items-start gap-3">
+                    <span className="mt-1.5 w-7 h-7 rounded-full border-2 border-primary text-primary font-label font-semibold grid place-items-center shrink-0">
+                      {s.step}
+                    </span>
+                    <div className="flex-1 space-y-2">
+                      <input
+                        type="text"
+                        value={s.title}
+                        onChange={e => updateStep(i, { title: e.target.value })}
+                        className="input font-semibold"
+                      />
+                      <textarea
+                        rows={2}
+                        value={s.body}
+                        onChange={e => updateStep(i, { body: e.target.value })}
+                        className="input"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Section>
+
+            <div className="rounded-xl bg-secondary-container/30 p-5 text-sm text-on-secondary-container">
+              <p className="font-label text-[11px] tracking-[0.15em] uppercase mb-1">Source</p>
+              <p className="font-mono text-xs break-all">
+                ASIN: <strong>{amazon.asin}</strong> · <a href={amazon.url} target="_blank" rel="noreferrer" className="underline">{amazon.url}</a>
+              </p>
+            </div>
+          </div>
+        )}
+
+        {draft && (
+          <div className="fixed bottom-0 inset-x-0 z-30 bg-surface-container border-t border-outline-variant/40">
+            <div className="max-w-[960px] mx-auto px-5 md:px-10 py-3 flex items-center justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => handleSave(false)}
+                disabled={phase === 'saving'}
+                className="px-5 py-2.5 rounded-md bg-surface-container-high text-on-surface font-label text-sm tracking-wider uppercase hover:bg-surface-container-highest transition disabled:opacity-60"
+              >
+                Save Draft
+              </button>
+              <button
+                type="button"
+                onClick={() => handleSave(true)}
+                disabled={phase === 'saving'}
+                className="px-5 py-2.5 rounded-md bg-primary text-on-primary font-label text-sm tracking-wider uppercase shadow-lift hover:bg-primary-container transition disabled:opacity-60"
+              >
+                {phase === 'saving' ? 'Saving…' : 'Publish'}
+              </button>
+            </div>
+          </div>
+        )}
+      </main>
+    </AdminLayout>
+  )
+}
+
+function Section({ title, children }) {
+  return (
+    <section className="rounded-xl bg-surface-container-low p-6 shadow-lift">
+      <h2 className="font-headline text-xl text-on-surface mb-4">{title}</h2>
+      {children}
+    </section>
+  )
+}
+function Field({ label, children }) {
+  return (
+    <label className="block">
+      <span className="font-label text-xs tracking-wider uppercase text-on-surface-variant">{label}</span>
+      <div className="mt-1">{children}</div>
+    </label>
+  )
+}
+function Row({ children }) {
+  return <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">{children}</div>
+}
+function Spinner() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" className="animate-spin">
+      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" fill="none" opacity="0.25" />
+      <path d="M22 12a10 10 0 0 1-10 10" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round" />
+    </svg>
+  )
+}

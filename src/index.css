@@ -91,6 +91,21 @@ body {
     0 8px 24px rgba(50, 88, 125, 0.08);
 }
 
+/* Admin form input baseline */
+.input {
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  border-radius: 0.375rem;
+  background: var(--color-surface-container-lowest);
+  border: 1px solid color-mix(in srgb, var(--color-outline-variant) 60%, transparent);
+  color: var(--color-on-surface);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  transition: border-color 120ms ease;
+}
+.input:focus { outline: none; border-color: var(--color-primary); }
+textarea.input { resize: vertical; min-height: 4rem; line-height: 1.5; }
+
 /* Article prose styling for blog posts */
 .prose h2 {
   font-family: var(--font-headline);

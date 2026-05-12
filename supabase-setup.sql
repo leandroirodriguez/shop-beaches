@@ -68,12 +68,13 @@ CREATE POLICY "Admins can manage categories" ON categories
   );
 
 -- Seed the categories shown in the mockups
-INSERT INTO categories (slug, name, description, display_order) VALUES
-  ('pregnancy',         'Pregnancy',          'Essential care for a healthy pregnancy journey, ensuring the well-being of both mother and baby.', 1),
-  ('nutrition-wellness','Nutrition & Wellness','Key elements for maintaining vitality and long-term wellness.', 2),
-  ('sexual-health',     'Sexual Health',      'Supporting physical and emotional aspects of intimacy.', 3),
-  ('pcos',              'PCOS Support',       'Hormonal harmony for regular ovulation and cycles.', 4),
-  ('menopause',         'Menopause',          'Alleviate common symptoms for a smoother transition.', 5)
+INSERT INTO categories (slug, name, description, hero_image_url, display_order) VALUES
+  ('pregnancy',         'Pregnancy',          'Essential care for a healthy pregnancy journey, ensuring the well-being of both mother and baby.', '/categories/pregnancy.webp', 1),
+  ('nutrition-wellness','Nutrition & Wellness','Key elements for maintaining vitality and long-term wellness.', '/categories/nutrition.webp', 2),
+  ('sexual-health',     'Sexual Health',      'Supporting physical and emotional aspects of intimacy.', '/categories/sexualhealth.webp', 3),
+  ('pcos',              'PCOS Support',       'Hormonal harmony for regular ovulation and cycles.', '/categories/pcos.webp', 4),
+  ('perimenopause',     'Perimenopause',      'Navigate the transition with confidence — supporting hormone balance, sleep, and mood during the years before menopause.', '/categories/perimenopause.webp', 5),
+  ('menopause',         'Menopause/TRT Support', 'Alleviate common symptoms for a smoother transition.', '/categories/trtsupport.webp', 6)
 ON CONFLICT (slug) DO NOTHING;
 
 -- ============================================================

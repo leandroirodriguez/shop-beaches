@@ -22,7 +22,8 @@ export default function AdminProductNew() {
   const [rawPrice, setRawPrice] = useState('')
   const [rawImageUrls, setRawImageUrls] = useState('')
 
-  const [phase, setPhase] = useState('idle') // idle | working | ready | saving
+  const [phase, setPhase] = useState('idle') // idle | fetching | working | ready | saving
+  const [fetchError, setFetchError] = useState('')
   const [error, setError] = useState('')
   const [amazon, setAmazon] = useState(null)
   const [draft, setDraft] = useState(null)
@@ -41,6 +42,47 @@ export default function AdminProductNew() {
     () => categories.find(c => c.slug === draft?.suggested_category_slug),
     [categories, draft]
   )
+
+  async function handleFetchFromAmazon() {
+    setFetchError('')
+    if (!amazonUrl) {
+      setFetchError('Paste an Amazon URL first.')
+      return
+    }
+    setPhase('fetching')
+
+    const { data: { session } } = await supabase.auth.getSession()
+    if (!session) {
+      setFetchError('Session expired. Please sign in again.')
+      setPhase('idle')
+      return
+    }
+
+    try {
+      const r = await fetch('/api/fetch-amazon', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({ amazon_url: amazonUrl }),
+      })
+      const payload = await r.json()
+      if (!r.ok) {
+        setFetchError(payload.error || `Request failed (${r.status})`)
+        setPhase('idle')
+        return
+      }
+      setRawTitle(payload.title || '')
+      setRawFeatures((payload.features || []).join('\n'))
+      setRawPrice(payload.price || '')
+      setRawImageUrls((payload.images || []).join('\n'))
+      setPhase('idle')
+    } catch (err) {
+      setFetchError(err.message)
+      setPhase('idle')
+    }
+  }
 
   async function handleGenerate(e) {
     e.preventDefault()
@@ -152,20 +194,49 @@ export default function AdminProductNew() {
         </details>
 
         <form onSubmit={handleGenerate} className="mt-6 rounded-xl bg-surface-container-low p-6 shadow-lift space-y-4">
-          <label className="block">
-            <span className="font-label text-xs tracking-wider uppercase text-on-surface-variant">
-              Amazon Product URL <Required />
-            </span>
-            <input
-              type="url"
-              required
-              value={amazonUrl}
-              onChange={e => setAmazonUrl(e.target.value)}
-              placeholder="https://www.amazon.com/dp/B07PXGQC1Q"
-              className="input mt-2 font-mono text-sm"
-              disabled={phase === 'working'}
-            />
-          </label>
+          <div>
+            <label className="block">
+              <span className="font-label text-xs tracking-wider uppercase text-on-surface-variant">
+                Amazon Product URL <Required />
+              </span>
+              <input
+                type="url"
+                required
+                value={amazonUrl}
+                onChange={e => setAmazonUrl(e.target.value)}
+                placeholder="https://www.amazon.com/dp/B07PXGQC1Q"
+                className="input mt-2 font-mono text-sm"
+                disabled={phase === 'working' || phase === 'fetching'}
+              />
+            </label>
+            <div className="mt-2 flex items-center gap-3">
+              <button
+                type="button"
+                onClick={handleFetchFromAmazon}
+                disabled={phase === 'working' || phase === 'fetching'}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-surface-container text-on-surface font-label text-xs tracking-wider uppercase hover:bg-surface-container-high transition disabled:opacity-60"
+              >
+                {phase === 'fetching' ? (
+                  <><Spinner /> Fetching…</>
+                ) : (
+                  <>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                    </svg>
+                    Fetch from Amazon
+                  </>
+                )}
+              </button>
+              <span className="text-[11px] text-on-surface-variant">
+                Auto-fills the four fields below via Creators API
+              </span>
+            </div>
+            {fetchError && (
+              <p className="mt-2 text-sm text-on-error-container bg-error-container rounded-md px-3 py-2">
+                Couldn't fetch: {fetchError}. You can still fill the fields by hand.
+              </p>
+            )}
+          </div>
 
           <label className="block">
             <span className="font-label text-xs tracking-wider uppercase text-on-surface-variant">

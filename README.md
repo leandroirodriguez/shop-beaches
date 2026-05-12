@@ -41,9 +41,12 @@ You'll do these once. Most steps are external accounts; the code is already in p
 
 ### About Amazon API integration
 
-The admin's "Add Product" flow currently uses **manual paste mode**: you paste the Amazon listing's title, bullets, price, and image URLs; Claude rewrites them into the curated voice.
+The admin's "Add Product" flow supports both:
 
-Why not automated? Amazon retired the old Product Advertising API (PA-API) on **May 15, 2026**, replacing it with the **Creators API** which uses OAuth 2.0 (Client ID + Secret instead of Access Key + Secret Key). Integrating the new API is a TODO — when it ships, the admin will accept just the Amazon URL and pull title/images/price/bullets automatically.
+1. **Auto-fetch** (recommended) — paste the URL, click **Fetch from Amazon**. The Creators API fills in title, features, price, and image URLs. Claude then rewrites everything into the curated voice.
+2. **Manual paste** (fallback) — if Creators API is unavailable or rate-limited, type/paste the fields by hand.
+
+To enable auto-fetch, generate credentials at <https://affiliate-program.amazon.com/creatorsapi> → **Manage Credentials**. Amazon issues a **Credential ID**, a **Secret**, and a **Version** (e.g. `3.1` for the US Login-with-Amazon path). Put all three in your `.env` / Vercel env vars as `AMAZON_CREDENTIAL_ID`, `AMAZON_CREDENTIAL_SECRET`, `AMAZON_CREDENTIAL_VERSION`. Access requires at least 10 qualifying Associates sales in the past 30 days (a soft gate Amazon enforces server-side).
 
 ### 5. Run locally
 

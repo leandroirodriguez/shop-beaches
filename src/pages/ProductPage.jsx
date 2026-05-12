@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import logo from '../assets/logo.svg'
 
 function StarRow({ rating = 4.8, count }) {
   const filled = Math.round(rating)
@@ -201,7 +202,11 @@ export default function ProductPage() {
 
       {/* Footer */}
       <footer className="mt-16 pt-8 border-t border-outline-variant/40 text-center md:max-w-[760px] md:mx-auto">
-        <p className="font-headline text-2xl text-on-surface">Beaches OBGYN</p>
+        <img
+          src={logo}
+          alt="Beaches OBGYN"
+          className="h-12 md:h-14 w-auto mx-auto"
+        />
         <p className="mt-6 text-[10px] tracking-wider uppercase text-on-surface-variant leading-relaxed">
           These statements have not been evaluated by the Food and Drug Administration.
           This product is not intended to diagnose, treat, cure, or prevent any disease.

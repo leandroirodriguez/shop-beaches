@@ -83,7 +83,9 @@ ON CONFLICT (slug) DO NOTHING;
 CREATE TABLE IF NOT EXISTS products (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   slug TEXT UNIQUE NOT NULL,
-  category_id UUID REFERENCES categories(id) ON DELETE SET NULL,
+  -- A product can belong to one or more categories. First element is the
+  -- "primary" category (used for breadcrumbs + related-products grouping).
+  category_ids UUID[] NOT NULL DEFAULT '{}',
 
   -- Source data from Amazon
   amazon_url TEXT NOT NULL,           -- full affiliate URL (with your partner tag baked in)
@@ -109,7 +111,7 @@ CREATE TABLE IF NOT EXISTS products (
   updated_at TIMESTAMPTZ DEFAULT now()
 );
 
-CREATE INDEX IF NOT EXISTS products_category_idx ON products(category_id);
+CREATE INDEX IF NOT EXISTS products_category_ids_idx ON products USING GIN (category_ids);
 CREATE INDEX IF NOT EXISTS products_published_idx ON products(published);
 
 ALTER TABLE products ENABLE ROW LEVEL SECURITY;

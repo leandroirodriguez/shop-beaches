@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AdminLayout from '../components/AdminLayout'
 import { supabase } from '../lib/supabase'
@@ -30,6 +30,7 @@ export default function AdminProductNew() {
   const [amazon, setAmazon] = useState(null)
   const [draft, setDraft] = useState(null)
   const [categories, setCategories] = useState([])
+  const [categoryIds, setCategoryIds] = useState([])
 
   useEffect(() => {
     if (!verified) return
@@ -40,10 +41,19 @@ export default function AdminProductNew() {
       .then(({ data }) => setCategories(data || []))
   }, [verified])
 
-  const selectedCategory = useMemo(
-    () => categories.find(c => c.slug === draft?.suggested_category_slug),
-    [categories, draft]
-  )
+  // Pre-select Claude's suggested category once draft + categories are loaded
+  useEffect(() => {
+    if (!draft?.suggested_category_slug || categories.length === 0) return
+    if (categoryIds.length > 0) return // respect the user's prior selections
+    const cat = categories.find(c => c.slug === draft.suggested_category_slug)
+    if (cat) setCategoryIds([cat.id])
+  }, [draft, categories, categoryIds.length])
+
+  function toggleCategory(catId) {
+    setCategoryIds(ids =>
+      ids.includes(catId) ? ids.filter(id => id !== catId) : [...ids, catId]
+    )
+  }
 
   async function handleFetchFromAmazon() {
     setFetchError('')
@@ -153,7 +163,7 @@ export default function AdminProductNew() {
 
     const { error: insertError } = await supabase.from('products').insert({
       slug,
-      category_id: selectedCategory?.id || null,
+      category_ids: categoryIds,
       amazon_url: amazon.url,
       amazon_asin: amazon.asin,
       amazon_title: amazon.title,
@@ -396,29 +406,36 @@ export default function AdminProductNew() {
                   />
                 </Field>
               </Row>
-              <Row>
-                <Field label="Category">
-                  <select
-                    value={draft.suggested_category_slug || ''}
-                    onChange={e => updateDraft({ suggested_category_slug: e.target.value })}
-                    className="input"
-                  >
-                    <option value="">— Select category —</option>
-                    {categories.map(c => (
-                      <option key={c.slug} value={c.slug}>{c.name}</option>
-                    ))}
-                  </select>
-                </Field>
-                <Field label="Badge (optional)">
-                  <input
-                    type="text"
-                    value={draft.badge || ''}
-                    onChange={e => updateDraft({ badge: e.target.value })}
-                    placeholder="OBGYN APPROVED, TOP RECOMMENDATION…"
-                    className="input"
-                  />
-                </Field>
-              </Row>
+              <Field label="Categories (pick one or more)">
+                <div className="flex flex-wrap gap-2 mt-1">
+                  {categories.map(c => {
+                    const selected = categoryIds.includes(c.id)
+                    return (
+                      <button
+                        key={c.id}
+                        type="button"
+                        onClick={() => toggleCategory(c.id)}
+                        className={`px-3 py-1.5 rounded-full font-label text-xs tracking-wider transition ${
+                          selected
+                            ? 'bg-primary text-on-primary'
+                            : 'bg-surface-container text-on-surface hover:bg-surface-container-high'
+                        }`}
+                      >
+                        {c.name}
+                      </button>
+                    )
+                  })}
+                </div>
+              </Field>
+              <Field label="Badge (optional)">
+                <input
+                  type="text"
+                  value={draft.badge || ''}
+                  onChange={e => updateDraft({ badge: e.target.value })}
+                  placeholder="OBGYN APPROVED, TOP RECOMMENDATION…"
+                  className="input"
+                />
+              </Field>
               <Field label="Short Description">
                 <textarea
                   rows={3}

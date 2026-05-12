@@ -41,6 +41,15 @@ export default function AdminProductEdit() {
   }, [verified, id])
 
   function update(patch) { setForm(f => ({ ...f, ...patch })) }
+  function toggleCategory(catId) {
+    setForm(f => {
+      const ids = f.category_ids || []
+      return {
+        ...f,
+        category_ids: ids.includes(catId) ? ids.filter(id => id !== catId) : [...ids, catId],
+      }
+    })
+  }
   function updateBenefit(i, patch) {
     setForm(f => ({
       ...f,
@@ -90,7 +99,7 @@ export default function AdminProductEdit() {
 
     const updates = {
       slug: form.slug,
-      category_id: form.category_id || null,
+      category_ids: form.category_ids || [],
       amazon_url: form.amazon_url,
       amazon_price: form.amazon_price,
       amazon_image_urls: images,
@@ -175,29 +184,36 @@ export default function AdminProductEdit() {
                 />
               </Field>
             </Row>
-            <Row>
-              <Field label="Category">
-                <select
-                  value={form.category_id || ''}
-                  onChange={e => update({ category_id: e.target.value || null })}
-                  className="input"
-                >
-                  <option value="">— Uncategorized —</option>
-                  {categories.map(c => (
-                    <option key={c.id} value={c.id}>{c.name}</option>
-                  ))}
-                </select>
-              </Field>
-              <Field label="Badge (optional)">
-                <input
-                  type="text"
-                  value={form.badge || ''}
-                  onChange={e => update({ badge: e.target.value })}
-                  placeholder="OBGYN APPROVED, TOP RECOMMENDATION…"
-                  className="input"
-                />
-              </Field>
-            </Row>
+            <Field label="Categories (pick one or more)">
+              <div className="flex flex-wrap gap-2 mt-1">
+                {categories.map(c => {
+                  const selected = (form.category_ids || []).includes(c.id)
+                  return (
+                    <button
+                      key={c.id}
+                      type="button"
+                      onClick={() => toggleCategory(c.id)}
+                      className={`px-3 py-1.5 rounded-full font-label text-xs tracking-wider transition ${
+                        selected
+                          ? 'bg-primary text-on-primary'
+                          : 'bg-surface-container text-on-surface hover:bg-surface-container-high'
+                      }`}
+                    >
+                      {c.name}
+                    </button>
+                  )
+                })}
+              </div>
+            </Field>
+            <Field label="Badge (optional)">
+              <input
+                type="text"
+                value={form.badge || ''}
+                onChange={e => update({ badge: e.target.value })}
+                placeholder="OBGYN APPROVED, TOP RECOMMENDATION…"
+                className="input mt-3"
+              />
+            </Field>
             <Row>
               <Field label="Price (display)">
                 <input

@@ -22,7 +22,7 @@ export default function CategoryPage() {
       const { data: items } = await supabase
         .from('products')
         .select('id, slug, display_title, short_description, amazon_price, amazon_image_urls, badge, is_top_recommendation, provider_note, tags')
-        .eq('category_id', cat.id)
+        .contains('category_ids', [cat.id])
         .eq('published', true)
         .order('is_top_recommendation', { ascending: false })
         .order('created_at', { ascending: false })

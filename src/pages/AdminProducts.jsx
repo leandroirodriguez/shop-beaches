@@ -7,19 +7,32 @@ import { useAdminGuard } from '../hooks/useAdminGuard'
 export default function AdminProducts() {
   const verified = useAdminGuard()
   const [products, setProducts] = useState([])
+  const [categoriesMap, setCategoriesMap] = useState({})
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     if (!verified) return
-    supabase
-      .from('products')
-      .select('id, slug, display_title, amazon_price, amazon_image_urls, published, badge, category:categories(name)')
-      .order('created_at', { ascending: false })
-      .then(({ data }) => {
-        setProducts(data || [])
-        setLoading(false)
-      })
+    Promise.all([
+      supabase
+        .from('products')
+        .select('id, slug, display_title, amazon_price, amazon_image_urls, published, badge, category_ids')
+        .order('created_at', { ascending: false }),
+      supabase
+        .from('categories')
+        .select('id, name'),
+    ]).then(([{ data: prods }, { data: cats }]) => {
+      setProducts(prods || [])
+      setCategoriesMap(Object.fromEntries((cats || []).map(c => [c.id, c.name])))
+      setLoading(false)
+    })
   }, [verified])
+
+  function categoryNames(catIds) {
+    return (catIds || [])
+      .map(id => categoriesMap[id])
+      .filter(Boolean)
+      .join(' · ') || 'Uncategorized'
+  }
 
   async function togglePublish(p) {
     const { error } = await supabase
@@ -81,7 +94,7 @@ export default function AdminProducts() {
                     {p.display_title}
                   </Link>
                   <p className="text-xs text-on-surface-variant">
-                    {p.category?.name || 'Uncategorized'} · {p.amazon_price || '—'}
+                    {categoryNames(p.category_ids)} · {p.amazon_price || '—'}
                   </p>
                 </div>
                 <button

@@ -33,6 +33,7 @@ function StarRow({ rating, count }) {
 export default function ProductPage() {
   const { slug } = useParams()
   const [product, setProduct] = useState(null)
+  const [primaryCategory, setPrimaryCategory] = useState(null)
   const [status, setStatus] = useState('loading')
   const [activeImage, setActiveImage] = useState(0)
   const [relatedProducts, setRelatedProducts] = useState(null)
@@ -41,6 +42,7 @@ export default function ProductPage() {
   useEffect(() => {
     // Reset state when navigating between products
     setProduct(null)
+    setPrimaryCategory(null)
     setStatus('loading')
     setActiveImage(0)
     setRelatedProducts(null)
@@ -48,24 +50,33 @@ export default function ProductPage() {
 
     supabase
       .from('products')
-      .select('*, category:categories(id, name, slug)')
+      .select('*')
       .eq('slug', slug)
       .eq('published', true)
       .maybeSingle()
-      .then(({ data, error }) => {
+      .then(async ({ data, error }) => {
         if (error) { setStatus('error'); return }
         if (!data) { setStatus('not-found'); return }
         setProduct(data)
         setStatus('ok')
 
-        // Fire related-products query as soon as we know the category
-        const catId = data.category_id || data.category?.id
-        if (catId) {
+        // Look up the primary category (first id in category_ids) so we
+        // can display its name in the "More from X" related-products header.
+        const catIds = data.category_ids || []
+        if (catIds.length > 0) {
+          supabase
+            .from('categories')
+            .select('id, name, slug')
+            .eq('id', catIds[0])
+            .maybeSingle()
+            .then(({ data: cat }) => setPrimaryCategory(cat))
+
+          // Related: any other product that shares at least one category
           supabase
             .from('products')
             .select('id, slug, display_title, amazon_image_urls, amazon_price, badge')
             .eq('published', true)
-            .eq('category_id', catId)
+            .overlaps('category_ids', catIds)
             .neq('id', data.id)
             .order('is_top_recommendation', { ascending: false })
             .order('created_at', { ascending: false })
@@ -258,7 +269,7 @@ export default function ProductPage() {
         <section className="mt-16 md:mt-24">
           <h2 className="font-headline text-2xl md:text-3xl text-on-surface">You May Also Like</h2>
           <p className="text-on-surface-variant mt-2">
-            More from {p.category?.name || 'this category'}
+            More from {primaryCategory?.name || 'this category'}
           </p>
           <div className="mt-6 grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5">
             {relatedProducts.map(rp => (

@@ -28,6 +28,7 @@ export default function ProductPage() {
   const { slug } = useParams()
   const [product, setProduct] = useState(null)
   const [status, setStatus] = useState('loading')
+  const [activeImage, setActiveImage] = useState(0)
 
   useEffect(() => {
     supabase
@@ -40,6 +41,7 @@ export default function ProductPage() {
         if (error) { setStatus('error'); return }
         if (!data) { setStatus('not-found'); return }
         setProduct(data)
+        setActiveImage(0)
         setStatus('ok')
       })
   }, [slug])
@@ -70,24 +72,39 @@ export default function ProductPage() {
   return (
     <main className="max-w-[720px] mx-auto px-5 pb-32">
       {/* Hero image with badge */}
-      <div className="relative mt-4 rounded-xl overflow-hidden bg-surface-container">
+      <div className="relative mt-4 rounded-xl overflow-hidden bg-surface-container-low">
         {p.badge && (
           <span className="absolute top-4 left-4 z-10 inline-flex items-center px-3 py-1 rounded-md bg-secondary text-on-secondary font-label text-[11px] tracking-[0.12em] uppercase">
             {p.badge}
           </span>
         )}
-        {images[0] && (
-          <img src={images[0]} alt={p.display_title} className="w-full aspect-square object-cover" />
+        {images[activeImage] && (
+          <img
+            src={images[activeImage]}
+            alt={p.display_title}
+            className="w-full aspect-square object-contain p-4"
+          />
         )}
       </div>
 
-      {/* Thumbnails */}
+      {/* Thumbnails — clickable to swap the main image */}
       {images.length > 1 && (
         <div className="mt-3 grid grid-cols-4 gap-3">
-          {images.slice(1, 5).map((src, i) => (
-            <div key={i} className="aspect-square rounded-md overflow-hidden bg-surface-container border border-outline-variant/40">
-              <img src={src} alt="" className="w-full h-full object-cover" />
-            </div>
+          {images.slice(0, 4).map((src, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => setActiveImage(i)}
+              aria-label={`Show image ${i + 1}`}
+              aria-pressed={activeImage === i}
+              className={`aspect-square rounded-md overflow-hidden bg-surface-container-low border-2 transition ${
+                activeImage === i
+                  ? 'border-primary'
+                  : 'border-outline-variant/40 hover:border-outline'
+              }`}
+            >
+              <img src={src} alt="" className="w-full h-full object-contain p-1" />
+            </button>
           ))}
         </div>
       )}

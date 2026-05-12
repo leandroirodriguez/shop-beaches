@@ -9,7 +9,7 @@ export default function Header() {
           <img
             src={logo}
             alt="Beaches OBGYN"
-            className="h-7 md:h-8 w-auto"
+            className="h-10 md:h-12 w-auto"
           />
         </Link>
         <nav className="flex items-center gap-1">

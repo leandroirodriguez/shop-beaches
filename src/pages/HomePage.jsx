@@ -102,7 +102,11 @@ export default function HomePage() {
                 className="block rounded-lg bg-surface-container-low shadow-lift hover:bg-surface-container transition overflow-hidden"
               >
                 {p.amazon_image_urls?.[0] && (
-                  <img src={p.amazon_image_urls[0]} alt={p.display_title} className="w-full aspect-square object-cover" />
+                  <img
+                    src={p.amazon_image_urls[0]}
+                    alt={p.display_title}
+                    className="w-full aspect-square object-contain p-4 bg-surface-container-lowest"
+                  />
                 )}
                 <div className="p-4">
                   {p.badge && (

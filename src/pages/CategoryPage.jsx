@@ -105,7 +105,7 @@ export default function CategoryPage() {
                   <img
                     src={p.amazon_image_urls[0]}
                     alt={p.display_title}
-                    className="w-full aspect-square object-cover bg-surface-container"
+                    className="w-full aspect-square object-contain p-6 bg-surface-container-lowest"
                   />
                 </Link>
               )}

@@ -128,7 +128,7 @@ export default function ProductPage() {
         {/* Image gallery (sticks on desktop scroll) */}
         <div className="md:sticky md:top-20">
           <div
-            className={`relative mt-4 md:mt-0 rounded-xl overflow-hidden ${
+            className={`relative mt-4 md:mt-0 rounded-md overflow-hidden ${
               activeImage === 0 ? 'bg-surface-container-lowest' : ''
             }`}
           >
@@ -275,7 +275,7 @@ export default function ProductPage() {
             {p.how_to_use.map(s => (
               <li
                 key={s.step}
-                className="flex items-start gap-4 lg:block lg:rounded-xl lg:bg-surface-container-low lg:shadow-lift lg:p-6"
+                className="flex items-start gap-4 lg:block lg:rounded-lg lg:bg-surface-container-low lg:shadow-lift lg:p-6"
               >
                 <span className="w-8 h-8 rounded-full border-2 border-primary text-primary font-label font-semibold grid place-items-center shrink-0 lg:mb-3">
                   {s.step}
@@ -303,7 +303,7 @@ export default function ProductPage() {
               <Link
                 key={rp.id}
                 to={`/product/${rp.slug}`}
-                className="group block rounded-xl bg-surface-container-low shadow-lift overflow-hidden transition hover:-translate-y-0.5 hover:shadow-md"
+                className="group block rounded-lg bg-surface-container-low shadow-lift overflow-hidden transition hover:-translate-y-0.5 hover:shadow-md"
               >
                 {rp.amazon_image_urls?.[0] && (
                   <img
@@ -343,7 +343,7 @@ export default function ProductPage() {
             {recentPosts.map(post => (
               <article key={post.id} className="group">
                 {post.cover_url && (
-                  <Link to={`/blog/${post.slug}`} className="block overflow-hidden rounded-xl">
+                  <Link to={`/blog/${post.slug}`} className="block overflow-hidden rounded-lg">
                     <img
                       src={post.cover_url}
                       alt=""

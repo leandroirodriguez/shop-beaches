@@ -31,7 +31,7 @@ function CurvedDivider({ tone = 'surface-container-low', flipY = false }) {
 
 function CategorySkeleton() {
   return (
-    <div className="rounded-xl bg-[#fdf1f5] shadow-lift overflow-hidden animate-pulse">
+    <div className="rounded-lg bg-[#fdf1f5] shadow-lift overflow-hidden animate-pulse">
       <div className="aspect-[16/10] bg-secondary-container/40" />
       <div className="p-5">
         <div className="h-5 bg-secondary-container/40 rounded w-1/2 mb-3" />
@@ -44,7 +44,7 @@ function CategorySkeleton() {
 
 function ProductSkeleton() {
   return (
-    <div className="rounded-xl bg-surface-container-low shadow-lift overflow-hidden animate-pulse">
+    <div className="rounded-lg bg-surface-container-low shadow-lift overflow-hidden animate-pulse">
       <div className="aspect-square bg-surface-container-lowest" />
       <div className="p-5">
         <div className="h-2 bg-surface-container-high rounded w-1/3 mb-3" />
@@ -58,7 +58,7 @@ function ProductSkeleton() {
 function PostSkeleton() {
   return (
     <div className="animate-pulse">
-      <div className="aspect-[16/9] bg-surface-container-low rounded-xl mb-4" />
+      <div className="aspect-[16/9] bg-surface-container-low rounded-lg mb-4" />
       <div className="h-5 bg-surface-container-low rounded w-3/4 mb-3" />
       <div className="h-3 bg-surface-container-low rounded w-full mb-2" />
       <div className="h-3 bg-surface-container-low rounded w-5/6" />
@@ -182,7 +182,7 @@ export default function HomePage() {
               <Link
                 key={c.id}
                 to={`/category/${c.slug}`}
-                className="group relative block rounded-xl bg-[#fdf1f5] shadow-lift overflow-hidden transition hover:-translate-y-0.5 hover:shadow-md"
+                className="group relative block rounded-lg bg-[#fdf1f5] shadow-lift overflow-hidden transition hover:-translate-y-0.5 hover:shadow-md"
               >
                 {c.hero_image_url ? (
                   <div className="aspect-[16/10] overflow-hidden">
@@ -233,7 +233,7 @@ export default function HomePage() {
                 <Link
                   key={p.id}
                   to={`/product/${p.slug}`}
-                  className="group block rounded-xl bg-surface-container-low shadow-lift overflow-hidden transition hover:-translate-y-0.5 hover:shadow-md"
+                  className="group block rounded-lg bg-surface-container-low shadow-lift overflow-hidden transition hover:-translate-y-0.5 hover:shadow-md"
                 >
                   {p.amazon_image_urls?.[0] && (
                     <img
@@ -293,7 +293,7 @@ export default function HomePage() {
               {recentPosts && recentPosts.map(p => (
                 <article key={p.id} className="group">
                   {p.cover_url && (
-                    <Link to={`/blog/${p.slug}`} className="block overflow-hidden rounded-xl">
+                    <Link to={`/blog/${p.slug}`} className="block overflow-hidden rounded-lg">
                       <img
                         src={p.cover_url}
                         alt=""

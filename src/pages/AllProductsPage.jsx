@@ -5,7 +5,7 @@ import { formatPrice } from '../lib/format'
 
 function ProductSkeleton() {
   return (
-    <div className="rounded-xl bg-surface-container-low shadow-lift overflow-hidden animate-pulse">
+    <div className="rounded-lg bg-surface-container-low shadow-lift overflow-hidden animate-pulse">
       <div className="aspect-square bg-surface-container-lowest" />
       <div className="p-5">
         <div className="h-2 bg-surface-container-high rounded w-1/3 mb-3" />
@@ -114,7 +114,7 @@ export default function AllProductsPage() {
         {products === null && Array.from({ length: 6 }).map((_, i) => <ProductSkeleton key={i} />)}
 
         {products && products.length === 0 && (
-          <div className="col-span-full p-10 rounded-xl bg-surface-container-low border border-dashed border-outline-variant/60 text-center">
+          <div className="col-span-full p-10 rounded-lg bg-surface-container-low border border-dashed border-outline-variant/60 text-center">
             <p className="font-headline text-xl text-on-surface">No products in this category yet</p>
             <p className="text-on-surface-variant text-sm mt-2">
               We're still curating this list — check back soon.
@@ -126,7 +126,7 @@ export default function AllProductsPage() {
           <Link
             key={p.id}
             to={`/product/${p.slug}`}
-            className="group block rounded-xl bg-surface-container-low shadow-lift overflow-hidden transition hover:-translate-y-0.5 hover:shadow-md"
+            className="group block rounded-lg bg-surface-container-low shadow-lift overflow-hidden transition hover:-translate-y-0.5 hover:shadow-md"
           >
             {p.amazon_image_urls?.[0] && (
               <img

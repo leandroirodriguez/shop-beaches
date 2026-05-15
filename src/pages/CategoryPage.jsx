@@ -127,7 +127,7 @@ export default function CategoryPage() {
                 <img
                   src={category.hero_image_url}
                   alt=""
-                  className="w-full h-auto rounded-2xl"
+                  className="w-full h-auto rounded-xl"
                   fetchPriority="high"
                   decoding="async"
                 />
@@ -187,7 +187,7 @@ export default function CategoryPage() {
       {topProduct && (
         <section className="max-w-[1140px] mx-auto px-5 md:px-16 pt-10 md:pt-16">
           <Reveal>
-            <div className="rounded-2xl bg-surface-container-low shadow-lift overflow-hidden lg:grid lg:grid-cols-2 lg:items-center">
+            <div className="rounded-xl bg-surface-container-low shadow-lift overflow-hidden lg:grid lg:grid-cols-2 lg:items-center">
               {topProduct.amazon_image_urls?.[0] && (
                 <Link to={`/product/${topProduct.slug}`} className="block bg-surface-container-lowest">
                   <img
@@ -239,7 +239,7 @@ export default function CategoryPage() {
       {/* Product grid (remaining picks) */}
       <section className="max-w-[1140px] mx-auto px-5 md:px-16 pt-10 md:pt-16 pb-4 md:pb-8">
         {otherProducts.length === 0 && !topProduct ? (
-          <div className="p-10 rounded-xl bg-surface-container-low border border-dashed border-outline-variant/60 text-center">
+          <div className="p-10 rounded-lg bg-surface-container-low border border-dashed border-outline-variant/60 text-center">
             <p className="font-headline text-xl text-on-surface">No products yet</p>
             <p className="text-on-surface-variant text-sm mt-2">Check back soon — we're curating this category now.</p>
           </div>
@@ -254,7 +254,7 @@ export default function CategoryPage() {
               {otherProducts.map(p => (
                 <article
                   key={p.id}
-                  className="rounded-xl bg-surface-container-low shadow-lift overflow-hidden relative flex flex-col transition hover:-translate-y-0.5 hover:shadow-md"
+                  className="rounded-lg bg-surface-container-low shadow-lift overflow-hidden relative flex flex-col transition hover:-translate-y-0.5 hover:shadow-md"
                 >
                   {p.badge && (
                     <span className="absolute top-0 left-6 z-10 inline-flex items-center px-3 py-1.5 rounded-b-md bg-secondary-container text-on-secondary-container font-label text-[11px] tracking-[0.12em] uppercase">
@@ -327,7 +327,7 @@ export default function CategoryPage() {
             {recentPosts.map(p => (
               <article key={p.id} className="group">
                 {p.cover_url && (
-                  <Link to={`/blog/${p.slug}`} className="block overflow-hidden rounded-xl">
+                  <Link to={`/blog/${p.slug}`} className="block overflow-hidden rounded-lg">
                     <img
                       src={p.cover_url}
                       alt=""

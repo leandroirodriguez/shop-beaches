@@ -127,7 +127,11 @@ export default function ProductPage() {
       <div className="md:grid md:grid-cols-2 md:gap-12 md:items-start md:mt-8">
         {/* Image gallery (sticks on desktop scroll) */}
         <div className="md:sticky md:top-20">
-          <div className="relative mt-4 md:mt-0 rounded-xl overflow-hidden bg-surface-container-lowest">
+          <div
+            className={`relative mt-4 md:mt-0 rounded-xl overflow-hidden ${
+              activeImage === 0 ? 'bg-surface-container-lowest' : ''
+            }`}
+          >
             {p.badge && (
               <span className="absolute top-4 left-4 z-10 inline-flex items-center px-3 py-1 rounded-md bg-secondary text-on-secondary font-label text-[11px] tracking-[0.12em] uppercase">
                 {p.badge}
@@ -137,7 +141,11 @@ export default function ProductPage() {
               <img
                 src={images[activeImage]}
                 alt={p.display_title}
-                className="w-full aspect-square object-contain p-4 md:p-10"
+                className={`w-full aspect-square ${
+                  activeImage === 0
+                    ? 'object-contain p-4 md:p-10'
+                    : 'object-cover'
+                }`}
               />
             )}
           </div>

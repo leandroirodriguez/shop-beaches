@@ -1,14 +1,9 @@
 import { Link } from 'react-router-dom'
 import logo from '../assets/logo.svg'
 
-const shopLinks = [
-  { to: '/shop', label: 'All Products' },
-  { to: '/category/pregnancy', label: 'Pregnancy' },
-  { to: '/category/nutrition-wellness', label: 'Nutrition & Wellness' },
-  { to: '/category/sexual-health', label: 'Sexual Health' },
-  { to: '/category/pcos', label: 'PCOS Support' },
-  { to: '/category/perimenopause', label: 'Perimenopause' },
-  { to: '/category/menopause', label: 'Menopause / TRT' },
+const quickLinks = [
+  { to: '/shop', label: 'Shop' },
+  { to: '/blog', label: 'Blog' },
 ]
 
 const aboutLinks = [
@@ -22,7 +17,6 @@ const aboutLinks = [
     label: 'Contact',
     external: true,
   },
-  { to: '/blog', label: 'Blog' },
 ]
 
 export default function Footer() {
@@ -42,13 +36,13 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Shop column */}
+          {/* Browse column */}
           <div className="text-center md:text-left">
             <h3 className="font-label text-xs tracking-[0.2em] uppercase text-secondary mb-4">
-              Shop
+              Browse
             </h3>
             <ul className="space-y-2">
-              {shopLinks.map(l => (
+              {quickLinks.map(l => (
                 <li key={l.to}>
                   <Link
                     to={l.to}

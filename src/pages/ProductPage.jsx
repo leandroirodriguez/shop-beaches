@@ -151,13 +151,13 @@ export default function ProductPage() {
                   onClick={() => setActiveImage(i)}
                   aria-label={`Show image ${i + 1}`}
                   aria-pressed={activeImage === i}
-                  className={`aspect-square rounded-md overflow-hidden bg-surface-container-lowest border-2 transition ${
+                  className={`aspect-square rounded-md overflow-hidden border-2 transition ${
                     activeImage === i
                       ? 'border-primary'
                       : 'border-outline-variant/40 hover:border-outline'
                   }`}
                 >
-                  <img src={src} alt="" className="w-full h-full object-contain p-1" />
+                  <img src={src} alt="" className="w-full h-full object-cover" />
                 </button>
               ))}
             </div>

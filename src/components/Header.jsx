@@ -18,15 +18,20 @@ export default function Header() {
         </Link>
 
         {/* Mobile: flex-1 balances the left spacer to center the logo.
-            Desktop: ml-auto pushes the nav to the far right. */}
-        <nav className="flex-1 md:flex-none md:ml-auto flex items-center justify-end">
-          <button
-            type="button"
-            aria-label="Search"
-            className="w-10 h-10 grid place-items-center rounded-full hover:bg-surface-container-high"
+            Desktop: ml-auto pushes the nav to the far right with text links. */}
+        <nav className="flex-1 md:flex-none md:ml-auto flex items-center justify-end gap-7">
+          <Link
+            to="/shop"
+            className="hidden md:inline-block font-label text-xs tracking-[0.2em] uppercase text-on-surface hover:text-primary transition"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
-          </button>
+            Shop
+          </Link>
+          <Link
+            to="/blog"
+            className="hidden md:inline-block font-label text-xs tracking-[0.2em] uppercase text-on-surface hover:text-primary transition"
+          >
+            Blog
+          </Link>
         </nav>
       </div>
     </header>

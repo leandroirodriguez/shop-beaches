@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { formatPrice } from '../lib/format'
-import logo from '../assets/logo.svg'
 import Starfish from '../components/Starfish'
 
 function StarRow({ rating, count }) {
@@ -365,20 +364,6 @@ export default function ProductPage() {
           </div>
         </section>
       )}
-
-      {/* Footer */}
-      <footer className="mt-16 pt-8 border-t border-outline-variant/40 flex flex-col items-center text-center md:max-w-[760px] md:mx-auto">
-        <img
-          src={logo}
-          alt="Beaches OBGYN"
-          className="h-16 md:h-20 w-auto"
-        />
-        <p className="mt-6 text-[10px] tracking-wider uppercase text-on-surface-variant leading-relaxed">
-          These statements have not been evaluated by the Food and Drug Administration.
-          This product is not intended to diagnose, treat, cure, or prevent any disease.
-          Consult your provider before starting new supplements.
-        </p>
-      </footer>
 
       {/* Sticky bottom CTA — mobile only */}
       <div className="md:hidden fixed bottom-0 inset-x-0 z-30 bg-surface-container border-t border-outline-variant/40">

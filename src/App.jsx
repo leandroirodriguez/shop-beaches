@@ -1,5 +1,6 @@
 import { Routes, Route, useLocation } from 'react-router-dom'
 import Header from './components/Header'
+import Footer from './components/Footer'
 import HomePage from './pages/HomePage'
 import AllProductsPage from './pages/AllProductsPage'
 import CategoryPage from './pages/CategoryPage'
@@ -43,6 +44,7 @@ export default function App() {
         <Route path="/admin/blog/new" element={<AdminBlogNew />} />
         <Route path="/admin/blog/:id/edit" element={<AdminBlogEdit />} />
       </Routes>
+      {!isAdmin && <Footer />}
     </>
   )
 }

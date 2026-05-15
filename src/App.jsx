@@ -1,6 +1,7 @@
 import { Routes, Route, useLocation } from 'react-router-dom'
 import Header from './components/Header'
 import HomePage from './pages/HomePage'
+import AllProductsPage from './pages/AllProductsPage'
 import CategoryPage from './pages/CategoryPage'
 import ProductPage from './pages/ProductPage'
 import BlogPage from './pages/BlogPage'
@@ -24,6 +25,7 @@ export default function App() {
       {!isAdmin && <Header />}
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/shop" element={<AllProductsPage />} />
         <Route path="/category/:slug" element={<CategoryPage />} />
         <Route path="/product/:slug" element={<ProductPage />} />
         <Route path="/blog" element={<BlogPage />} />

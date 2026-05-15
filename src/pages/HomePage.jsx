@@ -120,7 +120,7 @@ export default function HomePage() {
                 Professional recommendations tailored for every stage of your health journey.
               </p>
               <Link
-                to={featuredProducts?.[0] ? `/product/${featuredProducts[0].slug}` : '/category/pregnancy'}
+                to="/shop"
                 className="mt-7 inline-flex items-center justify-center px-8 py-3.5 rounded-md bg-primary text-on-primary font-label text-sm tracking-wider uppercase shadow-lift hover:bg-primary-container transition"
               >
                 Shop Now

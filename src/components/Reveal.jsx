@@ -26,7 +26,11 @@ export default function Reveal({ children, delay = 0, className = '' }) {
           }
         })
       },
-      { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+      // threshold:0 fires when ANY part of the element enters the
+      // viewport — important for tall mobile grids where a 15%
+      // threshold meant the user had to scroll hundreds of pixels
+      // into invisible content before it faded in.
+      { threshold: 0, rootMargin: '0px 0px -60px 0px' }
     )
     observer.observe(node)
     return () => observer.disconnect()

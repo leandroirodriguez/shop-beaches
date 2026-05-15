@@ -15,6 +15,7 @@ import AdminCategories from './pages/AdminCategories'
 import AdminCategoryEdit from './pages/AdminCategoryEdit'
 import AdminBlog from './pages/AdminBlog'
 import AdminBlogNew from './pages/AdminBlogNew'
+import AdminBlogEdit from './pages/AdminBlogEdit'
 
 export default function App() {
   const { pathname } = useLocation()
@@ -40,6 +41,7 @@ export default function App() {
         <Route path="/admin/categories/:id/edit" element={<AdminCategoryEdit />} />
         <Route path="/admin/blog" element={<AdminBlog />} />
         <Route path="/admin/blog/new" element={<AdminBlogNew />} />
+        <Route path="/admin/blog/:id/edit" element={<AdminBlogEdit />} />
       </Routes>
     </>
   )

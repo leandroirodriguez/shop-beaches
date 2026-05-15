@@ -291,9 +291,10 @@ export default function ProductPage() {
         </section>
       )}
 
-      {/* Full-width: You May Also Like + Recommended Reading */}
+      {/* Full-width: You May Also Like + Recommended Reading.
+          Hidden on mobile (too much vertical scroll for small screens). */}
       {relatedProducts && relatedProducts.length > 0 && (
-        <section className="mt-16 md:mt-24">
+        <section className="hidden md:block mt-16 md:mt-24">
           <h2 className="font-headline text-2xl md:text-3xl text-on-surface">You May Also Like</h2>
           <p className="text-on-surface-variant mt-2">
             More from {primaryCategory?.name || 'this category'}

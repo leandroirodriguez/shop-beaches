@@ -198,40 +198,51 @@ export default function ProductPage() {
         </div>
       </div>
 
-      {/* Narrow readable column for the provider note + how to use */}
-      <div className="md:max-w-[760px] md:mx-auto">
-        {/* Why We Recommend This — refined */}
-        {p.provider_note && (
-          <section className="relative mt-10 md:mt-20 rounded-2xl bg-primary text-on-primary p-7 md:p-12 overflow-hidden">
-            {/* OBGYN Approved stamp — top right on desktop */}
-            <div
-              className="hidden md:flex absolute top-7 right-7 w-24 h-24 rounded-full border-2 border-primary-fixed-dim/40 items-center justify-center"
-              style={{ transform: 'rotate(8deg)' }}
-              aria-hidden="true"
-            >
-              <div className="text-center font-label text-[9px] tracking-[0.2em] uppercase text-primary-fixed-dim/80 leading-[1.4]">
-                OBGYN<br />
-                <span className="inline-block text-base leading-none my-0.5">✦</span><br />
-                Approved
-              </div>
+      {/* Why We Recommend This — refined; internal 2-col on lg+ so the
+          card spans the full container width without giving the quote
+          uncomfortable line lengths */}
+      {p.provider_note && (
+        <section className="relative mt-10 md:mt-20 rounded-2xl bg-primary text-on-primary p-7 md:p-12 overflow-hidden">
+          {/* OBGYN Approved stamp — visible only at md (single-col card).
+              At lg+ the 2-col layout already provides visual rhythm and
+              the stamp would crash into the right column. */}
+          <div
+            className="hidden md:flex lg:hidden absolute top-7 right-7 w-24 h-24 rounded-full border-2 border-primary-fixed-dim/40 items-center justify-center"
+            style={{ transform: 'rotate(8deg)' }}
+            aria-hidden="true"
+          >
+            <div className="text-center font-label text-[9px] tracking-[0.2em] uppercase text-primary-fixed-dim/80 leading-[1.4]">
+              OBGYN<br />
+              <span className="inline-block text-base leading-none my-0.5">✦</span><br />
+              Approved
+            </div>
+          </div>
+
+          <div className="lg:grid lg:grid-cols-2 lg:gap-14 lg:items-start">
+            {/* Quote column */}
+            <div>
+              <p className="font-label text-[10px] tracking-[0.25em] uppercase text-primary-fixed-dim md:max-w-[70%] lg:max-w-none">
+                Why We Recommend This
+              </p>
+
+              <blockquote className="mt-4 md:mt-5 font-headline text-xl md:text-3xl leading-[1.3] italic text-on-primary md:max-w-[70%] lg:max-w-none">
+                <span className="font-headline text-3xl md:text-5xl leading-none align-text-top text-primary-fixed-dim mr-1.5">"</span>
+                {p.provider_note}
+              </blockquote>
+
+              <p className="mt-6 font-label text-[11px] tracking-[0.2em] uppercase text-primary-fixed-dim">
+                — The Beaches OBGYN Team
+              </p>
             </div>
 
-            <p className="font-label text-[10px] tracking-[0.25em] uppercase text-primary-fixed-dim md:max-w-[70%]">
-              Why We Recommend This
-            </p>
-
-            <blockquote className="mt-4 md:mt-5 font-headline text-xl md:text-3xl leading-[1.3] italic text-on-primary md:max-w-[70%]">
-              <span className="font-headline text-3xl md:text-5xl leading-none align-text-top text-primary-fixed-dim mr-1.5">"</span>
-              {p.provider_note}
-            </blockquote>
-
-            <p className="mt-6 font-label text-[11px] tracking-[0.2em] uppercase text-primary-fixed-dim">
-              — The Beaches OBGYN Team
-            </p>
-
+            {/* Benefits column (right on desktop, below on mobile) */}
             {Array.isArray(p.key_benefits) && p.key_benefits.length > 0 && (
-              <>
-                <div className="mt-8 mb-6 h-px bg-primary-container/60" />
+              <div className="mt-8 lg:mt-0">
+                {/* Divider only on stacked layouts; not needed in 2-col */}
+                <div className="mb-6 h-px bg-primary-container/60 lg:hidden" />
+                <p className="hidden lg:block font-label text-[10px] tracking-[0.25em] uppercase text-primary-fixed-dim mb-5">
+                  Key Benefits
+                </p>
                 <ul className="space-y-4">
                   {p.key_benefits.map((b, i) => (
                     <li key={i} className="flex items-start gap-3">
@@ -247,31 +258,34 @@ export default function ProductPage() {
                     </li>
                   ))}
                 </ul>
-              </>
+              </div>
             )}
-          </section>
-        )}
+          </div>
+        </section>
+      )}
 
-        {/* How to Use */}
-        {Array.isArray(p.how_to_use) && p.how_to_use.length > 0 && (
-          <section className="mt-12 md:mt-16">
-            <h2 className="font-headline text-2xl md:text-3xl text-on-surface">How to Use</h2>
-            <ol className="mt-6 space-y-5">
-              {p.how_to_use.map(s => (
-                <li key={s.step} className="flex items-start gap-4">
-                  <span className="w-8 h-8 rounded-full border-2 border-primary text-primary font-label font-semibold grid place-items-center shrink-0">
-                    {s.step}
-                  </span>
-                  <div>
-                    <h3 className="font-label font-semibold text-on-surface">{s.title}</h3>
-                    <p className="text-on-surface-variant text-sm mt-1 leading-relaxed">{s.body}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </section>
-        )}
-      </div>
+      {/* How to Use — vertical list on mobile/tablet, horizontal 3-up grid on lg+ */}
+      {Array.isArray(p.how_to_use) && p.how_to_use.length > 0 && (
+        <section className="mt-12 md:mt-16">
+          <h2 className="font-headline text-2xl md:text-3xl text-on-surface">How to Use</h2>
+          <ol className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-5 lg:gap-6">
+            {p.how_to_use.map(s => (
+              <li
+                key={s.step}
+                className="flex items-start gap-4 lg:block lg:rounded-xl lg:bg-surface-container-low lg:shadow-lift lg:p-6"
+              >
+                <span className="w-8 h-8 rounded-full border-2 border-primary text-primary font-label font-semibold grid place-items-center shrink-0 lg:mb-3">
+                  {s.step}
+                </span>
+                <div>
+                  <h3 className="font-label font-semibold text-on-surface">{s.title}</h3>
+                  <p className="text-on-surface-variant text-sm mt-1 leading-relaxed">{s.body}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
 
       {/* Full-width: You May Also Like + Recommended Reading */}
       {relatedProducts && relatedProducts.length > 0 && (

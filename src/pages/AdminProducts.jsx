@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import AdminLayout from '../components/AdminLayout'
 import { supabase } from '../lib/supabase'
 import { useAdminGuard } from '../hooks/useAdminGuard'
+import { formatPrice } from '../lib/format'
 
 export default function AdminProducts() {
   const verified = useAdminGuard()
@@ -94,7 +95,7 @@ export default function AdminProducts() {
                     {p.display_title}
                   </Link>
                   <p className="text-xs text-on-surface-variant">
-                    {categoryNames(p.category_ids)} · {p.amazon_price || '—'}
+                    {categoryNames(p.category_ids)} · {formatPrice(p.amazon_price) || '—'}
                   </p>
                 </div>
                 <button

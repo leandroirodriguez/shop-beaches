@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import { formatPrice } from '../lib/format'
 import logo from '../assets/logo.svg'
 
 function StarRow({ rating, count }) {
@@ -168,7 +169,7 @@ export default function ProductPage() {
           <StarRow rating={p.rating} count={p.review_count} />
           <h1 className="font-headline text-3xl md:text-4xl text-on-surface mt-3 leading-tight">{p.display_title}</h1>
           {p.amazon_price && (
-            <p className="font-headline text-2xl md:text-3xl text-primary mt-3">{p.amazon_price}</p>
+            <p className="font-headline text-2xl md:text-3xl text-primary mt-3">{formatPrice(p.amazon_price)}</p>
           )}
           {p.short_description && (
             <p className="text-on-surface-variant mt-4 md:mt-5 leading-relaxed md:text-lg">{p.short_description}</p>
@@ -295,7 +296,7 @@ export default function ProductPage() {
                     {rp.display_title}
                   </h3>
                   {rp.amazon_price && (
-                    <p className="font-headline text-sm md:text-base text-primary mt-1">{rp.amazon_price}</p>
+                    <p className="font-headline text-sm md:text-base text-primary mt-1">{formatPrice(rp.amazon_price)}</p>
                   )}
                 </div>
               </Link>
@@ -361,7 +362,7 @@ export default function ProductPage() {
                 <p className="font-label text-[10px] tracking-[0.15em] uppercase text-on-surface-variant">
                   Retail Price
                 </p>
-                <p className="font-headline text-xl text-on-surface leading-none mt-1">{p.amazon_price}</p>
+                <p className="font-headline text-xl text-on-surface leading-none mt-1">{formatPrice(p.amazon_price)}</p>
               </>
             )}
           </div>

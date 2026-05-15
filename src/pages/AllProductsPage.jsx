@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import { formatPrice } from '../lib/format'
 
 function ProductSkeleton() {
   return (
@@ -142,7 +143,7 @@ export default function AllProductsPage() {
               )}
               <h3 className="font-headline text-lg text-on-surface leading-snug">{p.display_title}</h3>
               {p.amazon_price && (
-                <p className="font-headline text-base text-primary mt-1">{p.amazon_price}</p>
+                <p className="font-headline text-base text-primary mt-1">{formatPrice(p.amazon_price)}</p>
               )}
             </div>
           </Link>

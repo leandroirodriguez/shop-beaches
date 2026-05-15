@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import { formatPrice } from '../lib/format'
 
 export default function CategoryPage() {
   const { slug } = useParams()
@@ -118,7 +119,7 @@ export default function CategoryPage() {
                   <Link to={`/product/${p.slug}`} className="hover:underline">
                     <h2 className="font-headline text-lg lg:text-xl text-on-surface leading-snug">{p.display_title}</h2>
                   </Link>
-                  {p.amazon_price && <p className="font-headline text-base lg:text-lg text-primary shrink-0">{p.amazon_price}</p>}
+                  {p.amazon_price && <p className="font-headline text-base lg:text-lg text-primary shrink-0">{formatPrice(p.amazon_price)}</p>}
                 </div>
 
                 {p.provider_note && (

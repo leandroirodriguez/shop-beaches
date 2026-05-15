@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import { formatPrice } from '../lib/format'
 
 // Reusable curved divider. `tone` selects which color the SVG fills with,
 // which should match the BACKGROUND of the section immediately below.
@@ -232,7 +233,7 @@ export default function HomePage() {
                     )}
                     <h3 className="font-headline text-lg text-on-surface leading-snug">{p.display_title}</h3>
                     {p.amazon_price && (
-                      <p className="font-headline text-base text-primary mt-1">{p.amazon_price}</p>
+                      <p className="font-headline text-base text-primary mt-1">{formatPrice(p.amazon_price)}</p>
                     )}
                   </div>
                 </Link>

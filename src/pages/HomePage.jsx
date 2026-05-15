@@ -120,6 +120,19 @@ export default function HomePage() {
           >
             Shop Now
           </Link>
+
+          {/* Hero collage — three figures on organic-shape backgrounds */}
+          <div className="mt-10 md:mt-14 max-w-3xl mx-auto">
+            <img
+              src="/hero/hero.png"
+              alt=""
+              width="1536"
+              height="1024"
+              fetchPriority="high"
+              decoding="async"
+              className="w-full h-auto"
+            />
+          </div>
         </div>
 
         {/* Curve flowing into the tinted Categories band */}

@@ -131,7 +131,7 @@ export default function HomePage() {
             {/* Image column — order-1 on desktop puts it on the left */}
             <div className="mt-10 lg:mt-0 lg:order-1 max-w-3xl mx-auto lg:max-w-none">
               <img
-                src="/hero/hero.png"
+                src="/hero/hero.webp"
                 alt=""
                 width="1536"
                 height="1024"
@@ -195,8 +195,9 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Curve back out to the base surface */}
-        <CurvedDivider tone="surface" flipY />
+        {/* Curve back out to the base surface — belly points down (same
+            orientation as the divider at the top of this band) */}
+        <CurvedDivider tone="surface" />
       </section>
 
       {/* Everything below sits on the base surface */}

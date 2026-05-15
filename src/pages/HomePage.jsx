@@ -148,7 +148,7 @@ export default function HomePage() {
 
       {/* Categories — tinted band */}
       <section className="bg-surface-container-low">
-        <div className="max-w-[1140px] mx-auto px-5 md:px-16 py-12 md:py-20">
+        <div className="max-w-[1140px] mx-auto px-5 md:px-16 pt-12 md:pt-20 pb-6 md:pb-12">
           <div className="text-center md:text-left">
             <h2 className="font-headline text-3xl md:text-4xl text-on-surface">Your Journey</h2>
             <p className="text-on-surface-variant mt-2">Explore wellness by category</p>
@@ -202,7 +202,7 @@ export default function HomePage() {
       <main className="max-w-[1140px] mx-auto px-5 md:px-16 pb-24">
         {/* Featured products — render skeletons while loading, hide section entirely if loaded-empty */}
         {(featuredProducts === null || featuredProducts.length > 0) && (
-          <section className="pt-12 md:pt-16">
+          <section className="pt-4 md:pt-10">
             <div className="text-center md:text-left">
               <h2 className="font-headline text-3xl md:text-4xl text-on-surface">Featured Picks</h2>
               <p className="text-on-surface-variant mt-2">Our team's recent recommendations</p>

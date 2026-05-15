@@ -102,36 +102,43 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Hero — full-bleed with subtle warm radial gradient */}
+      {/* Hero — full-bleed with subtle warm radial gradient.
+          Mobile: text stacked above image. Desktop (lg+): 2-column,
+          image on the left, text on the right, vertically centered. */}
       <section className="hero-radial">
-        <div className="max-w-[1140px] mx-auto px-5 md:px-16 pt-10 md:pt-20 pb-14 md:pb-24 text-center">
-          <p className="font-label text-xs tracking-[0.2em] uppercase text-secondary mb-3">
-            Expert Curation
-          </p>
-          <h1 className="font-headline text-4xl md:text-6xl text-on-surface leading-[1.1]">
-            Carefully Chosen.<br />OBGYN Approved.
-          </h1>
-          <p className="mt-5 text-on-surface-variant max-w-md mx-auto md:text-lg">
-            Professional recommendations tailored for every stage of your health journey.
-          </p>
-          <Link
-            to={featuredProducts?.[0] ? `/product/${featuredProducts[0].slug}` : '/category/pregnancy'}
-            className="mt-7 inline-flex items-center justify-center px-8 py-3.5 rounded-md bg-primary text-on-primary font-label text-sm tracking-wider uppercase shadow-lift hover:bg-primary-container transition"
-          >
-            Shop Now
-          </Link>
+        <div className="max-w-[1140px] mx-auto px-5 md:px-16 pt-10 md:pt-16 lg:pt-20 pb-14 md:pb-24">
+          <div className="lg:grid lg:grid-cols-2 lg:gap-14 lg:items-center">
+            {/* Text column — order-2 on desktop pushes it to the right */}
+            <div className="text-center lg:order-2 lg:text-left">
+              <p className="font-label text-xs tracking-[0.2em] uppercase text-secondary mb-3">
+                Expert Curation
+              </p>
+              <h1 className="font-headline text-4xl md:text-5xl lg:text-6xl text-on-surface leading-[1.1]">
+                Carefully Chosen.<br />OBGYN Approved.
+              </h1>
+              <p className="mt-5 text-on-surface-variant max-w-md mx-auto lg:mx-0 md:text-lg">
+                Professional recommendations tailored for every stage of your health journey.
+              </p>
+              <Link
+                to={featuredProducts?.[0] ? `/product/${featuredProducts[0].slug}` : '/category/pregnancy'}
+                className="mt-7 inline-flex items-center justify-center px-8 py-3.5 rounded-md bg-primary text-on-primary font-label text-sm tracking-wider uppercase shadow-lift hover:bg-primary-container transition"
+              >
+                Shop Now
+              </Link>
+            </div>
 
-          {/* Hero collage — three figures on organic-shape backgrounds */}
-          <div className="mt-10 md:mt-14 max-w-3xl mx-auto">
-            <img
-              src="/hero/hero.png"
-              alt=""
-              width="1536"
-              height="1024"
-              fetchPriority="high"
-              decoding="async"
-              className="w-full h-auto"
-            />
+            {/* Image column — order-1 on desktop puts it on the left */}
+            <div className="mt-10 lg:mt-0 lg:order-1 max-w-3xl mx-auto lg:max-w-none">
+              <img
+                src="/hero/hero.png"
+                alt=""
+                width="1536"
+                height="1024"
+                fetchPriority="high"
+                decoding="async"
+                className="w-full h-auto"
+              />
+            </div>
           </div>
         </div>
 

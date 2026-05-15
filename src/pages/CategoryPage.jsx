@@ -244,10 +244,27 @@ export default function CategoryPage() {
       {/* Product grid (the rest, or all if no spotlight) */}
       <section className="max-w-[1140px] mx-auto px-5 md:px-16 pt-10 md:pt-16 pb-4 md:pb-8">
         {products.length === 0 ? (
-          <div className="p-10 rounded-lg bg-surface-container-low border border-dashed border-outline-variant/60 text-center">
-            <p className="font-headline text-xl text-on-surface">No products yet</p>
-            <p className="text-on-surface-variant text-sm mt-2">Check back soon — we're curating this category now.</p>
-          </div>
+          <Reveal>
+            <div className="rounded-xl bg-surface-container-low shadow-lift px-6 py-12 md:py-16 text-center">
+              <Starfish className="w-12 h-12 mx-auto text-secondary opacity-60 mb-5" />
+              <p className="font-headline text-2xl md:text-3xl text-on-surface">
+                Curated picks coming soon
+              </p>
+              <p className="text-on-surface-variant mt-3 max-w-md mx-auto leading-relaxed">
+                Our team is hand-selecting products for this category.
+                In the meantime, browse the picks we've published elsewhere.
+              </p>
+              <Link
+                to="/shop"
+                className="mt-7 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md bg-primary text-on-primary font-label text-sm tracking-wider uppercase shadow-lift hover:bg-primary-container transition"
+              >
+                Browse All Products
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h14M13 5l7 7-7 7" />
+                </svg>
+              </Link>
+            </div>
+          </Reveal>
         ) : (
           <>
             <Reveal>

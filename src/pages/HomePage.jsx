@@ -83,14 +83,17 @@ export default function HomePage() {
         setCategories(data || [])
       })
 
+    // Pull up to 50 published products and pick 3 at random on the client.
+    // Cheap for a curated catalog and avoids a Postgres random() RPC.
     supabase
       .from('products')
       .select('id, slug, display_title, amazon_image_urls, amazon_price, badge')
       .eq('published', true)
-      .order('is_top_recommendation', { ascending: false })
-      .order('created_at', { ascending: false })
-      .limit(3)
-      .then(({ data }) => setFeaturedProducts(data || []))
+      .limit(50)
+      .then(({ data }) => {
+        const shuffled = [...(data || [])].sort(() => Math.random() - 0.5)
+        setFeaturedProducts(shuffled.slice(0, 3))
+      })
 
     supabase
       .from('blog_posts')

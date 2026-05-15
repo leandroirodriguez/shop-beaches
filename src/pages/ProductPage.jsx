@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { formatPrice } from '../lib/format'
 import logo from '../assets/logo.svg'
+import Starfish from '../components/Starfish'
 
 function StarRow({ rating, count }) {
   if (rating == null) return null
@@ -203,6 +204,9 @@ export default function ProductPage() {
           uncomfortable line lengths */}
       {p.provider_note && (
         <section className="relative mt-10 md:mt-20 rounded-2xl bg-primary text-on-primary p-7 md:p-12 overflow-hidden">
+          {/* Decorative starfish watermark, bottom-right */}
+          <Starfish className="absolute -bottom-24 -right-24 w-80 h-80 md:w-96 md:h-96 text-primary-fixed-dim opacity-15 -rotate-12 pointer-events-none" />
+
           {/* OBGYN Approved stamp — visible only at md (single-col card).
               At lg+ the 2-col layout already provides visual rhythm and
               the stamp would crash into the right column. */}
@@ -218,7 +222,7 @@ export default function ProductPage() {
             </div>
           </div>
 
-          <div className="lg:grid lg:grid-cols-2 lg:gap-14 lg:items-start">
+          <div className="relative lg:grid lg:grid-cols-2 lg:gap-14 lg:items-start">
             {/* Quote column */}
             <div>
               <p className="font-label text-[10px] tracking-[0.25em] uppercase text-primary-fixed-dim md:max-w-[70%] lg:max-w-none">

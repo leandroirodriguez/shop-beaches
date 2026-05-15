@@ -89,7 +89,7 @@ export default function Footer() {
         {/* Fine print: affiliate disclosure (FTC-required) + FDA disclaimer + copyright */}
         <div className="mt-12 md:mt-16 pt-8 border-t border-outline-variant/40 text-center md:text-left">
           <p className="text-[10px] leading-relaxed text-on-surface-variant/80 max-w-3xl mx-auto md:mx-0">
-            As an Amazon Associate, Beaches OBGYN earns from qualifying purchases at no additional cost to you. These statements have not been evaluated by the Food and Drug Administration. Products featured are not intended to diagnose, treat, cure, or prevent any disease. Consult your healthcare provider before starting any new supplement.
+            As an Amazon Associate, Beaches OBGYN Ventures, LLC earns from qualifying purchases at no additional cost to you. These statements have not been evaluated by the Food and Drug Administration. Products featured are not intended to diagnose, treat, cure, or prevent any disease. Consult your healthcare provider before starting any new supplement.
           </p>
           <p className="mt-4 text-[10px] tracking-[0.15em] uppercase text-on-surface-variant/60">
             © {new Date().getFullYear()} Beaches OBGYN · All rights reserved

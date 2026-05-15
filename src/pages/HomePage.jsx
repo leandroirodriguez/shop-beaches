@@ -214,7 +214,7 @@ export default function HomePage() {
       </section>
 
       {/* Everything below sits on the base surface */}
-      <main className="max-w-[1140px] mx-auto px-5 md:px-16 pb-24">
+      <main className="max-w-[1140px] mx-auto px-5 md:px-16 pb-16 md:pb-24">
         {/* Featured products — render skeletons while loading, hide section entirely if loaded-empty.
             Hidden on mobile (Shop Now in the hero already covers product discovery). */}
         {(featuredProducts === null || featuredProducts.length > 0) && (

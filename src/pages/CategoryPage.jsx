@@ -242,7 +242,7 @@ export default function CategoryPage() {
       )}
 
       {/* Product grid (the rest, or all if no spotlight) */}
-      <section className="max-w-[1140px] mx-auto px-5 md:px-16 pt-10 md:pt-16 pb-4 md:pb-8">
+      <section className={`max-w-[1140px] mx-auto px-5 md:px-16 pt-10 md:pt-16 ${recentPosts.length > 0 ? 'pb-4 md:pb-8' : 'pb-16 md:pb-24'}`}>
         {products.length === 0 ? (
           <Reveal>
             <div className="rounded-xl bg-surface-container-low shadow-lift px-6 py-12 md:py-16 text-center">
@@ -336,7 +336,7 @@ export default function CategoryPage() {
 
       {/* Related blog posts */}
       {recentPosts.length > 0 && (
-        <section className="max-w-[1140px] mx-auto px-5 md:px-16 pt-12 md:pt-20">
+        <section className="max-w-[1140px] mx-auto px-5 md:px-16 pt-12 md:pt-20 pb-16 md:pb-24">
           <Reveal>
             <div className="flex items-center justify-between flex-wrap gap-2">
               <h2 className="font-headline text-2xl md:text-3xl text-on-surface">Educational Resources</h2>

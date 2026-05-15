@@ -91,29 +91,6 @@ body {
     0 8px 24px rgba(50, 88, 125, 0.08);
 }
 
-/* Drifting decorative starfish — slow rotation animations for the
-   background ornament elements. Two opposite directions + varied
-   durations so the elements never feel synchronized. Respects
-   prefers-reduced-motion. */
-@keyframes drift-rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-@keyframes drift-rotate-reverse {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(-360deg); }
-}
-.drift-slow { animation: drift-rotate 90s linear infinite; }
-.drift-slow-reverse { animation: drift-rotate-reverse 120s linear infinite; }
-.drift-medium { animation: drift-rotate 75s linear infinite; }
-@media (prefers-reduced-motion: reduce) {
-  .drift-slow,
-  .drift-slow-reverse,
-  .drift-medium {
-    animation: none;
-  }
-}
-
 /* Subtle warm radial gradient for the homepage hero. Hand-tuned so the
    plum tint is barely perceptible at the top center and fades to nothing
    well before reaching the section's bottom — adds depth without

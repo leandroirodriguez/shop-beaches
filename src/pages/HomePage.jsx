@@ -112,12 +112,10 @@ export default function HomePage() {
           Mobile: text stacked above image. Desktop (lg+): 2-column,
           image on the left, text on the right, vertically centered. */}
       <section className="hero-radial relative overflow-hidden">
-        {/* Decorative drifting starfish — large + very faint */}
+        {/* Decorative starfish — large + very faint, in the top-right
+            corner of the hero. Visual brand cue without distracting. */}
         <Starfish
-          className="hidden md:block absolute -top-32 -right-32 w-[480px] h-[480px] text-secondary opacity-[0.07] pointer-events-none drift-slow"
-        />
-        <Starfish
-          className="hidden lg:block absolute top-[60%] -left-24 w-72 h-72 text-tertiary opacity-[0.04] pointer-events-none drift-slow-reverse"
+          className="hidden md:block absolute -top-32 -right-32 w-[480px] h-[480px] text-secondary opacity-[0.07] pointer-events-none rotate-12"
         />
 
         <div className="relative max-w-[1140px] mx-auto px-5 md:px-16 pt-10 md:pt-16 lg:pt-20 pb-14 md:pb-24">
@@ -161,11 +159,8 @@ export default function HomePage() {
       </section>
 
       {/* Categories — tinted band */}
-      <section className="bg-surface-container-low relative overflow-hidden">
-        {/* Drifting starfish backdrop */}
-        <Starfish className="hidden md:block absolute top-10 -right-32 w-96 h-96 text-primary opacity-[0.04] pointer-events-none drift-medium" />
-
-        <div className="relative max-w-[1140px] mx-auto px-5 md:px-16 pt-12 md:pt-20 pb-6 md:pb-12">
+      <section className="bg-surface-container-low">
+        <div className="max-w-[1140px] mx-auto px-5 md:px-16 pt-12 md:pt-20 pb-6 md:pb-12">
           <Reveal>
             <div className="text-center md:text-left">
               <h2 className="font-headline text-3xl md:text-4xl text-on-surface">Your Journey</h2>
@@ -266,21 +261,17 @@ export default function HomePage() {
 
         {/* Provider's Promise */}
         <Reveal>
-          <section className="relative mt-16 md:mt-24 rounded-2xl bg-surface-container-low p-8 md:p-12 text-center shadow-lift overflow-hidden">
-            {/* Drifting starfish behind the quote */}
-            <Starfish className="hidden md:block absolute -top-16 -right-16 w-64 h-64 text-secondary opacity-[0.05] pointer-events-none drift-slow" />
-            <div className="relative">
-              <Starfish className="w-10 h-10 mx-auto mb-4 text-primary" />
-              <p className="font-label text-xs tracking-[0.2em] uppercase text-secondary mb-3">
-                Provider's Promise
-              </p>
-              <blockquote className="font-headline text-xl md:text-2xl text-on-surface italic leading-snug max-w-2xl mx-auto">
-                "We believe wellness isn't just a destination, but a curated journey of understanding your body's unique signals at every age."
-              </blockquote>
-              <p className="font-label text-xs tracking-wider uppercase text-on-surface-variant mt-5">
-                The Beaches OBGYN Team · Board-Certified Specialists
-              </p>
-            </div>
+          <section className="mt-16 md:mt-24 rounded-2xl bg-surface-container-low p-8 md:p-12 text-center shadow-lift">
+            <Starfish className="w-10 h-10 mx-auto mb-4 text-primary" />
+            <p className="font-label text-xs tracking-[0.2em] uppercase text-secondary mb-3">
+              Provider's Promise
+            </p>
+            <blockquote className="font-headline text-xl md:text-2xl text-on-surface italic leading-snug max-w-2xl mx-auto">
+              "We believe wellness isn't just a destination, but a curated journey of understanding your body's unique signals at every age."
+            </blockquote>
+            <p className="font-label text-xs tracking-wider uppercase text-on-surface-variant mt-5">
+              The Beaches OBGYN Team · Board-Certified Specialists
+            </p>
           </section>
         </Reveal>
 

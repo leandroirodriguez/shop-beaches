@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { formatPrice } from '../lib/format'
+import Starfish from '../components/Starfish'
 
 // Reusable curved divider. `tone` selects which color the SVG fills with,
 // which should match the BACKGROUND of the section immediately below.
@@ -109,8 +110,14 @@ export default function HomePage() {
       {/* Hero — full-bleed with subtle warm radial gradient.
           Mobile: text stacked above image. Desktop (lg+): 2-column,
           image on the left, text on the right, vertically centered. */}
-      <section className="hero-radial">
-        <div className="max-w-[1140px] mx-auto px-5 md:px-16 pt-10 md:pt-16 lg:pt-20 pb-14 md:pb-24">
+      <section className="hero-radial relative overflow-hidden">
+        {/* Decorative starfish — large + very faint, in the top-right
+            corner of the hero. Visual brand cue without distracting. */}
+        <Starfish
+          className="hidden md:block absolute -top-32 -right-32 w-[480px] h-[480px] text-secondary opacity-[0.07] pointer-events-none rotate-12"
+        />
+
+        <div className="relative max-w-[1140px] mx-auto px-5 md:px-16 pt-10 md:pt-16 lg:pt-20 pb-14 md:pb-24">
           <div className="lg:grid lg:grid-cols-2 lg:gap-14 lg:items-center">
             {/* Text column — order-2 on desktop pushes it to the right */}
             <div className="text-center lg:order-2 lg:text-left">
@@ -248,6 +255,7 @@ export default function HomePage() {
 
         {/* Provider's Promise */}
         <section className="mt-16 md:mt-24 rounded-2xl bg-surface-container-low p-8 md:p-12 text-center shadow-lift">
+          <Starfish className="w-10 h-10 mx-auto mb-4 text-primary" />
           <p className="font-label text-xs tracking-[0.2em] uppercase text-secondary mb-3">
             Provider's Promise
           </p>

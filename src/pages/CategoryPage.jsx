@@ -99,8 +99,13 @@ export default function CategoryPage() {
     )
   }
 
+  // Only use the full-width spotlight when there's a real "top pick"
+  // AND there are other products to distinguish it from. If the category
+  // has only one product, the spotlight is redundant — show it as a
+  // normal card in the grid instead.
   const topProduct = products.find(p => p.is_top_recommendation)
-  const otherProducts = topProduct
+  const useSpotlight = topProduct && products.length > 1
+  const gridProducts = useSpotlight
     ? products.filter(p => p.id !== topProduct.id)
     : products
 
@@ -183,8 +188,8 @@ export default function CategoryPage() {
         </>
       )}
 
-      {/* Top recommendation spotlight */}
-      {topProduct && (
+      {/* Top recommendation spotlight (only if there are other products too) */}
+      {useSpotlight && (
         <section className="max-w-[1140px] mx-auto px-5 md:px-16 pt-10 md:pt-16">
           <Reveal>
             <div className="rounded-xl bg-surface-container-low shadow-lift overflow-hidden lg:grid lg:grid-cols-2 lg:items-center">
@@ -236,22 +241,22 @@ export default function CategoryPage() {
         </section>
       )}
 
-      {/* Product grid (remaining picks) */}
+      {/* Product grid (the rest, or all if no spotlight) */}
       <section className="max-w-[1140px] mx-auto px-5 md:px-16 pt-10 md:pt-16 pb-4 md:pb-8">
-        {otherProducts.length === 0 && !topProduct ? (
+        {products.length === 0 ? (
           <div className="p-10 rounded-lg bg-surface-container-low border border-dashed border-outline-variant/60 text-center">
             <p className="font-headline text-xl text-on-surface">No products yet</p>
             <p className="text-on-surface-variant text-sm mt-2">Check back soon — we're curating this category now.</p>
           </div>
-        ) : otherProducts.length > 0 ? (
+        ) : (
           <>
             <Reveal>
               <h2 className="font-headline text-2xl md:text-3xl text-on-surface">
-                {topProduct ? 'More Picks' : 'Our Picks'}
+                {useSpotlight ? 'More Picks' : 'Our Picks'}
               </h2>
             </Reveal>
             <Reveal delay={100} className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {otherProducts.map(p => (
+              {gridProducts.map(p => (
                 <article
                   key={p.id}
                   className="rounded-lg bg-surface-container-low shadow-lift overflow-hidden relative flex flex-col transition hover:-translate-y-0.5 hover:shadow-md"
@@ -309,7 +314,7 @@ export default function CategoryPage() {
               ))}
             </Reveal>
           </>
-        ) : null}
+        )}
       </section>
 
       {/* Related blog posts */}

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { formatPrice } from '../lib/format'
 import Starfish from '../components/Starfish'
+import Reveal from '../components/Reveal'
 
 // Reusable curved divider. `tone` selects which color the SVG fills with,
 // which should match the BACKGROUND of the section immediately below.
@@ -111,10 +112,12 @@ export default function HomePage() {
           Mobile: text stacked above image. Desktop (lg+): 2-column,
           image on the left, text on the right, vertically centered. */}
       <section className="hero-radial relative overflow-hidden">
-        {/* Decorative starfish — large + very faint, in the top-right
-            corner of the hero. Visual brand cue without distracting. */}
+        {/* Decorative drifting starfish — large + very faint */}
         <Starfish
-          className="hidden md:block absolute -top-32 -right-32 w-[480px] h-[480px] text-secondary opacity-[0.07] pointer-events-none rotate-12"
+          className="hidden md:block absolute -top-32 -right-32 w-[480px] h-[480px] text-secondary opacity-[0.07] pointer-events-none drift-slow"
+        />
+        <Starfish
+          className="hidden lg:block absolute top-[60%] -left-24 w-72 h-72 text-tertiary opacity-[0.04] pointer-events-none drift-slow-reverse"
         />
 
         <div className="relative max-w-[1140px] mx-auto px-5 md:px-16 pt-10 md:pt-16 lg:pt-20 pb-14 md:pb-24">
@@ -158,12 +161,17 @@ export default function HomePage() {
       </section>
 
       {/* Categories — tinted band */}
-      <section className="bg-surface-container-low">
-        <div className="max-w-[1140px] mx-auto px-5 md:px-16 pt-12 md:pt-20 pb-6 md:pb-12">
-          <div className="text-center md:text-left">
-            <h2 className="font-headline text-3xl md:text-4xl text-on-surface">Your Journey</h2>
-            <p className="text-on-surface-variant mt-2">Explore wellness by category</p>
-          </div>
+      <section className="bg-surface-container-low relative overflow-hidden">
+        {/* Drifting starfish backdrop */}
+        <Starfish className="hidden md:block absolute top-10 -right-32 w-96 h-96 text-primary opacity-[0.04] pointer-events-none drift-medium" />
+
+        <div className="relative max-w-[1140px] mx-auto px-5 md:px-16 pt-12 md:pt-20 pb-6 md:pb-12">
+          <Reveal>
+            <div className="text-center md:text-left">
+              <h2 className="font-headline text-3xl md:text-4xl text-on-surface">Your Journey</h2>
+              <p className="text-on-surface-variant mt-2">Explore wellness by category</p>
+            </div>
+          </Reveal>
 
           {categoriesError && (
             <div className="mt-8 p-4 rounded-md bg-error-container text-on-error-container text-sm">
@@ -171,7 +179,7 @@ export default function HomePage() {
             </div>
           )}
 
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <Reveal delay={100} className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {categories === null && !categoriesError &&
               Array.from({ length: 6 }).map((_, i) => <CategorySkeleton key={i} />)}
 
@@ -202,7 +210,7 @@ export default function HomePage() {
                 </div>
               </Link>
             ))}
-          </div>
+          </Reveal>
         </div>
 
         {/* Curve back out to the base surface — belly points down (same
@@ -216,11 +224,13 @@ export default function HomePage() {
             Hidden on mobile (Shop Now in the hero already covers product discovery). */}
         {(featuredProducts === null || featuredProducts.length > 0) && (
           <section className="hidden md:block pt-4 md:pt-10">
-            <div className="text-center md:text-left">
-              <h2 className="font-headline text-3xl md:text-4xl text-on-surface">Featured Picks</h2>
-              <p className="text-on-surface-variant mt-2">Our team's recent recommendations</p>
-            </div>
-            <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-5">
+            <Reveal>
+              <div className="text-center md:text-left">
+                <h2 className="font-headline text-3xl md:text-4xl text-on-surface">Featured Picks</h2>
+                <p className="text-on-surface-variant mt-2">Our team's recent recommendations</p>
+              </div>
+            </Reveal>
+            <Reveal delay={100} className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-5">
               {featuredProducts === null &&
                 Array.from({ length: 3 }).map((_, i) => <ProductSkeleton key={i} />)}
 
@@ -250,34 +260,42 @@ export default function HomePage() {
                   </div>
                 </Link>
               ))}
-            </div>
+            </Reveal>
           </section>
         )}
 
         {/* Provider's Promise */}
-        <section className="mt-16 md:mt-24 rounded-2xl bg-surface-container-low p-8 md:p-12 text-center shadow-lift">
-          <Starfish className="w-10 h-10 mx-auto mb-4 text-primary" />
-          <p className="font-label text-xs tracking-[0.2em] uppercase text-secondary mb-3">
-            Provider's Promise
-          </p>
-          <blockquote className="font-headline text-xl md:text-2xl text-on-surface italic leading-snug max-w-2xl mx-auto">
-            "We believe wellness isn't just a destination, but a curated journey of understanding your body's unique signals at every age."
-          </blockquote>
-          <p className="font-label text-xs tracking-wider uppercase text-on-surface-variant mt-5">
-            The Beaches OBGYN Team · Board-Certified Specialists
-          </p>
-        </section>
+        <Reveal>
+          <section className="relative mt-16 md:mt-24 rounded-2xl bg-surface-container-low p-8 md:p-12 text-center shadow-lift overflow-hidden">
+            {/* Drifting starfish behind the quote */}
+            <Starfish className="hidden md:block absolute -top-16 -right-16 w-64 h-64 text-secondary opacity-[0.05] pointer-events-none drift-slow" />
+            <div className="relative">
+              <Starfish className="w-10 h-10 mx-auto mb-4 text-primary" />
+              <p className="font-label text-xs tracking-[0.2em] uppercase text-secondary mb-3">
+                Provider's Promise
+              </p>
+              <blockquote className="font-headline text-xl md:text-2xl text-on-surface italic leading-snug max-w-2xl mx-auto">
+                "We believe wellness isn't just a destination, but a curated journey of understanding your body's unique signals at every age."
+              </blockquote>
+              <p className="font-label text-xs tracking-wider uppercase text-on-surface-variant mt-5">
+                The Beaches OBGYN Team · Board-Certified Specialists
+              </p>
+            </div>
+          </section>
+        </Reveal>
 
         {/* Recent posts */}
         {(recentPosts === null || recentPosts.length > 0) && (
           <section className="mt-16 md:mt-24">
-            <div className="flex items-center justify-between flex-wrap gap-2">
-              <h2 className="font-headline text-3xl md:text-4xl text-on-surface">Educational Resources</h2>
-              <Link to="/blog" className="font-label text-xs tracking-wider uppercase text-primary hover:underline">
-                View All →
-              </Link>
-            </div>
-            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <Reveal>
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <h2 className="font-headline text-3xl md:text-4xl text-on-surface">Educational Resources</h2>
+                <Link to="/blog" className="font-label text-xs tracking-wider uppercase text-primary hover:underline">
+                  View All →
+                </Link>
+              </div>
+            </Reveal>
+            <Reveal delay={100} className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
               {recentPosts === null &&
                 Array.from({ length: 2 }).map((_, i) => <PostSkeleton key={i} />)}
 
@@ -300,7 +318,7 @@ export default function HomePage() {
                   )}
                 </article>
               ))}
-            </div>
+            </Reveal>
           </section>
         )}
       </main>

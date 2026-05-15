@@ -212,9 +212,10 @@ export default function HomePage() {
 
       {/* Everything below sits on the base surface */}
       <main className="max-w-[1140px] mx-auto px-5 md:px-16 pb-24">
-        {/* Featured products — render skeletons while loading, hide section entirely if loaded-empty */}
+        {/* Featured products — render skeletons while loading, hide section entirely if loaded-empty.
+            Hidden on mobile (Shop Now in the hero already covers product discovery). */}
         {(featuredProducts === null || featuredProducts.length > 0) && (
-          <section className="pt-4 md:pt-10">
+          <section className="hidden md:block pt-4 md:pt-10">
             <div className="text-center md:text-left">
               <h2 className="font-headline text-3xl md:text-4xl text-on-surface">Featured Picks</h2>
               <p className="text-on-surface-variant mt-2">Our team's recent recommendations</p>

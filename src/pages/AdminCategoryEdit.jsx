@@ -40,6 +40,9 @@ export default function AdminCategoryEdit() {
       slug: form.slug,
       name: form.name,
       description: form.description,
+      intro_paragraph: form.intro_paragraph,
+      cta_label: form.cta_label,
+      cta_url: form.cta_url,
       hero_image_url: form.hero_image_url,
       display_order: form.display_order,
     }
@@ -108,7 +111,7 @@ export default function AdminCategoryEdit() {
             </label>
 
             <label className="block">
-              <span className="font-label text-xs tracking-wider uppercase text-on-surface-variant">Description</span>
+              <span className="font-label text-xs tracking-wider uppercase text-on-surface-variant">Description (short — shown on cards + below the hero title)</span>
               <textarea
                 rows={3}
                 value={form.description || ''}
@@ -116,6 +119,40 @@ export default function AdminCategoryEdit() {
                 className="input mt-1"
               />
             </label>
+
+            <label className="block">
+              <span className="font-label text-xs tracking-wider uppercase text-on-surface-variant">"From our team" intro paragraph (optional)</span>
+              <textarea
+                rows={5}
+                value={form.intro_paragraph || ''}
+                onChange={e => update({ intro_paragraph: e.target.value })}
+                className="input mt-1"
+                placeholder="2–3 sentences explaining why your team curates this category. Shown as a tinted band below the hero. Leave blank to hide the section."
+              />
+            </label>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <label className="block">
+                <span className="font-label text-xs tracking-wider uppercase text-on-surface-variant">CTA button label (optional)</span>
+                <input
+                  type="text"
+                  value={form.cta_label || ''}
+                  onChange={e => update({ cta_label: e.target.value })}
+                  placeholder="e.g. Book a consultation"
+                  className="input mt-1"
+                />
+              </label>
+              <label className="block">
+                <span className="font-label text-xs tracking-wider uppercase text-on-surface-variant">CTA button URL</span>
+                <input
+                  type="text"
+                  value={form.cta_url || ''}
+                  onChange={e => update({ cta_url: e.target.value })}
+                  placeholder="https://…"
+                  className="input mt-1 font-mono text-xs"
+                />
+              </label>
+            </div>
 
             <label className="block">
               <span className="font-label text-xs tracking-wider uppercase text-on-surface-variant">Hero Image URL</span>

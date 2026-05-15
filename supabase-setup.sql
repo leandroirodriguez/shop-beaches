@@ -51,6 +51,9 @@ CREATE TABLE IF NOT EXISTS categories (
   slug TEXT UNIQUE NOT NULL,
   name TEXT NOT NULL,
   description TEXT,
+  intro_paragraph TEXT,     -- longer "why we curate this category" copy from the team
+  cta_label TEXT,           -- optional CTA button at the bottom of the category page
+  cta_url TEXT,
   icon TEXT,                -- name or URL for the small icon shown in the grid
   hero_image_url TEXT,      -- image for the category landing page
   display_order INT DEFAULT 0,

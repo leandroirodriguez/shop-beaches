@@ -13,7 +13,7 @@ export default function Header() {
           <img
             src={logo}
             alt="Beaches OBGYN"
-            className="block h-[4.2rem] md:h-[4.8rem] w-auto"
+            className="block h-[3.78rem] md:h-[4.32rem] w-auto"
           />
         </Link>
 

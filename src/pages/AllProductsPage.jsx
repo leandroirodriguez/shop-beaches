@@ -16,6 +16,10 @@ function ProductSkeleton() {
   )
 }
 
+// Sexual Health always sorts after every other category, per practice
+// preference — everything else keeps its admin-defined display_order.
+const LAST_SLUG = 'sexual-health'
+
 export default function AllProductsPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const activeSlug = searchParams.get('category') || ''
@@ -29,7 +33,12 @@ export default function AllProductsPage() {
       .from('categories')
       .select('id, slug, name')
       .order('display_order')
-      .then(({ data }) => setCategories(data || []))
+      .then(({ data }) =>
+        setCategories([
+          ...(data || []).filter(c => c.slug !== LAST_SLUG),
+          ...(data || []).filter(c => c.slug === LAST_SLUG),
+        ])
+      )
   }, [])
 
   // Reload products whenever the filter changes
@@ -40,7 +49,7 @@ export default function AllProductsPage() {
       if (!activeSlug) {
         const { data } = await supabase
           .from('products')
-          .select('id, slug, display_title, amazon_image_urls, amazon_price, badge')
+          .select('id, slug, display_title, amazon_image_urls, amazon_price, badge, category_ids')
           .eq('published', true)
           .order('is_top_recommendation', { ascending: false })
           .order('created_at', { ascending: false })
@@ -109,47 +118,106 @@ export default function AllProductsPage() {
         ))}
       </div>
 
-      {/* Product grid */}
-      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {products === null && Array.from({ length: 6 }).map((_, i) => <ProductSkeleton key={i} />)}
+      {/* Loading */}
+      {(products === null || (!activeSlug && categories.length === 0)) && (
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {Array.from({ length: 6 }).map((_, i) => <ProductSkeleton key={i} />)}
+        </div>
+      )}
 
-        {products && products.length === 0 && (
-          <div className="col-span-full p-10 rounded-lg bg-surface-container-low border border-dashed border-outline-variant/60 text-center">
-            <p className="font-headline text-xl text-on-surface">No products in this category yet</p>
-            <p className="text-on-surface-variant text-sm mt-2">
-              We're still curating this list — check back soon.
-            </p>
-          </div>
-        )}
+      {/* Empty */}
+      {products && products.length === 0 && (
+        <div className="mt-10 p-10 rounded-lg bg-surface-container-low border border-dashed border-outline-variant/60 text-center">
+          <p className="font-headline text-xl text-on-surface">No products in this category yet</p>
+          <p className="text-on-surface-variant text-sm mt-2">
+            We're still curating this list — check back soon.
+          </p>
+        </div>
+      )}
 
-        {products && products.map(p => (
-          <Link
-            key={p.id}
-            to={`/product/${p.slug}`}
-            className="group block rounded-lg bg-surface-container-low shadow-lift overflow-hidden transition hover:-translate-y-0.5 hover:shadow-md"
-          >
-            {p.amazon_image_urls?.[0] && (
-              <img
-                src={p.amazon_image_urls[0]}
-                alt={p.display_title}
-                className="w-full aspect-square object-contain p-5 bg-surface-container-lowest transition duration-500 group-hover:scale-[1.03]"
-              />
-            )}
-            <div className="p-5">
-              {p.badge && (
-                <span className="inline-block font-label text-[10px] tracking-[0.15em] uppercase text-secondary mb-2">
-                  {p.badge}
-                </span>
-              )}
-              <h3 className="font-headline text-lg text-on-surface leading-snug">{p.display_title}</h3>
-              {p.amazon_price && (
-                <p className="font-headline text-base text-primary mt-1">{formatPrice(p.amazon_price)}</p>
-              )}
-            </div>
-          </Link>
-        ))}
-      </div>
+      {/* Filtered: flat grid */}
+      {activeSlug && products && products.length > 0 && (
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {products.map(p => <ProductCard key={p.id} product={p} />)}
+        </div>
+      )}
+
+      {/* Unfiltered: grouped by primary category */}
+      {!activeSlug && products && products.length > 0 && categories.length > 0 && (
+        <div className="mt-4">
+          {groupByCategory(products, categories).map(({ category, items }) => (
+            <section key={category.id} className="mt-12">
+              <div className="flex items-baseline justify-between border-b border-outline-variant/60 pb-3">
+                <h2 className="font-headline text-2xl md:text-3xl text-on-surface">
+                  {category.name}
+                </h2>
+                {category.slug && (
+                  <button
+                    type="button"
+                    onClick={() => setCategory(category.slug)}
+                    className="font-label text-xs tracking-[0.15em] uppercase text-primary hover:underline"
+                  >
+                    View only
+                  </button>
+                )}
+              </div>
+              <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {items.map(p => <ProductCard key={p.id} product={p} />)}
+              </div>
+            </section>
+          ))}
+        </div>
+      )}
     </main>
+  )
+}
+
+// Buckets products under their primary category (category_ids[0]) in the
+// given category order; products with no recognized category land in a
+// trailing "More Products" group (kept ahead of the forced-last category).
+function groupByCategory(products, categories) {
+  const byId = new Map(categories.map(c => [c.id, []]))
+  const orphans = []
+  for (const p of products) {
+    const bucket = byId.get(p.category_ids?.[0])
+    if (bucket) bucket.push(p)
+    else orphans.push(p)
+  }
+  const groups = categories
+    .map(c => ({ category: c, items: byId.get(c.id) }))
+    .filter(g => g.items.length > 0)
+  if (orphans.length > 0) {
+    const at = Math.max(0, groups.length - (groups.at(-1)?.category.slug === LAST_SLUG ? 1 : 0))
+    groups.splice(at, 0, { category: { id: 'other', slug: '', name: 'More Products' }, items: orphans })
+  }
+  return groups
+}
+
+function ProductCard({ product: p }) {
+  return (
+    <Link
+      to={`/product/${p.slug}`}
+      className="group block rounded-lg bg-surface-container-low shadow-lift overflow-hidden transition hover:-translate-y-0.5 hover:shadow-md"
+    >
+      {p.amazon_image_urls?.[0] && (
+        <img
+          src={p.amazon_image_urls[0]}
+          alt={p.display_title}
+          className="w-full aspect-square object-contain p-5 bg-surface-container-lowest transition duration-500 group-hover:scale-[1.03]"
+        />
+      )}
+      <div className="p-5">
+        {p.badge && (
+          <span className="inline-block font-label text-[10px] tracking-[0.15em] uppercase text-secondary mb-2">
+            {p.badge}
+          </span>
+        )}
+        <h3 className="font-headline text-lg text-on-surface leading-snug">{p.display_title}</h3>
+        {p.amazon_price && (
+          <p className="font-headline text-base text-primary mt-1">{formatPrice(p.amazon_price)}</p>
+        )}
+      </div>
+    </Link>
   )
 }
 

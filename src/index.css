@@ -92,14 +92,14 @@ body {
     0 8px 24px rgba(47, 86, 100, 0.08);
 }
 
-/* Subtle warm radial gradient for the homepage hero. Hand-tuned so the
-   sand tint is barely perceptible at the top center and fades to nothing
-   well before reaching the section's bottom — adds depth without
-   competing with the off-white body. */
+/* Subtle coastal radial gradient for the hero sections. Hand-tuned so the
+   seafoam tint is soft at the top center and fades to nothing well before
+   reaching the section's bottom — adds depth without competing with the
+   off-white body. */
 .hero-radial {
   background: radial-gradient(
     ellipse 100% 80% at 50% 0%,
-    color-mix(in srgb, var(--color-secondary-container) 22%, transparent) 0%,
+    color-mix(in srgb, var(--color-primary-container) 45%, transparent) 0%,
     transparent 55%
   );
 }

@@ -2,62 +2,63 @@
 @source "../src/**/*.{jsx,js}";
 
 @theme {
-  /* DESIGN.md — Clinical Wellness palette */
-  --color-surface: #fff9ee;
-  --color-surface-dim: #e0d9cc;
-  --color-surface-bright: #fff9ee;
+  /* Coastal palette — teal #2f5664, sand #d9d0c3, off-white #f7f5f2,
+     taupe #a89c8d, seafoam #bfcfc8, camel #bb9b72 */
+  --color-surface: #f7f5f2;
+  --color-surface-dim: #d9d0c3;
+  --color-surface-bright: #f7f5f2;
   --color-surface-container-lowest: #ffffff;
-  --color-surface-container-low: #faf3e5;
-  --color-surface-container: #f4eddf;
-  --color-surface-container-high: #eee8da;
-  --color-surface-container-highest: #e8e2d4;
-  --color-on-surface: #1e1b13;
-  --color-on-surface-variant: #42474e;
-  --color-inverse-surface: #333027;
-  --color-inverse-on-surface: #f7f0e2;
-  --color-outline: #73777f;
-  --color-outline-variant: #c2c7cf;
-  --color-surface-tint: #3c6187;
+  --color-surface-container-low: #f0ece6;
+  --color-surface-container: #eae4dd;
+  --color-surface-container-high: #e4ddd3;
+  --color-surface-container-highest: #ded6ca;
+  --color-on-surface: #1e2a30;
+  --color-on-surface-variant: #55636a;
+  --color-inverse-surface: #2b3b43;
+  --color-inverse-on-surface: #f2f0ec;
+  --color-outline: #766d63;
+  --color-outline-variant: #d3ccc1;
+  --color-surface-tint: #2f5664;
 
-  --color-primary: #174164;
+  --color-primary: #2f5664;
   --color-on-primary: #ffffff;
-  --color-primary-container: #32587d;
-  --color-on-primary-container: #a9cef9;
-  --color-inverse-primary: #a5caf5;
+  --color-primary-container: #bfcfc8;
+  --color-on-primary-container: #24424c;
+  --color-inverse-primary: #a8c6ce;
 
-  --color-secondary: #824e6a;
+  --color-secondary: #7a654a;
   --color-on-secondary: #ffffff;
-  --color-secondary-container: #fdbcdc;
-  --color-on-secondary-container: #7a4863;
+  --color-secondary-container: #e4d7c7;
+  --color-on-secondary-container: #5a452a;
 
-  --color-tertiary: #502d71;
+  --color-tertiary: #6d655c;
   --color-on-tertiary: #ffffff;
-  --color-tertiary-container: #69458a;
-  --color-on-tertiary-container: #e1bcff;
+  --color-tertiary-container: #e5dfd5;
+  --color-on-tertiary-container: #4a4237;
 
   --color-error: #ba1a1a;
   --color-on-error: #ffffff;
   --color-error-container: #ffdad6;
   --color-on-error-container: #93000a;
 
-  --color-primary-fixed: #d0e4ff;
-  --color-primary-fixed-dim: #a5caf5;
-  --color-on-primary-fixed: #001d34;
-  --color-on-primary-fixed-variant: #22496d;
+  --color-primary-fixed: #bfcfc8;
+  --color-primary-fixed-dim: #a2b0aa;
+  --color-on-primary-fixed: #12262e;
+  --color-on-primary-fixed-variant: #2f5664;
 
-  --color-secondary-fixed: #ffd8e9;
-  --color-secondary-fixed-dim: #f4b4d3;
-  --color-on-secondary-fixed: #340c25;
-  --color-on-secondary-fixed-variant: #673751;
+  --color-secondary-fixed: #ebe1d5;
+  --color-secondary-fixed-dim: #bb9b72;
+  --color-on-secondary-fixed: #322614;
+  --color-on-secondary-fixed-variant: #6b5335;
 
-  --color-tertiary-fixed: #f1dbff;
-  --color-tertiary-fixed-dim: #deb7ff;
-  --color-on-tertiary-fixed: #2c044c;
-  --color-on-tertiary-fixed-variant: #5a367a;
+  --color-tertiary-fixed: #e9e3d9;
+  --color-tertiary-fixed-dim: #a89c8d;
+  --color-on-tertiary-fixed: #2e2921;
+  --color-on-tertiary-fixed-variant: #5d5346;
 
-  --color-background: #fff9ee;
-  --color-on-background: #1e1b13;
-  --color-surface-variant: #e8e2d4;
+  --color-background: #f7f5f2;
+  --color-on-background: #1e2a30;
+  --color-surface-variant: #e4ddd3;
 
   /* Fonts from DESIGN.md */
   --font-headline: "Newsreader", serif;
@@ -84,17 +85,17 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Soft "lift" shadow tinted with primary — DESIGN.md elevation section */
+/* Soft "lift" shadow tinted with primary */
 .shadow-lift {
   box-shadow:
-    0 1px 2px rgba(50, 88, 125, 0.04),
-    0 8px 24px rgba(50, 88, 125, 0.08);
+    0 1px 2px rgba(47, 86, 100, 0.04),
+    0 8px 24px rgba(47, 86, 100, 0.08);
 }
 
 /* Subtle warm radial gradient for the homepage hero. Hand-tuned so the
-   plum tint is barely perceptible at the top center and fades to nothing
+   sand tint is barely perceptible at the top center and fades to nothing
    well before reaching the section's bottom — adds depth without
-   competing with the cream body. */
+   competing with the off-white body. */
 .hero-radial {
   background: radial-gradient(
     ellipse 100% 80% at 50% 0%,

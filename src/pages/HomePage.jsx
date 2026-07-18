@@ -31,7 +31,7 @@ function CurvedDivider({ tone = 'surface-container-low', flipY = false }) {
 
 function CategorySkeleton() {
   return (
-    <div className="rounded-lg bg-[#fdf1f5] shadow-lift overflow-hidden animate-pulse">
+    <div className="rounded-lg bg-surface-container-low shadow-lift overflow-hidden animate-pulse">
       <div className="aspect-[16/10] bg-secondary-container/40" />
       <div className="p-5">
         <div className="h-5 bg-secondary-container/40 rounded w-1/2 mb-3" />
@@ -182,7 +182,7 @@ export default function HomePage() {
               <Link
                 key={c.id}
                 to={`/category/${c.slug}`}
-                className="group relative block rounded-lg bg-[#fdf1f5] shadow-lift overflow-hidden transition hover:-translate-y-0.5 hover:shadow-md"
+                className="group relative block rounded-lg bg-surface-container-low shadow-lift overflow-hidden transition hover:-translate-y-0.5 hover:shadow-md"
               >
                 {c.hero_image_url ? (
                   <div className="aspect-[16/10] overflow-hidden">

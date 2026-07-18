@@ -97,11 +97,17 @@ body {
    reaching the section's bottom — adds depth without competing with the
    off-white body. */
 .hero-radial {
-  background: radial-gradient(
-    ellipse 100% 80% at 50% 0%,
-    color-mix(in srgb, var(--color-primary-container) 45%, transparent) 0%,
-    transparent 55%
-  );
+  background:
+    radial-gradient(
+      ellipse 100% 80% at 50% 0%,
+      color-mix(in srgb, var(--color-primary-container) 45%, transparent) 0%,
+      transparent 55%
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-primary-container) 40%, transparent) 0%,
+      transparent 45%
+    );
 }
 
 /* Admin form input baseline */

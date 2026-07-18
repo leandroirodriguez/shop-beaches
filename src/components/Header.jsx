@@ -3,7 +3,7 @@ import logo from '../assets/logo.svg'
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-40 bg-surface/95 backdrop-blur border-b border-outline-variant/40">
+    <header className="sticky top-0 z-40 bg-surface-container-lowest/95 backdrop-blur border-b border-outline-variant/40">
       <div className="max-w-[1140px] mx-auto px-5 md:px-16 h-20 md:h-24 flex items-center">
         {/* Mobile-only spacer to keep the logo symmetrically centered.
             Removed on desktop so the logo hugs the left edge. */}

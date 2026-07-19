@@ -214,7 +214,7 @@ export function PracticeFooter() {
           {/* Right region — alliance logo + membership statement */}
           <div className="lg:pl-8 lg:border-l lg:border-outline-variant/40">
             <a href="https://www.toplinemd.com/" aria-label="TopLine MD Alliance">
-              <img src={allianceLogo} alt="TopLine MD Alliance" className="h-14 w-auto" />
+              <img src={allianceLogo} alt="TopLine MD Alliance" className="h-11 w-auto" />
             </a>
             <p className="mt-8 text-sm leading-relaxed text-on-surface-variant">
               We are a member of the TopLine MD Alliance, a collective group of

@@ -237,12 +237,12 @@ export default function MainClonePage() {
           </h2>
         </div>
 
-        <div className="max-w-[1240px] mx-auto px-5 md:px-10 pb-24 md:pb-32">
+        <div className="pb-24 md:pb-32">
           <div className="grid sm:grid-cols-2 gap-2">
             {SERVICES.map(s => (
               <article
                 key={s.label}
-                className="group relative flex flex-col items-center overflow-hidden bg-surface-container-lowest text-on-surface min-h-[30rem] md:min-h-[34rem]"
+                className="group relative flex flex-col items-center overflow-hidden bg-surface-container-lowest text-on-surface aspect-[4/5] sm:aspect-auto sm:min-h-[34rem] lg:min-h-[42rem]"
               >
                 <div className="pt-12 md:pt-14 px-6 text-center">
                   <h3 className="font-headline text-3xl md:text-4xl leading-tight">{s.label}</h3>

@@ -41,9 +41,9 @@ export default function MISClonePage() {
       {/* ---------- Hero ---------- */}
       <section className="relative overflow-hidden min-h-[420px] h-[55vh] max-h-[640px]">
         <img
-          src="/categories/pcos.webp"
-          alt="Calm coastal light"
-          className="absolute inset-0 w-full h-full object-cover"
+          src="/davinci/arms-fan.jpg"
+          alt="The da Vinci Xi's articulated arms extended over the operating field"
+          className="absolute inset-0 w-full h-full object-cover object-[center_40%]"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#1e3a44]/80 via-[#1e3a44]/45 to-[#1e3a44]/10" />
         <div className="relative z-10 max-w-[1240px] mx-auto px-5 md:px-10 h-full flex items-center">

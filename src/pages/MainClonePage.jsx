@@ -14,17 +14,17 @@ const PILLARS = [
 ]
 
 const PHYSICIANS = [
-  { name: 'John Bordelon', credentials: 'MD, FACOG', interests: 'Endometrial ablation, laparoscopy, hysteroscopy, da Vinci robotic surgery', tenure: 'With the practice since 1991' },
-  { name: 'Kimberly Manek', credentials: 'MD, FACOG', interests: 'Gynecologic oncology, comprehensive obstetric care', tenure: null },
-  { name: 'Laura Peter', credentials: 'DO, FACOG', interests: 'Whole-person osteopathic approach to obstetrics and gynecology', tenure: null },
-  { name: 'Anita Patel', credentials: 'MD, FACOG', interests: 'Minimally invasive surgery, abnormal uterine bleeding, pelvic pain, menopause care', tenure: 'Jacksonville native' },
-  { name: 'Rebekah Richmond', credentials: 'MD, FACOG', interests: 'Hormone replacement, contraceptive management; Chair, Women & Children Services at Baptist Beaches', tenure: 'Jacksonville native' },
-  { name: 'Leandro Rodriguez', credentials: 'MD, FACOG', interests: 'Gynecologic ultrasound, minimally invasive procedures; Chief of Medical Staff at Baptist Beaches', tenure: 'Practicing since 2005' },
-  { name: 'Joana Fischer', credentials: 'MD', interests: 'Menstrual health education, family planning · Bilingual, English & Spanish', tenure: null },
-  { name: 'Rakiya Miller', credentials: 'MD', interests: 'Minimally invasive gynecology — AAGL Excellence Award recipient', tenure: null },
-  { name: 'Malinda Moussa', credentials: 'APRN', interests: 'Comprehensive women’s healthcare across every stage of life', tenure: 'With the practice since 2000' },
-  { name: 'Gabrielle Ahrens', credentials: 'APRN', interests: 'Labor and delivery, postpartum support — DAISY Award recipient, 2024', tenure: null },
-  { name: 'Katherine Dorsey', credentials: 'APRN', interests: 'Maternal and newborn care; former Director, Maternal Newborn Service Line', tenure: '15+ years in healthcare' },
+  { name: 'John Bordelon', photo: '/providers/bordelon.jpg', credentials: 'MD, FACOG', interests: 'Endometrial ablation, laparoscopy, hysteroscopy, da Vinci robotic surgery', tenure: 'With the practice since 1991' },
+  { name: 'Kimberly Manek', photo: '/providers/manek.jpg', credentials: 'MD, FACOG', interests: 'Gynecologic oncology, comprehensive obstetric care', tenure: null },
+  { name: 'Laura Peter', photo: '/providers/peter.jpg', credentials: 'DO, FACOG', interests: 'Whole-person osteopathic approach to obstetrics and gynecology', tenure: null },
+  { name: 'Anita Patel', photo: '/providers/patel.jpg', credentials: 'MD, FACOG', interests: 'Minimally invasive surgery, abnormal uterine bleeding, pelvic pain, menopause care', tenure: 'Jacksonville native' },
+  { name: 'Rebekah Richmond', photo: '/providers/richmond.jpg', credentials: 'MD, FACOG', interests: 'Hormone replacement, contraceptive management; Chair, Women & Children Services at Baptist Beaches', tenure: 'Jacksonville native' },
+  { name: 'Leandro Rodriguez', photo: '/providers/rodriguez.jpg', credentials: 'MD, FACOG', interests: 'Gynecologic ultrasound, minimally invasive procedures; Chief of Medical Staff at Baptist Beaches', tenure: 'Practicing since 2005' },
+  { name: 'Joana Fischer', photo: '/providers/fischer.jpg', credentials: 'MD', interests: 'Menstrual health education, family planning · Bilingual, English & Spanish', tenure: null },
+  { name: 'Rakiya Miller', photo: '/providers/miller.jpg', credentials: 'MD', interests: 'Minimally invasive gynecology — AAGL Excellence Award recipient', tenure: null },
+  { name: 'Malinda Moussa', photo: '/providers/moussa.jpg', credentials: 'APRN', interests: 'Comprehensive women’s healthcare across every stage of life', tenure: 'With the practice since 2000' },
+  { name: 'Gabrielle Ahrens', photo: '/providers/ahrens.jpg', credentials: 'APRN', interests: 'Labor and delivery, postpartum support — DAISY Award recipient, 2024', tenure: null },
+  { name: 'Katherine Dorsey', photo: '/providers/dorsey.jpg', credentials: 'APRN', interests: 'Maternal and newborn care; former Director, Maternal Newborn Service Line', tenure: '15+ years in healthcare' },
 ]
 
 // Soft neutral portrait backdrops, cycled across the carousel
@@ -152,8 +152,19 @@ export default function MainClonePage() {
           {PHYSICIANS.map((d, i) => (
             <article key={d.name} className="snap-start shrink-0 w-72 md:w-80">
               <div className={`aspect-[4/5] rounded-lg ${PORTRAIT_TINTS[i % PORTRAIT_TINTS.length]} relative overflow-hidden flex items-center justify-center`}>
-                <Starfish className="absolute -bottom-10 -right-10 w-40 h-40 text-primary opacity-[0.07]" />
-                <span className="font-headline text-6xl text-primary/70">{initials(d.name)}</span>
+                {d.photo ? (
+                  <img
+                    src={d.photo}
+                    alt={`Portrait of ${d.name}`}
+                    loading="lazy"
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                ) : (
+                  <>
+                    <Starfish className="absolute -bottom-10 -right-10 w-40 h-40 text-primary opacity-[0.07]" />
+                    <span className="font-headline text-6xl text-primary/70">{initials(d.name)}</span>
+                  </>
+                )}
               </div>
               <h3 className="mt-5 font-headline text-xl leading-snug">
                 {d.name}, <span className="text-on-surface-variant text-lg">{d.credentials}</span>

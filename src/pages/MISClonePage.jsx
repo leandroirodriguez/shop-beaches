@@ -175,20 +175,66 @@ export default function MISClonePage() {
       <section className="max-w-[1240px] mx-auto px-5 md:px-10 py-24 md:py-32">
         <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-5">Our Procedures</p>
         <h2 className="font-headline text-3xl md:text-5xl leading-[1.15] max-w-2xl">
-          Eight ways we make surgery smaller.
+          How we make surgery smaller.
         </h2>
         <div className="mt-16 grid md:grid-cols-2 gap-x-16 gap-y-12">
-          {PROCEDURES.map((p, i) => (
-            <div key={p.title} className="flex gap-6 border-t border-outline-variant/60 pt-8">
-              <span className="font-headline text-2xl text-secondary-fixed-dim shrink-0 w-10">
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <div>
-                <h3 className="font-headline text-xl leading-snug">{p.title}</h3>
-                <p className="mt-3 text-sm md:text-base text-on-surface-variant leading-relaxed">{p.text}</p>
-              </div>
+          {PROCEDURES.map(p => (
+            <div key={p.title} className="border-t border-outline-variant/60 pt-8">
+              <h3 className="font-headline text-xl leading-snug">{p.title}</h3>
+              <p className="mt-3 text-sm md:text-base text-on-surface-variant leading-relaxed">{p.text}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* ---------- Robotic surgery in numbers (video background) ---------- */}
+      <section className="relative overflow-hidden">
+        <video
+          className="absolute inset-0 w-full h-full object-cover"
+          src="/davinci/broll.mp4"
+          poster="/davinci/arms-fan.jpg"
+          autoPlay
+          muted
+          loop
+          playsInline
+          aria-hidden="true"
+        />
+        <div className="absolute inset-0 bg-[#1e3a44]/80" />
+        <div className="relative z-10 max-w-[1240px] mx-auto px-5 md:px-10 py-24 md:py-36 text-on-primary">
+          <p className="font-label text-xs tracking-[0.25em] uppercase text-primary-container mb-5">
+            Robotic-Assisted Surgery
+          </p>
+          <h2 className="font-headline text-3xl md:text-5xl leading-[1.15] max-w-2xl">
+            A proven platform, trusted worldwide.
+          </h2>
+          <div className="mt-14 grid sm:grid-cols-3 gap-10 max-w-3xl">
+            <div>
+              <p className="font-headline text-5xl md:text-6xl">20M+</p>
+              <p className="mt-2 text-sm text-on-primary/75 leading-relaxed">
+                patients treated with da Vinci surgery worldwide
+              </p>
+            </div>
+            <div>
+              <p className="font-headline text-5xl md:text-6xl">70+</p>
+              <p className="mt-2 text-sm text-on-primary/75 leading-relaxed">
+                procedure types performed with the system
+              </p>
+            </div>
+            <div>
+              <p className="font-headline text-5xl md:text-6xl">25+</p>
+              <p className="mt-2 text-sm text-on-primary/75 leading-relaxed">
+                years in clinical use by surgeons
+              </p>
+            </div>
+          </div>
+          <p className="mt-14 text-on-primary/70 text-sm leading-relaxed max-w-2xl">
+            The da Vinci system never operates on its own — your surgeon is in
+            complete control of every movement, every moment. Depending on your
+            procedure, robotic-assisted surgery may mean less pain and a
+            shorter recovery than open surgery. As with any operation, serious
+            complications can occur; your physician will help you weigh the
+            risks and benefits for your situation.
+          </p>
         </div>
       </section>
 

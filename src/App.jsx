@@ -19,13 +19,15 @@ import AdminBlogNew from './pages/AdminBlogNew'
 import AdminBlogEdit from './pages/AdminBlogEdit'
 import MainClonePage from './pages/MainClonePage'
 import MISClonePage from './pages/MISClonePage'
+import AboutClonePage from './pages/AboutClonePage'
 
 export default function App() {
   const { pathname } = useLocation()
   // Admin pages and the hidden /mainclone prototype render standalone,
   // without the shop chrome
   const isStandalone =
-    pathname.startsWith('/admin') || pathname === '/mainclone' || pathname === '/misclone'
+    pathname.startsWith('/admin') ||
+    ['/mainclone', '/misclone', '/aboutclone'].includes(pathname)
 
   return (
     <>
@@ -34,6 +36,7 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/mainclone" element={<MainClonePage />} />
         <Route path="/misclone" element={<MISClonePage />} />
+        <Route path="/aboutclone" element={<AboutClonePage />} />
         <Route path="/shop" element={<AllProductsPage />} />
         <Route path="/category/:slug" element={<CategoryPage />} />
         <Route path="/product/:slug" element={<ProductPage />} />

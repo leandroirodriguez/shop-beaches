@@ -3,7 +3,7 @@
 // a footer reproducing its content, both styled in the coastal palette.
 
 import { useState } from 'react'
-import logo from '../assets/toplinelogo.svg'
+import logo from '../assets/toplinelogo.png'
 
 export const APPOINTMENT_URL = 'https://www.toplinemd.com/beaches-obgyn/new-patients/#appoitment'
 

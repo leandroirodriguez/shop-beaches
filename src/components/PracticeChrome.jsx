@@ -5,6 +5,7 @@
 import { useState } from 'react'
 import logo from '../assets/toplinelogo.png'
 import allianceLogo from '../assets/topline-alliance.png'
+import Starfish from './Starfish'
 
 export const APPOINTMENT_URL = 'https://www.toplinemd.com/beaches-obgyn/new-patients/#appoitment'
 
@@ -61,8 +62,15 @@ export function PracticeHeader() {
 
       <header className="sticky top-0 z-40 bg-surface-container-lowest/95 backdrop-blur border-b border-outline-variant/40">
       <div className="max-w-[1240px] mx-auto px-5 md:px-10 h-20 md:h-24 flex items-center gap-6">
-        <a href="/mainclone" aria-label="Beaches OBGYN">
-          <img src={logo} alt="Beaches OBGYN — TopLine MD Alliance" className="block h-[4.2rem] md:h-[4.8rem] w-auto" />
+        <a href="/mainclone" aria-label="Beaches OBGYN" className="shrink-0">
+          {/* Full lockup when there's room; compact starfish mark at the
+              lg–xl widths where the lockup and full menu would collide */}
+          <img
+            src={logo}
+            alt="Beaches OBGYN — TopLine MD Alliance"
+            className="h-[4.2rem] md:h-[4.8rem] w-auto block lg:hidden xl:block"
+          />
+          <Starfish className="hidden lg:block xl:hidden w-14 h-14 text-primary" />
         </a>
 
         <nav className="hidden lg:flex items-center gap-6 ml-auto">

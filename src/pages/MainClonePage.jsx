@@ -6,13 +6,6 @@ import { useRef, useState } from 'react'
 import Starfish from '../components/Starfish'
 import { PracticeHeader, PracticeFooter, APPOINTMENT_URL } from '../components/PracticeChrome'
 
-const PILLARS = [
-  { title: 'Obstetrics', text: 'Attentive prenatal care through delivery and beyond, with our physicians beside you at Baptist Beaches.' },
-  { title: 'Gynecology', text: 'Annual wellness, preventive screenings, and thoughtful treatment for every stage of your health.' },
-  { title: 'Surgery', text: 'Advanced minimally invasive and robotic techniques that mean smaller incisions and faster recoveries.' },
-  { title: 'Menopause & Hormonal Health', text: 'Evidence-based guidance and hormone therapy tailored to how you want to feel.' },
-]
-
 const PHYSICIANS = [
   { name: 'Leandro Rodriguez', photo: '/providers/rodriguez.jpg', credentials: 'MD, FACOG', interests: 'Gynecologic ultrasound, minimally invasive procedures; Chief of Medical Staff at Baptist Beaches', tenure: 'Practicing since 2005' },
   { name: 'Rebekah Richmond', photo: '/providers/richmond.jpg', credentials: 'MD, FACOG', interests: 'Hormone replacement, contraceptive management; Chair, Women & Children Services at Baptist Beaches', tenure: 'Jacksonville native' },
@@ -172,16 +165,6 @@ export default function MainClonePage() {
               relationships that last.
             </p>
           </div>
-
-          <div className="mt-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {PILLARS.map(p => (
-              <div key={p.title} className="bg-surface-container-lowest rounded-lg shadow-lift p-8">
-                <h3 className="font-headline text-xl leading-snug">{p.title}</h3>
-                <div className="w-8 h-px bg-secondary-fixed-dim my-4" />
-                <p className="text-sm text-on-surface-variant leading-relaxed">{p.text}</p>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -255,37 +238,25 @@ export default function MainClonePage() {
         </div>
 
         <div className="max-w-[1240px] mx-auto px-5 md:px-10 pb-24 md:pb-32">
-          <div className="grid sm:grid-cols-2 gap-3 md:gap-4">
+          <div className="grid sm:grid-cols-2 gap-2">
             {SERVICES.map(s => (
               <article
                 key={s.label}
-                className={`group relative flex flex-col items-center overflow-hidden rounded-2xl min-h-[30rem] md:min-h-[34rem] ${
-                  s.dark ? 'bg-primary text-on-primary' : 'bg-surface-container-lowest text-on-surface'
-                }`}
+                className="group relative flex flex-col items-center overflow-hidden bg-surface-container-lowest text-on-surface min-h-[30rem] md:min-h-[34rem]"
               >
                 <div className="pt-12 md:pt-14 px-6 text-center">
                   <h3 className="font-headline text-3xl md:text-4xl leading-tight">{s.label}</h3>
-                  <p className={`mt-3 text-sm md:text-base ${s.dark ? 'text-on-primary/80' : 'text-on-surface-variant'}`}>
-                    {s.tagline}
-                  </p>
+                  <p className="mt-3 text-sm md:text-base text-on-surface-variant">{s.tagline}</p>
                   <div className="mt-6 flex items-center justify-center gap-3">
                     <a
                       href={s.learnHref}
-                      className={`font-label text-[11px] tracking-[0.15em] uppercase px-5 py-2.5 rounded-full transition ${
-                        s.dark
-                          ? 'bg-surface text-primary hover:bg-primary-container hover:text-on-primary-container'
-                          : 'bg-primary text-on-primary hover:bg-primary-container hover:text-on-primary-container'
-                      }`}
+                      className="font-label text-[11px] tracking-[0.15em] uppercase bg-primary text-on-primary px-5 py-2.5 rounded-full hover:bg-primary-container hover:text-on-primary-container transition"
                     >
                       Learn more
                     </a>
                     <a
                       href={APPOINTMENT_URL}
-                      className={`font-label text-[11px] tracking-[0.15em] uppercase px-5 py-2.5 rounded-full border transition ${
-                        s.dark
-                          ? 'border-on-primary/40 text-on-primary hover:bg-on-primary/10'
-                          : 'border-primary/40 text-primary hover:bg-primary/5'
-                      }`}
+                      className="font-label text-[11px] tracking-[0.15em] uppercase border border-primary/40 text-primary px-5 py-2.5 rounded-full hover:bg-primary/5 transition"
                     >
                       Schedule
                     </a>

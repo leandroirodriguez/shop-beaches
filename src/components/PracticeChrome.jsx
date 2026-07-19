@@ -4,6 +4,7 @@
 
 import { useState } from 'react'
 import logo from '../assets/toplinelogo.png'
+import allianceLogo from '../assets/topline-alliance.png'
 
 export const APPOINTMENT_URL = 'https://www.toplinemd.com/beaches-obgyn/new-patients/#appoitment'
 
@@ -136,52 +137,102 @@ export function PracticeHeader() {
   )
 }
 
+function HomeIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="shrink-0 mt-0.5 text-primary" aria-hidden="true">
+      <path d="M3 10.5 12 3l9 7.5M5 9.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
 export function PracticeFooter() {
   return (
-    <footer className="bg-primary text-on-primary">
-      <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-16 grid gap-10 md:grid-cols-3">
-        <div>
-          <h4 className="font-label text-xs tracking-[0.2em] uppercase text-primary-container mb-5">Contact Information</h4>
-          <p className="text-sm leading-relaxed opacity-90">
-            1577 Roberts Drive, Suite 323<br />
-            Jacksonville Beach, FL 32250
-          </p>
-          <p className="mt-4 text-sm leading-relaxed opacity-90">
-            9010 RG Skinner Parkway, Suite 102<br />
-            Jacksonville, FL 32256
-          </p>
-          <p className="mt-4 text-sm opacity-90">
-            (904) 241-9775 · (904) 249-3638 (fax)
-          </p>
-        </div>
-        <div>
-          <h4 className="font-label text-xs tracking-[0.2em] uppercase text-primary-container mb-5">Services</h4>
-          <ul className="text-sm space-y-2 opacity-90">
-            <li>Obstetrics</li>
-            <li>Gynecology</li>
-            <li>Minimally Invasive Surgery</li>
-            <li>Hormone Replacement</li>
-          </ul>
-        </div>
-        <div>
-          <h4 className="font-label text-xs tracking-[0.2em] uppercase text-primary-container mb-5">Office Hours</h4>
-          <p className="text-sm leading-relaxed opacity-90">
-            Monday–Thursday: 9:00am–12:00pm, 2:00pm–5:00pm<br />
-            Friday: 9:00am–12:00pm
-          </p>
-          <p className="mt-6 text-sm leading-relaxed opacity-75">
-            We are a member of the TopLine MD Alliance, a collective group of
-            practices, providers and specialty centers that help patients
-            navigate a complicated healthcare system.
-          </p>
+    <footer className="bg-surface-container-low text-on-surface border-t border-outline-variant/40">
+      <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-16">
+        <div className="grid lg:grid-cols-[1.9fr_1fr] gap-12 lg:gap-16">
+          {/* Left region — co-branded lockup + info columns */}
+          <div>
+            <img src={logo} alt="Beaches OBGYN — TopLine MD Alliance" className="h-16 w-auto" />
+
+            <div className="mt-12 grid gap-10 sm:grid-cols-3">
+              <div>
+                <h4 className="font-label text-xs tracking-[0.2em] uppercase text-on-surface-variant mb-5">Contact Information</h4>
+                <p className="flex gap-2.5 text-sm leading-relaxed text-on-surface-variant">
+                  <HomeIcon />
+                  <span>1577 Roberts Drive, Suite 323<br />Jacksonville Beach, FL 32250</span>
+                </p>
+                <p className="mt-4 flex gap-2.5 text-sm leading-relaxed text-on-surface-variant">
+                  <HomeIcon />
+                  <span>9010 RG Skinner Parkway, Suite 102<br />Jacksonville, FL 32256</span>
+                </p>
+                <p className="mt-5 space-y-1.5 text-sm text-on-surface-variant">
+                  <a href="tel:9042419775" className="flex items-center gap-2.5 hover:text-primary transition">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="text-primary" aria-hidden="true">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.22a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    (904) 241-9775
+                  </a>
+                  <span className="flex items-center gap-2.5">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="text-primary" aria-hidden="true">
+                      <path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    (904) 249-3638 (fax)
+                  </span>
+                </p>
+              </div>
+              <div>
+                <h4 className="font-label text-xs tracking-[0.2em] uppercase text-on-surface-variant mb-5">Services</h4>
+                <ul className="text-sm space-y-2 text-on-surface-variant">
+                  <li>Obstetrics</li>
+                  <li>Gynecology</li>
+                  <li>Minimally Invasive Surgery</li>
+                  <li>Hormone Replacement</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-label text-xs tracking-[0.2em] uppercase text-on-surface-variant mb-5">Office Hours</h4>
+                <p className="text-sm leading-relaxed text-on-surface-variant">
+                  <span className="text-on-surface">Monday – Thursday:</span><br />
+                  9:00am – 12:00pm<br />
+                  2:00pm – 5:00pm
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-on-surface-variant">
+                  <span className="text-on-surface">Friday:</span> 9:00am – 12:00pm
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Right region — alliance logo + membership statement */}
+          <div className="lg:pl-8 lg:border-l lg:border-outline-variant/40">
+            <a href="https://www.toplinemd.com/" aria-label="TopLine MD Alliance">
+              <img src={allianceLogo} alt="TopLine MD Alliance" className="h-14 w-auto" />
+            </a>
+            <p className="mt-8 text-sm leading-relaxed text-on-surface-variant">
+              We are a member of the TopLine MD Alliance, a collective group of
+              practices, providers and specialty centers that help patients
+              navigate a complicated healthcare system. Membership in the
+              Alliance is highly selective and based on exceptional patient
+              satisfaction. Our priority is to provide you with top-of-the-line
+              care, through a network of dedicated people you can trust, while
+              making your experience simple and convenient.
+            </p>
+            <a
+              href="https://www.toplinemd.com/"
+              className="mt-4 inline-block text-sm text-primary font-medium hover:underline"
+            >
+              Learn more about the Alliance &rsaquo;
+            </a>
+          </div>
         </div>
       </div>
-      <div className="border-t border-on-primary/15">
-        <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-6 flex flex-col md:flex-row gap-3 items-center justify-between text-xs opacity-75">
+
+      <div className="border-t border-outline-variant/40">
+        <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-6 flex flex-col md:flex-row gap-3 items-center justify-between text-xs text-on-surface-variant">
           <p>© Copyright 2012</p>
           <div className="flex gap-6">
-            <a href="https://www.toplinemd.com/practice-terms-policies/" className="hover:underline">Terms and Policies</a>
-            <a href="https://www.toplinemd.com/affiliation-disclaimer/" className="hover:underline">Affiliation Disclaimer</a>
+            <a href="https://www.toplinemd.com/practice-terms-policies/" className="hover:text-primary transition">Terms and Policies</a>
+            <a href="https://www.toplinemd.com/affiliation-disclaimer/" className="hover:text-primary transition">Affiliation Disclaimer</a>
           </div>
         </div>
       </div>

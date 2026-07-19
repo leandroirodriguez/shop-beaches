@@ -183,9 +183,9 @@ export default function MISClonePage() {
           playsInline
           aria-hidden="true"
         />
-        <div className="absolute inset-0 bg-[#1e3a44]/55" />
-        <div className="relative z-10 max-w-[1240px] mx-auto px-5 md:px-10 py-24 md:py-36 text-on-primary">
-          <p className="font-label text-xs tracking-[0.25em] uppercase text-primary-container mb-5">
+        <div className="absolute inset-0 bg-white/40" />
+        <div className="relative z-10 max-w-[1240px] mx-auto px-5 md:px-10 py-24 md:py-36 text-on-surface">
+          <p className="font-label text-xs tracking-[0.25em] uppercase text-primary mb-5">
             Robotic-Assisted Surgery
           </p>
           <h2 className="font-headline text-3xl md:text-5xl leading-[1.15] max-w-2xl">
@@ -193,25 +193,25 @@ export default function MISClonePage() {
           </h2>
           <div className="mt-14 grid sm:grid-cols-3 gap-10 max-w-3xl">
             <div>
-              <p className="font-headline text-5xl md:text-6xl">20M+</p>
-              <p className="mt-2 text-sm text-on-primary/75 leading-relaxed">
+              <p className="font-headline text-5xl md:text-6xl text-primary">20M+</p>
+              <p className="mt-2 text-sm text-on-surface/75 leading-relaxed">
                 patients treated with da Vinci surgery worldwide
               </p>
             </div>
             <div>
-              <p className="font-headline text-5xl md:text-6xl">70+</p>
-              <p className="mt-2 text-sm text-on-primary/75 leading-relaxed">
+              <p className="font-headline text-5xl md:text-6xl text-primary">70+</p>
+              <p className="mt-2 text-sm text-on-surface/75 leading-relaxed">
                 procedure types performed with the system
               </p>
             </div>
             <div>
-              <p className="font-headline text-5xl md:text-6xl">25+</p>
-              <p className="mt-2 text-sm text-on-primary/75 leading-relaxed">
+              <p className="font-headline text-5xl md:text-6xl text-primary">25+</p>
+              <p className="mt-2 text-sm text-on-surface/75 leading-relaxed">
                 years in clinical use by surgeons
               </p>
             </div>
           </div>
-          <p className="mt-14 text-on-primary/70 text-sm leading-relaxed max-w-2xl">
+          <p className="mt-14 text-on-surface/70 text-sm leading-relaxed max-w-2xl">
             The da Vinci system never operates on its own — your surgeon is in
             complete control of every movement, every moment. Depending on your
             procedure, robotic-assisted surgery may mean less pain and a

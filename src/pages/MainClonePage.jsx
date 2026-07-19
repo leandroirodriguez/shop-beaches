@@ -2,7 +2,7 @@
 // toplinemd.com/beaches-obgyn in the shop's coastal palette and type
 // system. Not linked from anywhere; reachable only at /mainclone.
 
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import Starfish from '../components/Starfish'
 import { PracticeHeader, PracticeFooter, APPOINTMENT_URL } from '../components/PracticeChrome'
 
@@ -39,31 +39,41 @@ function initials(name) {
   return name.split(' ').map(w => w[0]).join('')
 }
 
-// Real reviews drawn from the practice's Google/aggregated patient reviews
-// (4.8★ average across 1,517 reviews). Attributed to "Verified patient"
-// since reviewer names aren't reproduced here.
+// Real 5-star reviews drawn from the practice's Google/aggregated patient
+// reviews (4.8★ average across 1,517 reviews). Two are picked at random on
+// each page load. Attributed to "Verified patient" since reviewer names
+// aren't reproduced here.
 const REVIEWS = {
   rating: '4.8',
   count: '1,517',
-  featured: {
-    quote: 'Dr. Rodriguez and Dr. Peter are amazing, and the staff is always very nice and friendly. They really do care for their patients.',
-    author: 'Verified Google review',
-  },
-  more: [
-    {
-      quote: 'Dr. Manek is one of the best doctors I have ever had — kind, friendly, and knowledgeable. From our first meeting she listened to all of my questions and concerns and answered every one.',
-      author: 'Verified patient',
-    },
-    {
-      quote: 'I always appreciate the personable yet professional manner. Exams are quick, easy, and efficient, and I love being able to message through the portal if I need anything between visits.',
-      author: 'Verified patient',
-    },
+  pool: [
+    { quote: 'Dr. Rodriguez and Dr. Peter are amazing, and the staff is always very nice and friendly. They really do care for their patients.', author: 'Verified Google review' },
+    { quote: 'Dr. Rodriguez goes above and beyond for his patients. He is a caring and compassionate doctor.', author: 'Verified patient' },
+    { quote: 'Dr. Rodriguez has been my OB/GYN for over ten years and I have no complaints. He’s always so attentive, pleasant, and caring — he makes it a much more comfortable experience.', author: 'Verified patient' },
+    { quote: 'He is very methodical and does a great job with simple procedures as well as robotic surgeries. Although he has a lot of patients, he never seems to be in a hurry to get you out the door.', author: 'Verified patient' },
+    { quote: 'Dr. Manek is one of the best doctors I have ever had — kind, friendly, and knowledgeable. From our first meeting she listened to all of my questions and concerns and answered every one.', author: 'Verified patient' },
+    { quote: 'Dr. Manek is a wonderful and attentive OBGYN. She took great care of me and my son during my high-risk pregnancy. I would highly recommend her.', author: 'Verified patient' },
+    { quote: 'She made me feel comfortable during my exams. She took the time to ask what my concern was, and her warm, caring personality put me completely at ease.', author: 'Verified patient' },
+    { quote: 'I always appreciate the personable yet professional manner. Exams are quick, easy, and efficient, and I love being able to message through the portal if I need anything between visits.', author: 'Verified patient' },
+    { quote: 'Dr. Richmond was extraordinarily compassionate and kind, and put me at ease during my very first visit. I truly appreciated the time she spent speaking with me before my exam.', author: 'Verified patient' },
+    { quote: 'She made us feel like family and always takes the time to answer all of our questions — we never feel rushed.', author: 'Verified patient' },
+    { quote: 'Very much recommend this location for your pregnancy journey and care. The medical staff is fantastic.', author: 'Verified patient' },
+    { quote: 'Excellent service — the doctor explains everything and answers any questions you might have.', author: 'Verified patient' },
   ],
+}
+
+// Two distinct reviews at random, chosen once per mount
+function pickTwoReviews() {
+  const pool = REVIEWS.pool
+  const i = Math.floor(Math.random() * pool.length)
+  let j = Math.floor(Math.random() * (pool.length - 1))
+  if (j >= i) j += 1
+  return [pool[i], pool[j]]
 }
 
 function Stars({ className = '' }) {
   return (
-    <div className={`flex gap-1 ${className}`} aria-label={`${REVIEWS.rating} out of 5 stars`}>
+    <div className={`flex gap-1 ${className}`} aria-label="5 out of 5 stars">
       {Array.from({ length: 5 }).map((_, i) => (
         <svg key={i} width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z" />
@@ -75,6 +85,7 @@ function Stars({ className = '' }) {
 
 export default function MainClonePage() {
   const trackRef = useRef(null)
+  const [shownReviews] = useState(pickTwoReviews)
 
   function scrollTrack(dir) {
     const el = trackRef.current
@@ -256,21 +267,14 @@ export default function MainClonePage() {
             </div>
           </div>
 
-          <blockquote className="mt-14 max-w-3xl">
-            <p className="font-headline text-2xl md:text-4xl leading-[1.3]">
-              &ldquo;{REVIEWS.featured.quote}&rdquo;
-            </p>
-            <footer className="mt-6 font-label text-[11px] tracking-[0.2em] uppercase text-on-primary/70">
-              {REVIEWS.featured.author}
-            </footer>
-          </blockquote>
-
           <div className="mt-14 grid md:grid-cols-2 gap-5">
-            {REVIEWS.more.map(r => (
-              <figure key={r.quote} className="bg-on-primary/[0.06] rounded-lg p-8 border border-on-primary/10">
-                <Stars className="text-secondary-fixed-dim mb-4" />
-                <blockquote className="text-on-primary/90 leading-relaxed">&ldquo;{r.quote}&rdquo;</blockquote>
-                <figcaption className="mt-4 font-label text-[10px] tracking-[0.2em] uppercase text-on-primary/60">
+            {shownReviews.map(r => (
+              <figure key={r.quote} className="flex flex-col bg-on-primary/[0.06] rounded-lg p-8 md:p-10 border border-on-primary/10">
+                <Stars className="text-secondary-fixed-dim mb-5" />
+                <blockquote className="font-headline text-xl md:text-2xl leading-[1.4] text-on-primary/95">
+                  &ldquo;{r.quote}&rdquo;
+                </blockquote>
+                <figcaption className="mt-6 font-label text-[10px] tracking-[0.2em] uppercase text-on-primary/60">
                   {r.author}
                 </figcaption>
               </figure>

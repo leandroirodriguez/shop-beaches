@@ -118,6 +118,59 @@ export default function MISClonePage() {
         </div>
       </section>
 
+      {/* ---------- da Vinci system ---------- */}
+      <section className="bg-primary text-on-primary">
+        <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-24 md:py-32">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+            <div>
+              <p className="font-label text-xs tracking-[0.25em] uppercase text-primary-container mb-5">
+                The da Vinci System
+              </p>
+              <h2 className="font-headline text-3xl md:text-5xl leading-[1.15]">
+                Robotic precision. Your surgeon in control.
+              </h2>
+              <p className="mt-7 text-on-primary/80 md:text-lg leading-relaxed max-w-xl">
+                Our surgeons perform robotic-assisted procedures with the
+                da Vinci surgical system at Baptist Beaches. The surgeon is in
+                command at every moment — the system translates their hands
+                into precise, tremor-free micro-movements of wristed
+                instruments, working through incisions the size of a dime with
+                immersive 3D-HD visualization.
+              </p>
+            </div>
+            <div className="bg-surface-container-lowest rounded-lg shadow-lift overflow-hidden">
+              <img
+                src="/davinci/xi-front.jpg"
+                alt="The da Vinci Xi surgical system patient cart"
+                className="w-full aspect-[10/7] object-cover"
+              />
+            </div>
+          </div>
+          <div className="mt-8 grid md:grid-cols-2 gap-8">
+            <figure className="bg-surface-container-lowest rounded-lg shadow-lift overflow-hidden">
+              <img
+                src="/davinci/arms-fan.jpg"
+                alt="The da Vinci Xi's four articulated arms converging on a single small workspace"
+                className="w-full aspect-[10/7] object-cover"
+              />
+              <figcaption className="px-6 py-4 font-label text-[10px] tracking-[0.18em] uppercase text-on-surface-variant">
+                Four arms, one tiny workspace
+              </figcaption>
+            </figure>
+            <figure className="bg-surface-container-lowest rounded-lg shadow-lift overflow-hidden">
+              <img
+                src="/davinci/instrument.jpg"
+                alt="A wristed da Vinci instrument articulating at its tip"
+                className="w-full aspect-[10/7] object-cover"
+              />
+              <figcaption className="px-6 py-4 font-label text-[10px] tracking-[0.18em] uppercase text-on-surface-variant">
+                Wristed instruments that move beyond the human hand
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
       {/* ---------- Procedures ---------- */}
       <section className="max-w-[1240px] mx-auto px-5 md:px-10 py-24 md:py-32">
         <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-5">Our Procedures</p>

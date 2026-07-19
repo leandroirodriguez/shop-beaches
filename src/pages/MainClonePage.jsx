@@ -158,32 +158,34 @@ export default function MainClonePage() {
       </header>
 
       {/* ---------- Hero ---------- */}
-      <section id="top" className="relative overflow-hidden">
-        <div className="max-w-[1240px] mx-auto px-5 md:px-10 grid lg:grid-cols-2 items-center gap-10 lg:gap-16 py-14 lg:py-0">
-          <div className="lg:py-28 relative z-10">
-            <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-6">
+      <section id="top" className="relative overflow-hidden min-h-[560px] h-[calc(100vh-5rem)] md:h-[calc(100vh-6rem)] max-h-[900px]">
+        <img
+          src="/hero/chapter.jpg"
+          alt="A woman walking along the shoreline at sunrise in Jacksonville Beach"
+          className="absolute inset-0 w-full h-full object-cover object-[center_35%]"
+        />
+        {/* Teal scrim keeps the overlaid text readable against the bright sky */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1e3a44]/75 via-[#1e3a44]/35 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1e3a44]/40 via-transparent to-transparent" />
+
+        <div className="relative z-10 max-w-[1240px] mx-auto px-5 md:px-10 h-full flex items-center">
+          <div className="max-w-2xl">
+            <p className="font-label text-xs tracking-[0.25em] uppercase text-primary-container mb-6">
               Beaches OBGYN · Jacksonville Beach
             </p>
-            <h1 className="font-headline text-5xl md:text-6xl xl:text-7xl leading-[1.05] text-on-surface">
+            <h1 className="font-headline text-5xl md:text-6xl xl:text-7xl leading-[1.05] text-white">
               Women&rsquo;s Healthcare for Every Chapter of Life
             </h1>
-            <p className="mt-7 text-lg md:text-xl text-on-surface-variant leading-relaxed max-w-lg">
+            <p className="mt-7 text-lg md:text-xl text-white/85 leading-relaxed max-w-lg">
               Personalized obstetric and gynecologic care from Jacksonville
               Beach&rsquo;s trusted physicians.
             </p>
             <a
               href={APPOINTMENT_URL}
-              className="mt-10 inline-block font-label text-xs tracking-[0.2em] uppercase bg-primary text-on-primary px-8 py-4 rounded-full shadow-lift hover:bg-primary-container hover:text-on-primary-container transition"
+              className="mt-10 inline-block font-label text-xs tracking-[0.2em] uppercase bg-surface text-primary px-8 py-4 rounded-full shadow-lift hover:bg-primary-container hover:text-on-primary-container transition"
             >
               Schedule an Appointment
             </a>
-          </div>
-          <div className="relative lg:h-[calc(100vh-6rem)] lg:min-h-[560px] lg:max-h-[760px]">
-            <img
-              src="/hero/chapter.jpg"
-              alt="A woman walking along the shoreline at sunrise in Jacksonville Beach"
-              className="w-full h-full object-cover rounded-xl lg:rounded-none lg:rounded-b-xl aspect-square lg:aspect-auto"
-            />
           </div>
         </div>
       </section>

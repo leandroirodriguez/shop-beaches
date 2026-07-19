@@ -3,7 +3,7 @@
 // a footer reproducing its content, both styled in the coastal palette.
 
 import { useState } from 'react'
-import logo from '../assets/logo.svg'
+import logo from '../assets/toplinelogo.svg'
 
 export const APPOINTMENT_URL = 'https://www.toplinemd.com/beaches-obgyn/new-patients/#appoitment'
 
@@ -40,7 +40,7 @@ export function PracticeHeader() {
     <header className="sticky top-0 z-40 bg-surface-container-lowest/95 backdrop-blur border-b border-outline-variant/40">
       <div className="max-w-[1240px] mx-auto px-5 md:px-10 h-20 md:h-24 flex items-center gap-6">
         <a href="/mainclone" aria-label="Beaches OBGYN">
-          <img src={logo} alt="Beaches OBGYN" className="block h-12 md:h-14 w-auto" />
+          <img src={logo} alt="Beaches OBGYN — TopLine MD Alliance" className="block h-14 md:h-16 w-auto" />
         </a>
 
         <nav className="hidden lg:flex items-center gap-6 ml-auto">

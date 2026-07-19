@@ -1,0 +1,165 @@
+// Hidden design prototype — reimagining of the practice's Minimally
+// Invasive Surgery page in the coastal palette and type system.
+// Not linked from anywhere; reachable only at /misclone.
+
+import Starfish from '../components/Starfish'
+import { PracticeHeader, PracticeFooter, APPOINTMENT_URL } from '../components/PracticeChrome'
+
+const BENEFITS = [
+  { title: 'Less Pain', text: 'Smaller incisions mean gentler recoveries and less postoperative discomfort.' },
+  { title: 'Less Blood Loss', text: 'Precise techniques significantly reduce blood loss during surgery.' },
+  { title: 'Lower Infection Risk', text: 'Minimal entry points lower the chance of surgical-site infection.' },
+  { title: 'Shorter Stays', text: 'Many procedures are outpatient or require only a brief hospital stay.' },
+  { title: 'Faster Recovery', text: 'Most patients return to normal activities in a fraction of the time.' },
+]
+
+const PROCEDURES = [
+  { title: 'Endometrial Ablation', text: 'A hysteroscopic treatment for heavy menstrual bleeding that gently ablates the uterine lining — no incisions at all.' },
+  { title: 'Total Laparoscopic Hysterectomy', text: 'Complete removal of the uterus through a few tiny abdominal incisions, guided by high-definition visualization.' },
+  { title: 'Laparoscopic Supracervical Hysterectomy', text: 'A uterus-preserving-cervix approach for the right candidates, with the same small-incision recovery benefits.' },
+  { title: 'Tubal Ligation', text: 'Permanent, reliable contraception performed laparoscopically as a brief outpatient procedure.' },
+  { title: 'Advanced Hysteroscopy', text: 'A slender camera identifies — and often treats in the same visit — polyps, fibroids, and causes of abnormal bleeding.' },
+  { title: 'Advanced & Single-Incision Laparoscopy', text: 'Complex pelvic surgery through incisions measured in millimeters, sometimes just one at the navel.' },
+  { title: 'Robotic (da Vinci) Assisted Laparoscopy', text: 'Robotic instruments translate the surgeon’s hands into exceptionally precise, tremor-free movement.' },
+  { title: 'Robotic (da Vinci) Hysterectomy', text: 'The most advanced hysterectomy technique we offer — enhanced dexterity and 3D visualization through small incisions.' },
+]
+
+const CONDITIONS = [
+  'Abnormal uterine bleeding',
+  'Heavy menstrual bleeding',
+  'Pelvic pain',
+  'Uterine fibroids',
+  'Endometriosis',
+  'Polyps',
+]
+
+export default function MISClonePage() {
+  return (
+    <div className="bg-surface text-on-surface">
+      <PracticeHeader />
+
+      {/* ---------- Hero ---------- */}
+      <section className="relative overflow-hidden min-h-[420px] h-[55vh] max-h-[640px]">
+        <img
+          src="/categories/pcos.webp"
+          alt="Calm coastal light"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1e3a44]/80 via-[#1e3a44]/45 to-[#1e3a44]/10" />
+        <div className="relative z-10 max-w-[1240px] mx-auto px-5 md:px-10 h-full flex items-center">
+          <div className="max-w-2xl">
+            <p className="font-label text-xs tracking-[0.25em] uppercase text-primary-container mb-6">
+              Services · Surgery
+            </p>
+            <h1 className="font-headline text-4xl md:text-5xl xl:text-6xl leading-[1.08] text-white">
+              Minimally Invasive Surgery in Jacksonville Beach, Florida
+            </h1>
+            <p className="mt-6 text-lg text-white/85 leading-relaxed max-w-lg">
+              Advanced gynecologic surgery with smaller incisions, shorter
+              recoveries, and your own physician at your side.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- Intro / conditions ---------- */}
+      <section className="max-w-[1240px] mx-auto px-5 md:px-10 py-24 md:py-32 grid lg:grid-cols-[1.4fr_1fr] gap-12 lg:gap-20">
+        <div>
+          <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-5">A Gentler Approach</p>
+          <h2 className="font-headline text-3xl md:text-5xl leading-[1.15]">
+            Surgery, when you need it. Recovery, on your terms.
+          </h2>
+          <p className="mt-7 text-on-surface-variant md:text-lg leading-relaxed">
+            When conditions like abnormal bleeding, pelvic pain, fibroids, or
+            endometriosis call for surgical care, our physicians reach first
+            for the least invasive option that will work. Laparoscopic,
+            hysteroscopic, and robotic techniques let us operate through
+            incisions measured in millimeters — so you spend less time in the
+            hospital and more time back in your life.
+          </p>
+          <a
+            href={APPOINTMENT_URL}
+            className="mt-10 inline-block font-label text-xs tracking-[0.2em] uppercase bg-primary text-on-primary px-8 py-4 rounded-full shadow-lift hover:bg-primary-container hover:text-on-primary-container transition"
+          >
+            Schedule an Appointment
+          </a>
+        </div>
+        <div className="bg-surface-container-low rounded-lg p-8 md:p-10 self-start">
+          <h3 className="font-headline text-xl">Conditions We Treat</h3>
+          <div className="w-8 h-px bg-secondary-fixed-dim my-5" />
+          <ul className="space-y-3">
+            {CONDITIONS.map(c => (
+              <li key={c} className="flex items-start gap-3 text-on-surface-variant">
+                <span className="mt-2 w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
+                {c}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* ---------- Benefits ---------- */}
+      <section className="relative overflow-hidden bg-surface-container-low">
+        <Starfish className="absolute -top-24 -right-24 w-80 h-80 text-primary-fixed-dim opacity-10 -rotate-12 pointer-events-none" />
+        <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-24 md:py-32">
+          <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-5">Why Minimally Invasive</p>
+          <h2 className="font-headline text-3xl md:text-5xl leading-[1.15] max-w-2xl">
+            Small incisions. Meaningful differences.
+          </h2>
+          <div className="mt-16 grid sm:grid-cols-2 lg:grid-cols-5 gap-5">
+            {BENEFITS.map(b => (
+              <div key={b.title} className="bg-surface-container-lowest rounded-lg shadow-lift p-7">
+                <h3 className="font-headline text-lg leading-snug">{b.title}</h3>
+                <div className="w-8 h-px bg-secondary-fixed-dim my-4" />
+                <p className="text-sm text-on-surface-variant leading-relaxed">{b.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- Procedures ---------- */}
+      <section className="max-w-[1240px] mx-auto px-5 md:px-10 py-24 md:py-32">
+        <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-5">Our Procedures</p>
+        <h2 className="font-headline text-3xl md:text-5xl leading-[1.15] max-w-2xl">
+          Eight ways we make surgery smaller.
+        </h2>
+        <div className="mt-16 grid md:grid-cols-2 gap-x-16 gap-y-12">
+          {PROCEDURES.map((p, i) => (
+            <div key={p.title} className="flex gap-6 border-t border-outline-variant/60 pt-8">
+              <span className="font-headline text-2xl text-secondary-fixed-dim shrink-0 w-10">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <div>
+                <h3 className="font-headline text-xl leading-snug">{p.title}</h3>
+                <p className="mt-3 text-sm md:text-base text-on-surface-variant leading-relaxed">{p.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ---------- Closing CTA ---------- */}
+      <section className="bg-surface-container-low">
+        <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-24 md:py-32 text-center">
+          <Starfish className="w-12 h-12 mx-auto mb-6 text-primary" />
+          <h2 className="font-headline text-3xl md:text-5xl leading-[1.15] max-w-2xl mx-auto">
+            Wondering if a minimally invasive option is right for you?
+          </h2>
+          <p className="mt-6 text-on-surface-variant md:text-lg max-w-xl mx-auto">
+            Our physicians will walk you through every option — surgical and
+            not — and help you choose with confidence.
+          </p>
+          <a
+            href={APPOINTMENT_URL}
+            className="mt-10 inline-block font-label text-xs tracking-[0.2em] uppercase bg-primary text-on-primary px-8 py-4 rounded-full shadow-lift hover:bg-primary-container hover:text-on-primary-container transition"
+          >
+            Request an Appointment
+          </a>
+        </div>
+      </section>
+
+      <PracticeFooter />
+    </div>
+  )
+}

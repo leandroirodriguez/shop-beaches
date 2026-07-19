@@ -27,12 +27,34 @@ const PHYSICIANS = [
 // Soft neutral portrait backdrops, cycled across the carousel
 const PORTRAIT_TINTS = ['bg-primary-container/50', 'bg-secondary-container/60', 'bg-tertiary-container/70']
 
+// Apple-style tile grid. `dark` tiles get the deep-teal background with
+// light text; light tiles use the surface color. Each needs a bottom
+// image whose look suits its tile — see the image spec in the section.
 const SERVICES = [
-  { label: 'Obstetrics', image: '/categories/pregnancy.webp', text: 'From your first ultrasound to delivery day at Baptist Beaches, our physicians guide every pregnancy personally — no rotating strangers, no surprises.' },
-  { label: 'Gynecology', image: '/categories/nutrition.webp', text: 'Preventive care, screenings, and treatment delivered with unhurried attention, in a practice built around long-term relationships.' },
-  { label: 'Minimally Invasive Surgery', image: '/categories/pcos.webp', text: 'Laparoscopic, hysteroscopic, and da Vinci robotic techniques that shorten recovery and keep you close to home.' },
-  { label: 'Menopause Care', image: '/categories/perimenopause.webp', text: 'A calm, evidence-based path through perimenopause and beyond — sleep, mood, and vitality included.' },
-  { label: 'Hormone Therapy', image: '/categories/trtsupport.webp', text: 'Individualized hormone replacement designed around your labs, your symptoms, and your goals.' },
+  {
+    label: 'Obstetrics', dark: false,
+    tagline: 'Personal pregnancy care, from first visit to delivery.',
+    image: '/categories/pregnancy.webp',
+    learnHref: 'https://www.toplinemd.com/beaches-obgyn/ob-services/',
+  },
+  {
+    label: 'Minimally Invasive Surgery', dark: true,
+    tagline: 'Advanced laparoscopic and da Vinci robotic techniques.',
+    image: '/davinci/xi-front.jpg',
+    learnHref: '/misclone',
+  },
+  {
+    label: 'Gynecology', dark: false,
+    tagline: 'Preventive and wellness care built on lasting relationships.',
+    image: '/categories/nutrition.webp',
+    learnHref: 'https://www.toplinemd.com/beaches-obgyn/gyn-services/',
+  },
+  {
+    label: 'Menopause & Hormone Health', dark: true,
+    tagline: 'Evidence-based hormone therapy, tailored to how you feel.',
+    image: '/categories/perimenopause.webp',
+    learnHref: 'https://www.toplinemd.com/beaches-obgyn/gyn-services/',
+  },
 ]
 
 function initials(name) {
@@ -223,26 +245,61 @@ export default function MainClonePage() {
         </div>
       </section>
 
-      {/* ---------- Services ---------- */}
+      {/* ---------- Services (Apple-style tile grid) ---------- */}
       <section id="services" className="bg-surface-container-low">
-        <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-24 md:py-32">
+        <div className="max-w-[1240px] mx-auto px-5 md:px-10 pt-24 md:pt-32 pb-8 text-center">
           <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-5">Services</p>
-          <h2 className="font-headline text-3xl md:text-5xl leading-[1.15] max-w-2xl">
+          <h2 className="font-headline text-3xl md:text-5xl leading-[1.15]">
             Comprehensive care, delivered personally.
           </h2>
+        </div>
 
-          <div className="mt-16 space-y-20">
-            {SERVICES.map((s, i) => (
-              <div key={s.label} className={`grid md:grid-cols-2 gap-8 md:gap-16 items-center ${i % 2 ? 'md:[direction:rtl]' : ''}`}>
-                <div className="[direction:ltr]">
-                  <img src={s.image} alt={s.label} className="rounded-lg shadow-lift w-full aspect-[4/3] object-cover" />
+        <div className="max-w-[1240px] mx-auto px-5 md:px-10 pb-24 md:pb-32">
+          <div className="grid sm:grid-cols-2 gap-3 md:gap-4">
+            {SERVICES.map(s => (
+              <article
+                key={s.label}
+                className={`group relative flex flex-col items-center overflow-hidden rounded-2xl min-h-[30rem] md:min-h-[34rem] ${
+                  s.dark ? 'bg-primary text-on-primary' : 'bg-surface-container-lowest text-on-surface'
+                }`}
+              >
+                <div className="pt-12 md:pt-14 px-6 text-center">
+                  <h3 className="font-headline text-3xl md:text-4xl leading-tight">{s.label}</h3>
+                  <p className={`mt-3 text-sm md:text-base ${s.dark ? 'text-on-primary/80' : 'text-on-surface-variant'}`}>
+                    {s.tagline}
+                  </p>
+                  <div className="mt-6 flex items-center justify-center gap-3">
+                    <a
+                      href={s.learnHref}
+                      className={`font-label text-[11px] tracking-[0.15em] uppercase px-5 py-2.5 rounded-full transition ${
+                        s.dark
+                          ? 'bg-surface text-primary hover:bg-primary-container hover:text-on-primary-container'
+                          : 'bg-primary text-on-primary hover:bg-primary-container hover:text-on-primary-container'
+                      }`}
+                    >
+                      Learn more
+                    </a>
+                    <a
+                      href={APPOINTMENT_URL}
+                      className={`font-label text-[11px] tracking-[0.15em] uppercase px-5 py-2.5 rounded-full border transition ${
+                        s.dark
+                          ? 'border-on-primary/40 text-on-primary hover:bg-on-primary/10'
+                          : 'border-primary/40 text-primary hover:bg-primary/5'
+                      }`}
+                    >
+                      Schedule
+                    </a>
+                  </div>
                 </div>
-                <div className="[direction:ltr]">
-                  <h3 className="font-label text-sm tracking-[0.25em] uppercase text-primary">{s.label}</h3>
-                  <div className="w-10 h-px bg-secondary-fixed-dim my-5" />
-                  <p className="text-on-surface-variant md:text-lg leading-relaxed max-w-md">{s.text}</p>
+                <div className="mt-8 w-full flex-1 overflow-hidden">
+                  <img
+                    src={s.image}
+                    alt={s.label}
+                    loading="lazy"
+                    className="w-full h-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                  />
                 </div>
-              </div>
+              </article>
             ))}
           </div>
         </div>

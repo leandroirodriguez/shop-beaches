@@ -37,7 +37,34 @@ export function PracticeHeader() {
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-40 bg-surface-container-lowest/95 backdrop-blur border-b border-outline-variant/40">
+    <>
+      {/* Utility bar — phone/text on the left, alliance membership on the right */}
+      <div className="bg-primary text-on-primary">
+        <div className="max-w-[1240px] mx-auto px-5 md:px-10 h-10 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-5 font-label text-[11px] tracking-[0.12em]">
+            <a href="tel:9042419775" className="flex items-center gap-2 hover:text-primary-container transition whitespace-nowrap">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.22a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              CALL (904) 241-9775
+            </a>
+            <a href="sms:9044416725" className="hidden sm:flex items-center gap-2 hover:text-primary-container transition whitespace-nowrap">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              TEXT (904) 441-6725
+            </a>
+          </div>
+          <a
+            href="https://www.toplinemd.com/"
+            className="hidden md:block font-label text-[11px] tracking-[0.12em] opacity-85 hover:opacity-100 hover:text-primary-container transition whitespace-nowrap"
+          >
+            PROUD MEMBER OF TOPLINE MD ALLIANCE
+          </a>
+        </div>
+      </div>
+
+      <header className="sticky top-0 z-40 bg-surface-container-lowest/95 backdrop-blur border-b border-outline-variant/40">
       <div className="max-w-[1240px] mx-auto px-5 md:px-10 h-20 md:h-24 flex items-center gap-6">
         <a href="/mainclone" aria-label="Beaches OBGYN">
           <img src={logo} alt="Beaches OBGYN — TopLine MD Alliance" className="block h-14 md:h-16 w-auto" />
@@ -110,7 +137,8 @@ export function PracticeHeader() {
           </a>
         </nav>
       )}
-    </header>
+      </header>
+    </>
   )
 }
 

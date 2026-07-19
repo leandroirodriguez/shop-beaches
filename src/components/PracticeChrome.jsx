@@ -55,12 +55,6 @@ export function PracticeHeader() {
               TEXT (904) 441-6725
             </a>
           </div>
-          <a
-            href="https://www.toplinemd.com/"
-            className="hidden md:block font-label text-[11px] tracking-[0.12em] opacity-85 hover:opacity-100 hover:text-primary-container transition whitespace-nowrap"
-          >
-            PROUD MEMBER OF TOPLINE MD ALLIANCE
-          </a>
         </div>
       </div>
 

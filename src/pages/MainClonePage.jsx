@@ -21,10 +21,7 @@ const PHYSICIANS = [
   { name: 'Rebekah Richmond', photo: '/providers/richmond.jpg', credentials: 'MD, FACOG', interests: 'Hormone replacement, contraceptive management; Chair, Women & Children Services at Baptist Beaches', tenure: 'Jacksonville native' },
   { name: 'Leandro Rodriguez', photo: '/providers/rodriguez.jpg', credentials: 'MD, FACOG', interests: 'Gynecologic ultrasound, minimally invasive procedures; Chief of Medical Staff at Baptist Beaches', tenure: 'Practicing since 2005' },
   { name: 'Joana Fischer', photo: '/providers/fischer.jpg', credentials: 'MD', interests: 'Menstrual health education, family planning · Bilingual, English & Spanish', tenure: null },
-  { name: 'Rakiya Miller', photo: '/providers/miller.jpg', credentials: 'MD', interests: 'Minimally invasive gynecology — AAGL Excellence Award recipient', tenure: null },
-  { name: 'Malinda Moussa', photo: '/providers/moussa.jpg', credentials: 'APRN', interests: 'Comprehensive women’s healthcare across every stage of life', tenure: 'With the practice since 2000' },
-  { name: 'Gabrielle Ahrens', photo: '/providers/ahrens.jpg', credentials: 'APRN', interests: 'Labor and delivery, postpartum support — DAISY Award recipient, 2024', tenure: null },
-  { name: 'Katherine Dorsey', photo: '/providers/dorsey.jpg', credentials: 'APRN', interests: 'Maternal and newborn care; former Director, Maternal Newborn Service Line', tenure: '15+ years in healthcare' },
+  { name: 'Rakiya Miller', photo: '/providers/miller.jpg', credentials: 'MD, FACOG', interests: 'Minimally invasive gynecology — AAGL Excellence Award recipient', tenure: null },
 ]
 
 // Soft neutral portrait backdrops, cycled across the carousel
@@ -147,7 +144,7 @@ export default function MainClonePage() {
 
         <div
           ref={trackRef}
-          className="mt-12 flex gap-5 overflow-x-auto snap-x snap-mandatory pb-4 -mx-5 px-5 md:mx-0 md:px-0 scroll-smooth"
+          className="mt-12 flex gap-5 overflow-x-auto snap-x snap-mandatory pb-4 -mx-5 pl-8 pr-5 md:mx-0 md:pl-0 md:pr-0 scroll-smooth scroll-pl-8 md:scroll-pl-0"
         >
           {PHYSICIANS.map((d, i) => (
             <article key={d.name} className="snap-start shrink-0 w-72 md:w-80">

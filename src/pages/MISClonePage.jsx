@@ -171,22 +171,6 @@ export default function MISClonePage() {
         </div>
       </section>
 
-      {/* ---------- Procedures ---------- */}
-      <section className="max-w-[1240px] mx-auto px-5 md:px-10 py-24 md:py-32">
-        <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-5">Our Procedures</p>
-        <h2 className="font-headline text-3xl md:text-5xl leading-[1.15] max-w-2xl">
-          How we make surgery smaller.
-        </h2>
-        <div className="mt-16 grid md:grid-cols-2 gap-x-16 gap-y-12">
-          {PROCEDURES.map(p => (
-            <div key={p.title} className="border-t border-outline-variant/60 pt-8">
-              <h3 className="font-headline text-xl leading-snug">{p.title}</h3>
-              <p className="mt-3 text-sm md:text-base text-on-surface-variant leading-relaxed">{p.text}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* ---------- Robotic surgery in numbers (video background) ---------- */}
       <section className="relative overflow-hidden">
         <video
@@ -199,7 +183,7 @@ export default function MISClonePage() {
           playsInline
           aria-hidden="true"
         />
-        <div className="absolute inset-0 bg-[#1e3a44]/80" />
+        <div className="absolute inset-0 bg-[#1e3a44]/55" />
         <div className="relative z-10 max-w-[1240px] mx-auto px-5 md:px-10 py-24 md:py-36 text-on-primary">
           <p className="font-label text-xs tracking-[0.25em] uppercase text-primary-container mb-5">
             Robotic-Assisted Surgery
@@ -235,6 +219,22 @@ export default function MISClonePage() {
             complications can occur; your physician will help you weigh the
             risks and benefits for your situation.
           </p>
+        </div>
+      </section>
+
+      {/* ---------- Procedures ---------- */}
+      <section className="max-w-[1240px] mx-auto px-5 md:px-10 py-24 md:py-32">
+        <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-5">Our Procedures</p>
+        <h2 className="font-headline text-3xl md:text-5xl leading-[1.15] max-w-2xl">
+          How we make surgery smaller.
+        </h2>
+        <div className="mt-16 grid md:grid-cols-2 gap-x-16 gap-y-12">
+          {PROCEDURES.map(p => (
+            <div key={p.title} className="border-t border-outline-variant/60 pt-8">
+              <h3 className="font-headline text-xl leading-snug">{p.title}</h3>
+              <p className="mt-3 text-sm md:text-base text-on-surface-variant leading-relaxed">{p.text}</p>
+            </div>
+          ))}
         </div>
       </section>
 

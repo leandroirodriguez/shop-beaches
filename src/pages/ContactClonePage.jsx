@@ -36,25 +36,32 @@ export default function ContactClonePage() {
       <PracticeHeader />
 
       {/* ---------- Hero ---------- */}
-      <section className="relative overflow-hidden bg-surface-container-low">
-        <Starfish className="absolute -top-24 -right-24 w-96 h-96 text-primary-fixed-dim opacity-10 rotate-12 pointer-events-none" />
-        <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-24 md:py-36">
-          <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-6">
-            Contact Us
-          </p>
-          <h1 className="font-headline text-4xl md:text-6xl leading-[1.08] max-w-3xl">
-            Two offices, minutes from the ocean.
-          </h1>
-          <p className="mt-8 text-on-surface-variant md:text-lg leading-relaxed max-w-2xl">
-            Call, text, or stop by — whichever is easiest for you. We&rsquo;re
-            here Monday through Friday at both of our Jacksonville locations.
-          </p>
-          <a
-            href={APPOINTMENT_URL}
-            className="mt-10 inline-block font-label text-xs tracking-[0.2em] uppercase bg-primary text-on-primary px-8 py-4 rounded-full shadow-lift hover:bg-primary-container hover:text-on-primary-container transition"
-          >
-            Request an Appointment
-          </a>
+      <section className="relative overflow-hidden min-h-[420px] h-[55vh] max-h-[640px]">
+        <img
+          src="/hero/pier.jpg"
+          alt="The Jacksonville Beach pier at sunrise"
+          className="absolute inset-0 w-full h-full object-cover object-[center_60%]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1e3a44]/80 via-[#1e3a44]/45 to-[#1e3a44]/10" />
+        <div className="relative z-10 max-w-[1240px] mx-auto px-5 md:px-10 h-full flex items-center">
+          <div className="max-w-2xl">
+            <p className="font-label text-xs tracking-[0.25em] uppercase text-primary-container mb-6">
+              Contact Us
+            </p>
+            <h1 className="font-headline text-4xl md:text-5xl xl:text-6xl leading-[1.08] text-white">
+              Two offices, minutes from the ocean.
+            </h1>
+            <p className="mt-6 text-lg text-white/85 leading-relaxed max-w-lg">
+              Call, text, or stop by — whichever is easiest for you. We&rsquo;re
+              here Monday through Friday at both of our Jacksonville locations.
+            </p>
+            <a
+              href={APPOINTMENT_URL}
+              className="mt-10 inline-block font-label text-xs tracking-[0.2em] uppercase bg-surface text-primary px-8 py-4 rounded-full shadow-lift hover:bg-primary-container hover:text-on-primary-container transition"
+            >
+              Request an Appointment
+            </a>
+          </div>
         </div>
       </section>
 

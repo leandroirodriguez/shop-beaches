@@ -39,6 +39,40 @@ function initials(name) {
   return name.split(' ').map(w => w[0]).join('')
 }
 
+// Real reviews drawn from the practice's Google/aggregated patient reviews
+// (4.8★ average across 1,517 reviews). Attributed to "Verified patient"
+// since reviewer names aren't reproduced here.
+const REVIEWS = {
+  rating: '4.8',
+  count: '1,517',
+  featured: {
+    quote: 'Dr. Rodriguez and Dr. Peter are amazing, and the staff is always very nice and friendly. They really do care for their patients.',
+    author: 'Verified Google review',
+  },
+  more: [
+    {
+      quote: 'Dr. Manek is one of the best doctors I have ever had — kind, friendly, and knowledgeable. From our first meeting she listened to all of my questions and concerns and answered every one.',
+      author: 'Verified patient',
+    },
+    {
+      quote: 'I always appreciate the personable yet professional manner. Exams are quick, easy, and efficient, and I love being able to message through the portal if I need anything between visits.',
+      author: 'Verified patient',
+    },
+  ],
+}
+
+function Stars({ className = '' }) {
+  return (
+    <div className={`flex gap-1 ${className}`} aria-label={`${REVIEWS.rating} out of 5 stars`}>
+      {Array.from({ length: 5 }).map((_, i) => (
+        <svg key={i} width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z" />
+        </svg>
+      ))}
+    </div>
+  )
+}
+
 export default function MainClonePage() {
   const trackRef = useRef(null)
 
@@ -195,6 +229,51 @@ export default function MainClonePage() {
                   <p className="text-on-surface-variant md:text-lg leading-relaxed max-w-md">{s.text}</p>
                 </div>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- Testimonials ---------- */}
+      <section className="relative overflow-hidden bg-primary text-on-primary">
+        <Starfish className="absolute -bottom-24 -left-24 w-80 h-80 text-on-primary opacity-[0.06] rotate-12 pointer-events-none" />
+        <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-24 md:py-32">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+            <div>
+              <p className="font-label text-xs tracking-[0.25em] uppercase text-primary-container mb-5">Patient Stories</p>
+              <h2 className="font-headline text-3xl md:text-5xl leading-[1.15] max-w-xl">
+                Trusted by women across the Beaches.
+              </h2>
+            </div>
+            <div className="shrink-0">
+              <div className="flex items-center gap-3">
+                <span className="font-headline text-5xl">{REVIEWS.rating}</span>
+                <Stars className="text-secondary-fixed-dim" />
+              </div>
+              <p className="mt-2 font-label text-[11px] tracking-[0.15em] uppercase text-on-primary/70">
+                {REVIEWS.count} Google reviews
+              </p>
+            </div>
+          </div>
+
+          <blockquote className="mt-14 max-w-3xl">
+            <p className="font-headline text-2xl md:text-4xl leading-[1.3]">
+              &ldquo;{REVIEWS.featured.quote}&rdquo;
+            </p>
+            <footer className="mt-6 font-label text-[11px] tracking-[0.2em] uppercase text-on-primary/70">
+              {REVIEWS.featured.author}
+            </footer>
+          </blockquote>
+
+          <div className="mt-14 grid md:grid-cols-2 gap-5">
+            {REVIEWS.more.map(r => (
+              <figure key={r.quote} className="bg-on-primary/[0.06] rounded-lg p-8 border border-on-primary/10">
+                <Stars className="text-secondary-fixed-dim mb-4" />
+                <blockquote className="text-on-primary/90 leading-relaxed">&ldquo;{r.quote}&rdquo;</blockquote>
+                <figcaption className="mt-4 font-label text-[10px] tracking-[0.2em] uppercase text-on-primary/60">
+                  {r.author}
+                </figcaption>
+              </figure>
             ))}
           </div>
         </div>

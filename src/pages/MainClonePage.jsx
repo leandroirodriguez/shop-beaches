@@ -62,9 +62,12 @@ const REVIEWS = {
   ],
 }
 
-// Two distinct reviews at random, chosen once per mount
+// The first review stays featured on top; two distinct reviews from the
+// rest are chosen at random once per mount for the cards below.
+const FEATURED_REVIEW = REVIEWS.pool[0]
+
 function pickTwoReviews() {
-  const pool = REVIEWS.pool
+  const pool = REVIEWS.pool.slice(1)
   const i = Math.floor(Math.random() * pool.length)
   let j = Math.floor(Math.random() * (pool.length - 1))
   if (j >= i) j += 1
@@ -266,6 +269,15 @@ export default function MainClonePage() {
               </p>
             </div>
           </div>
+
+          <blockquote className="mt-14 max-w-3xl">
+            <p className="font-headline text-2xl md:text-4xl leading-[1.3]">
+              &ldquo;{FEATURED_REVIEW.quote}&rdquo;
+            </p>
+            <footer className="mt-6 font-label text-[11px] tracking-[0.2em] uppercase text-on-primary/70">
+              {FEATURED_REVIEW.author}
+            </footer>
+          </blockquote>
 
           <div className="mt-14 grid md:grid-cols-2 gap-5">
             {shownReviews.map(r => (

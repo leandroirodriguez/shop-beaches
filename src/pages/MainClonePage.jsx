@@ -25,9 +25,9 @@ const PORTRAIT_TINTS = ['bg-primary-container/50', 'bg-secondary-container/60', 
 // to light. Source each image on the matching background color below.
 const SERVICES = [
   {
-    label: 'Obstetrics', dark: false, bg: '#EDDACA',
+    label: 'Obstetrics', dark: false, bg: '#D9CFC3',
     tagline: 'Personal pregnancy care, from first visit to delivery.',
-    image: '/categories/pregnancy.webp',
+    image: '/services/pregnancy.jpg',
     learnHref: 'https://www.toplinemd.com/beaches-obgyn/ob-services/',
   },
   {
@@ -37,15 +37,15 @@ const SERVICES = [
     learnHref: '/misclone',
   },
   {
-    label: 'Gynecology', dark: false, bg: '#B7B3A3',
+    label: 'Gynecology', dark: false, bg: '#BFCEC7',
     tagline: 'Preventive and wellness care built on lasting relationships.',
-    image: '/categories/nutrition.webp',
+    image: '/services/gyn.jpg',
     learnHref: 'https://www.toplinemd.com/beaches-obgyn/gyn-services/',
   },
   {
-    label: 'Menopause & Hormone Health', dark: false, bg: '#EFDACA',
+    label: 'Menopause & Hormone Health', dark: true, bg: '#2F5665',
     tagline: 'Evidence-based hormone therapy, tailored to how you feel.',
-    image: '/categories/perimenopause.webp',
+    image: '/services/meno.jpg',
     learnHref: 'https://www.toplinemd.com/beaches-obgyn/gyn-services/',
   },
 ]
@@ -243,7 +243,7 @@ export default function MainClonePage() {
               <article
                 key={s.label}
                 style={{ backgroundColor: s.bg }}
-                className={`group relative flex flex-col items-center overflow-hidden aspect-[4/5] sm:aspect-square sm:min-h-[30rem] ${
+                className={`group relative flex flex-col items-center overflow-hidden aspect-[4/5] sm:aspect-square sm:min-h-[30rem] xl:aspect-auto xl:h-[38rem] ${
                   s.dark ? 'text-white' : 'text-on-surface'
                 }`}
               >
@@ -280,7 +280,7 @@ export default function MainClonePage() {
                     src={s.image}
                     alt={s.label}
                     loading="lazy"
-                    className="w-full h-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                    className="w-full h-full object-cover object-top transition duration-500 group-hover:scale-[1.03]"
                   />
                 </div>
               </article>
@@ -322,7 +322,7 @@ export default function MainClonePage() {
 
           <div className="mt-14 grid md:grid-cols-2 gap-5">
             {shownReviews.map(r => (
-              <figure key={r.quote} className="flex flex-col bg-on-primary/[0.06] rounded-lg p-8 md:p-10 border border-on-primary/10">
+              <figure key={r.quote} className="flex flex-col bg-on-primary/[0.06] p-8 md:p-10 border border-on-primary/10">
                 <Stars className="text-secondary-fixed-dim mb-5" />
                 <blockquote className="font-headline text-xl md:text-2xl leading-[1.4] text-on-primary/95">
                   &ldquo;{r.quote}&rdquo;

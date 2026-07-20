@@ -117,7 +117,7 @@ export default function ContactClonePage() {
           </h2>
           <div className="mt-14 grid md:grid-cols-2 gap-8">
             {LOCATIONS.map(l => (
-              <div key={l.name} className="bg-surface-container-lowest rounded-lg shadow-lift overflow-hidden">
+              <div key={l.name} className="bg-surface-container-lowest shadow-lift overflow-hidden">
                 <iframe
                   title={`Map to our ${l.name} office`}
                   src={`https://maps.google.com/maps?q=${encodeURIComponent(l.query)}&z=14&output=embed`}

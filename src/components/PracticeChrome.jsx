@@ -84,7 +84,7 @@ export function PracticeHeader() {
               </a>
               {item.children && (
                 <div className="absolute left-1/2 -translate-x-1/2 top-full pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition">
-                  <div className="bg-surface-container-lowest shadow-lift rounded-lg border border-outline-variant/40 py-2 min-w-56">
+                  <div className="bg-surface-container-lowest shadow-lift border border-outline-variant/40 py-2 min-w-56">
                     {item.children.map(c => (
                       <a
                         key={c.label}

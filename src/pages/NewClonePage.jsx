@@ -91,7 +91,7 @@ export default function NewClonePage() {
             <a
               key={m.label}
               href={m.href}
-              className="group bg-surface-container-low rounded-lg p-8 md:p-10 hover:shadow-lift transition"
+              className="group bg-surface-container-low p-8 md:p-10 hover:shadow-lift transition"
             >
               <p className="font-label text-[10px] tracking-[0.2em] uppercase text-secondary">{m.label}</p>
               <p className="mt-3 font-headline text-2xl text-primary group-hover:underline">{m.value}</p>
@@ -141,7 +141,7 @@ export default function NewClonePage() {
             <a
               key={f.name}
               href={LIVE_NEW_PATIENTS}
-              className="group flex items-center gap-6 bg-surface-container-low rounded-lg p-7 hover:shadow-lift transition"
+              className="group flex items-center gap-6 bg-surface-container-low p-7 hover:shadow-lift transition"
             >
               <span className="shrink-0 w-12 h-12 rounded-full bg-primary-container/60 text-primary flex items-center justify-center">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">

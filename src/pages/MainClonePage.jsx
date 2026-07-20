@@ -25,7 +25,7 @@ const PORTRAIT_TINTS = ['bg-primary-container/50', 'bg-secondary-container/60', 
 // to light. Source each image on the matching background color below.
 const SERVICES = [
   {
-    label: 'Obstetrics', dark: false, bg: '#D9CFC3', zoom: 1.1,
+    label: 'Obstetrics', dark: false, bg: '#D9CFC3',
     tagline: 'Personal pregnancy care, from first visit to delivery.',
     image: '/services/pregnancy.jpg',
     learnHref: 'https://www.toplinemd.com/beaches-obgyn/ob-services/',
@@ -37,13 +37,13 @@ const SERVICES = [
     learnHref: '/misclone',
   },
   {
-    label: 'Gynecology', dark: false, bg: '#BFCEC7', zoom: 1.1,
+    label: 'Gynecology', dark: false, bg: '#BFCEC7',
     tagline: 'Preventive and wellness care built on lasting relationships.',
     image: '/services/gyn.jpg',
     learnHref: 'https://www.toplinemd.com/beaches-obgyn/gyn-services/',
   },
   {
-    label: 'Menopause & Hormone Health', dark: true, bg: '#2F5665', zoom: 1.1,
+    label: 'Menopause & Hormone Health', dark: true, bg: '#2F5665',
     tagline: 'Evidence-based hormone therapy, tailored to how you feel.',
     image: '/services/meno.jpg',
     learnHref: 'https://www.toplinemd.com/beaches-obgyn/gyn-services/',
@@ -258,7 +258,7 @@ export default function MainClonePage() {
                     </a>
                   </div>
                 </div>
-                <div className="relative mt-8 w-full flex-1">
+                <div className="relative mt-8 w-full flex-1 min-h-0">
                   {s.cover && (
                     <div
                       className="absolute inset-x-0 top-0 h-16 z-10 pointer-events-none"
@@ -269,8 +269,7 @@ export default function MainClonePage() {
                     src={s.image}
                     alt={s.label}
                     loading="lazy"
-                    style={{ '--z': s.zoom || 1, '--zs': Math.min(s.zoom || 1, 1.08) }}
-                    className={`w-full h-full object-bottom origin-bottom [transform:scale(var(--zs))] sm:[transform:scale(var(--z))] ${s.cover ? 'object-cover' : 'object-contain'}`}
+                    className={`absolute inset-0 w-full h-full object-bottom ${s.cover ? 'object-cover' : 'object-contain'}`}
                   />
                 </div>
               </article>

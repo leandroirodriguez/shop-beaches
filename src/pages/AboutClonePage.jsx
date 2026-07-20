@@ -97,7 +97,7 @@ function BioRow({ bio, flip }) {
           src={bio.photo}
           alt={`Portrait of ${bio.name}`}
           loading="lazy"
-          className="rounded-lg shadow-lift w-full aspect-[4/5] object-cover"
+          className="shadow-lift w-full aspect-[4/5] object-cover"
         />
       </div>
       <div className="[direction:ltr]">

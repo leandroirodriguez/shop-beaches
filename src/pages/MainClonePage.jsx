@@ -201,7 +201,7 @@ export default function MainClonePage() {
         >
           {PHYSICIANS.map((d, i) => (
             <article key={d.name} className="snap-start shrink-0 w-72 md:w-80">
-              <div className={`aspect-[4/5] rounded-lg ${PORTRAIT_TINTS[i % PORTRAIT_TINTS.length]} relative overflow-hidden flex items-center justify-center`}>
+              <div className={`aspect-[4/5] ${PORTRAIT_TINTS[i % PORTRAIT_TINTS.length]} relative overflow-hidden flex items-center justify-center`}>
                 {d.photo ? (
                   <img
                     src={d.photo}

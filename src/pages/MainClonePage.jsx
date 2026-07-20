@@ -20,30 +20,30 @@ const PHYSICIANS = [
 // Soft neutral portrait backdrops, cycled across the carousel
 const PORTRAIT_TINTS = ['bg-primary-container/50', 'bg-secondary-container/60', 'bg-tertiary-container/70']
 
-// Apple-style tile grid. `dark` tiles get the deep-teal background with
-// light text; light tiles use the surface color. Each needs a bottom
-// image whose look suits its tile — see the image spec in the section.
+// Apple-style tile grid. Each tile's `bg` should match its image's
+// background so the photo blends into the tile. `dark` flips text/buttons
+// to light. Source each image on the matching background color below.
 const SERVICES = [
   {
-    label: 'Obstetrics', dark: false,
+    label: 'Obstetrics', dark: false, bg: '#EDDACA',
     tagline: 'Personal pregnancy care, from first visit to delivery.',
     image: '/categories/pregnancy.webp',
     learnHref: 'https://www.toplinemd.com/beaches-obgyn/ob-services/',
   },
   {
-    label: 'Minimally Invasive Surgery', dark: true,
+    label: 'Minimally Invasive Surgery', dark: true, bg: '#000000',
     tagline: 'Advanced laparoscopic and da Vinci robotic techniques.',
-    image: '/davinci/xi-front.jpg',
+    image: '/davinci/surgery-tile.jpg',
     learnHref: '/misclone',
   },
   {
-    label: 'Gynecology', dark: false,
+    label: 'Gynecology', dark: false, bg: '#B7B3A3',
     tagline: 'Preventive and wellness care built on lasting relationships.',
     image: '/categories/nutrition.webp',
     learnHref: 'https://www.toplinemd.com/beaches-obgyn/gyn-services/',
   },
   {
-    label: 'Menopause & Hormone Health', dark: true,
+    label: 'Menopause & Hormone Health', dark: false, bg: '#EFDACA',
     tagline: 'Evidence-based hormone therapy, tailored to how you feel.',
     image: '/categories/perimenopause.webp',
     learnHref: 'https://www.toplinemd.com/beaches-obgyn/gyn-services/',
@@ -237,26 +237,39 @@ export default function MainClonePage() {
           </h2>
         </div>
 
-        <div className="pb-24 md:pb-32">
-          <div className="grid sm:grid-cols-2 gap-2">
+        <div className="px-4 md:px-6 pb-24 md:pb-32">
+          <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
             {SERVICES.map(s => (
               <article
                 key={s.label}
-                className="group relative flex flex-col items-center overflow-hidden bg-surface-container-lowest text-on-surface aspect-[4/5] sm:aspect-auto sm:min-h-[34rem] lg:min-h-[42rem]"
+                style={{ backgroundColor: s.bg }}
+                className={`group relative flex flex-col items-center overflow-hidden rounded-xl aspect-[4/5] sm:aspect-auto sm:min-h-[34rem] lg:min-h-[42rem] ${
+                  s.dark ? 'text-white' : 'text-on-surface'
+                }`}
               >
                 <div className="pt-12 md:pt-14 px-6 text-center">
                   <h3 className="font-headline text-3xl md:text-4xl leading-tight">{s.label}</h3>
-                  <p className="mt-3 text-sm md:text-base text-on-surface-variant">{s.tagline}</p>
+                  <p className={`mt-3 text-sm md:text-base ${s.dark ? 'text-white/75' : 'text-on-surface-variant'}`}>
+                    {s.tagline}
+                  </p>
                   <div className="mt-6 flex items-center justify-center gap-3">
                     <a
                       href={s.learnHref}
-                      className="font-label text-[11px] tracking-[0.15em] uppercase bg-primary text-on-primary px-5 py-2.5 rounded-full hover:bg-primary-container hover:text-on-primary-container transition"
+                      className={`font-label text-[11px] tracking-[0.15em] uppercase px-5 py-2.5 rounded-full transition ${
+                        s.dark
+                          ? 'bg-white text-on-surface hover:bg-white/85'
+                          : 'bg-primary text-on-primary hover:bg-primary-container hover:text-on-primary-container'
+                      }`}
                     >
                       Learn more
                     </a>
                     <a
                       href={APPOINTMENT_URL}
-                      className="font-label text-[11px] tracking-[0.15em] uppercase border border-primary/40 text-primary px-5 py-2.5 rounded-full hover:bg-primary/5 transition"
+                      className={`font-label text-[11px] tracking-[0.15em] uppercase px-5 py-2.5 rounded-full border transition ${
+                        s.dark
+                          ? 'border-white/40 text-white hover:bg-white/10'
+                          : 'border-primary/40 text-primary hover:bg-primary/5'
+                      }`}
                     >
                       Schedule
                     </a>

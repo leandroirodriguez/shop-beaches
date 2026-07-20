@@ -230,14 +230,7 @@ export default function MainClonePage() {
 
       {/* ---------- Services (Apple-style tile grid) ---------- */}
       <section id="services" className="bg-surface-container-low">
-        <div className="max-w-[1240px] mx-auto px-5 md:px-10 pt-24 md:pt-32 pb-8 text-center">
-          <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-5">Services</p>
-          <h2 className="font-headline text-3xl md:text-5xl leading-[1.15]">
-            Comprehensive care, delivered personally.
-          </h2>
-        </div>
-
-        <div className="max-w-[1680px] mx-auto px-4 md:px-6 pb-24 md:pb-32">
+        <div className="max-w-[1680px] mx-auto px-4 md:px-6 py-24 md:py-32">
           <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
             {SERVICES.map(s => (
               <article
@@ -252,26 +245,16 @@ export default function MainClonePage() {
                   <p className={`mt-3 text-sm md:text-base ${s.dark ? 'text-white/75' : 'text-on-surface-variant'}`}>
                     {s.tagline}
                   </p>
-                  <div className="mt-6 flex items-center justify-center gap-3">
+                  <div className="mt-6 flex items-center justify-center">
                     <a
                       href={s.learnHref}
-                      className={`font-label text-[11px] tracking-[0.15em] uppercase px-5 py-2.5 rounded-full transition ${
+                      className={`font-label text-[11px] tracking-[0.15em] uppercase px-6 py-2.5 rounded-full transition ${
                         s.dark
                           ? 'bg-white text-on-surface hover:bg-white/85'
                           : 'bg-primary text-on-primary hover:bg-primary-container hover:text-on-primary-container'
                       }`}
                     >
                       Learn more
-                    </a>
-                    <a
-                      href={APPOINTMENT_URL}
-                      className={`font-label text-[11px] tracking-[0.15em] uppercase px-5 py-2.5 rounded-full border transition ${
-                        s.dark
-                          ? 'border-white/40 text-white hover:bg-white/10'
-                          : 'border-primary/40 text-primary hover:bg-primary/5'
-                      }`}
-                    >
-                      Schedule
                     </a>
                   </div>
                 </div>

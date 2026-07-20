@@ -25,25 +25,25 @@ const PORTRAIT_TINTS = ['bg-primary-container/50', 'bg-secondary-container/60', 
 // to light. Source each image on the matching background color below.
 const SERVICES = [
   {
-    label: 'Obstetrics', dark: false, bg: '#D9CFC3', zoom: 1.22,
+    label: 'Obstetrics', dark: false, bg: '#D9CFC3', zoom: 1.1,
     tagline: 'Personal pregnancy care, from first visit to delivery.',
     image: '/services/pregnancy.jpg',
     learnHref: 'https://www.toplinemd.com/beaches-obgyn/ob-services/',
   },
   {
-    label: 'Minimally Invasive Surgery', dark: true, bg: '#333E43', zoom: 1.06,
+    label: 'Minimally Invasive Surgery', dark: true, bg: '#16242C', cover: true,
     tagline: 'Advanced laparoscopic and da Vinci robotic techniques.',
     image: '/davinci/surgery-tile-teal.jpg',
     learnHref: '/misclone',
   },
   {
-    label: 'Gynecology', dark: false, bg: '#BFCEC7', zoom: 1.22,
+    label: 'Gynecology', dark: false, bg: '#BFCEC7', zoom: 1.1,
     tagline: 'Preventive and wellness care built on lasting relationships.',
     image: '/services/gyn.jpg',
     learnHref: 'https://www.toplinemd.com/beaches-obgyn/gyn-services/',
   },
   {
-    label: 'Menopause & Hormone Health', dark: true, bg: '#2F5665', zoom: 1.22,
+    label: 'Menopause & Hormone Health', dark: true, bg: '#2F5665', zoom: 1.1,
     tagline: 'Evidence-based hormone therapy, tailored to how you feel.',
     image: '/services/meno.jpg',
     learnHref: 'https://www.toplinemd.com/beaches-obgyn/gyn-services/',
@@ -150,7 +150,7 @@ export default function MainClonePage() {
       {/* ---------- Why Beaches OBGYN ---------- */}
       <section className="relative overflow-hidden bg-surface-container-low">
         <Starfish className="absolute -top-20 -left-24 w-72 h-72 text-primary-fixed-dim opacity-10 rotate-12 pointer-events-none" />
-        <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-24 md:py-32">
+        <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-12 md:py-16">
           <div className="max-w-3xl">
             <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-5">Why Beaches OBGYN</p>
             <h2 className="font-headline text-3xl md:text-5xl leading-[1.15]">
@@ -169,7 +169,7 @@ export default function MainClonePage() {
       </section>
 
       {/* ---------- Physicians ---------- */}
-      <section id="physicians" className="max-w-[1240px] mx-auto px-5 md:px-10 py-24 md:py-32">
+      <section id="physicians" className="max-w-[1240px] mx-auto px-5 md:px-10 py-12 md:py-16">
         <div className="flex items-end justify-between gap-6">
           <div>
             <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-5">Our Team</p>
@@ -258,13 +258,19 @@ export default function MainClonePage() {
                     </a>
                   </div>
                 </div>
-                <div className="mt-8 w-full flex-1">
+                <div className="relative mt-8 w-full flex-1">
+                  {s.cover && (
+                    <div
+                      className="absolute inset-x-0 top-0 h-16 z-10 pointer-events-none"
+                      style={{ background: `linear-gradient(to bottom, ${s.bg}, transparent)` }}
+                    />
+                  )}
                   <img
                     src={s.image}
                     alt={s.label}
                     loading="lazy"
                     style={{ '--z': s.zoom || 1, '--zs': Math.min(s.zoom || 1, 1.08) }}
-                    className="w-full h-full object-contain object-bottom origin-bottom [transform:scale(var(--zs))] sm:[transform:scale(var(--z))]"
+                    className={`w-full h-full object-bottom origin-bottom [transform:scale(var(--zs))] sm:[transform:scale(var(--z))] ${s.cover ? 'object-cover' : 'object-contain'}`}
                   />
                 </div>
               </article>
@@ -276,7 +282,7 @@ export default function MainClonePage() {
       {/* ---------- Testimonials ---------- */}
       <section className="relative overflow-hidden bg-primary text-on-primary">
         <Starfish className="absolute -bottom-24 -left-24 w-80 h-80 text-on-primary opacity-[0.06] rotate-12 pointer-events-none" />
-        <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-24 md:py-32">
+        <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-12 md:py-16">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <div>
               <p className="font-label text-xs tracking-[0.25em] uppercase text-primary-container mb-5">Patient Stories</p>
@@ -321,7 +327,7 @@ export default function MainClonePage() {
       </section>
 
       {/* ---------- Closing CTA ---------- */}
-      <section className="max-w-[1240px] mx-auto px-5 md:px-10 py-24 md:py-32 text-center">
+      <section className="max-w-[1240px] mx-auto px-5 md:px-10 py-12 md:py-16 text-center">
         <Starfish className="w-12 h-12 mx-auto mb-6 text-primary" />
         <h2 className="font-headline text-3xl md:text-5xl leading-[1.15]">
           With you every step of the way.

@@ -243,7 +243,7 @@ export default function MainClonePage() {
               <article
                 key={s.label}
                 style={{ backgroundColor: s.bg }}
-                className={`group relative flex flex-col items-center overflow-hidden rounded-xl aspect-[4/5] sm:aspect-auto sm:min-h-[34rem] lg:min-h-[42rem] ${
+                className={`group relative flex flex-col items-center overflow-hidden aspect-[4/5] sm:aspect-auto sm:min-h-[34rem] lg:min-h-[42rem] ${
                   s.dark ? 'text-white' : 'text-on-surface'
                 }`}
               >

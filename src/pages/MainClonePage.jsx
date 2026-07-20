@@ -25,25 +25,25 @@ const PORTRAIT_TINTS = ['bg-primary-container/50', 'bg-secondary-container/60', 
 // to light. Source each image on the matching background color below.
 const SERVICES = [
   {
-    label: 'Obstetrics', dark: false, bg: '#D9CFC3',
+    label: 'Obstetrics', dark: false, bg: '#D9CFC3', zoom: 1.22,
     tagline: 'Personal pregnancy care, from first visit to delivery.',
     image: '/services/pregnancy.jpg',
     learnHref: 'https://www.toplinemd.com/beaches-obgyn/ob-services/',
   },
   {
-    label: 'Minimally Invasive Surgery', dark: true, bg: '#000000',
+    label: 'Minimally Invasive Surgery', dark: true, bg: '#333E43', zoom: 1.06,
     tagline: 'Advanced laparoscopic and da Vinci robotic techniques.',
-    image: '/davinci/surgery-tile.jpg',
+    image: '/davinci/surgery-tile-teal.jpg',
     learnHref: '/misclone',
   },
   {
-    label: 'Gynecology', dark: false, bg: '#BFCEC7',
+    label: 'Gynecology', dark: false, bg: '#BFCEC7', zoom: 1.22,
     tagline: 'Preventive and wellness care built on lasting relationships.',
     image: '/services/gyn.jpg',
     learnHref: 'https://www.toplinemd.com/beaches-obgyn/gyn-services/',
   },
   {
-    label: 'Menopause & Hormone Health', dark: true, bg: '#2F5665',
+    label: 'Menopause & Hormone Health', dark: true, bg: '#2F5665', zoom: 1.22,
     tagline: 'Evidence-based hormone therapy, tailored to how you feel.',
     image: '/services/meno.jpg',
     learnHref: 'https://www.toplinemd.com/beaches-obgyn/gyn-services/',
@@ -240,7 +240,7 @@ export default function MainClonePage() {
                   s.dark ? 'text-white' : 'text-on-surface'
                 }`}
               >
-                <div className="pt-12 md:pt-14 px-6 text-center">
+                <div className="relative z-10 pt-12 md:pt-14 px-6 text-center">
                   <h3 className="font-headline text-3xl md:text-4xl leading-tight">{s.label}</h3>
                   <p className={`mt-3 text-sm md:text-base ${s.dark ? 'text-white/75' : 'text-on-surface-variant'}`}>
                     {s.tagline}
@@ -258,12 +258,13 @@ export default function MainClonePage() {
                     </a>
                   </div>
                 </div>
-                <div className="mt-8 w-full flex-1 overflow-hidden">
+                <div className="mt-8 w-full flex-1">
                   <img
                     src={s.image}
                     alt={s.label}
                     loading="lazy"
-                    className="w-full h-full object-contain object-bottom"
+                    style={{ '--z': s.zoom || 1, '--zs': Math.min(s.zoom || 1, 1.08) }}
+                    className="w-full h-full object-contain object-bottom origin-bottom [transform:scale(var(--zs))] sm:[transform:scale(var(--z))]"
                   />
                 </div>
               </article>

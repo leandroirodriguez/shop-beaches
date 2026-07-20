@@ -263,7 +263,7 @@ export default function MainClonePage() {
                     src={s.image}
                     alt={s.label}
                     loading="lazy"
-                    className="w-full h-full object-cover object-top transition duration-500 group-hover:scale-[1.03]"
+                    className="w-full h-full object-contain object-bottom transition duration-500 group-hover:scale-[1.03]"
                   />
                 </div>
               </article>

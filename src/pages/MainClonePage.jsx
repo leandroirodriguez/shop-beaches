@@ -31,7 +31,7 @@ const SERVICES = [
     learnHref: 'https://www.toplinemd.com/beaches-obgyn/ob-services/',
   },
   {
-    label: 'Minimally Invasive Surgery', dark: true, bg: '#16242C', cover: true,
+    label: 'Minimally Invasive Surgery', dark: true, bg: '#16242C',
     tagline: 'Advanced laparoscopic and da Vinci robotic techniques.',
     image: '/davinci/surgery-tile-teal.jpg',
     learnHref: '/misclone',

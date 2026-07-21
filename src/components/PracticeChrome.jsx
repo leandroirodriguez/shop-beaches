@@ -16,7 +16,7 @@ const NAV = [
     href: '/mainclone#services',
     children: [
       { label: 'GYN Services', href: 'https://www.toplinemd.com/beaches-obgyn/gyn-services/' },
-      { label: 'OB Services', href: 'https://www.toplinemd.com/beaches-obgyn/ob-services/' },
+      { label: 'OB Services', href: '/obclone' },
       { label: 'Minimally Invasive Surgery', href: '/misclone' },
     ],
   },

@@ -22,6 +22,7 @@ import MISClonePage from './pages/MISClonePage'
 import AboutClonePage from './pages/AboutClonePage'
 import NewClonePage from './pages/NewClonePage'
 import ContactClonePage from './pages/ContactClonePage'
+import OBClonePage from './pages/OBClonePage'
 
 export default function App() {
   const { pathname } = useLocation()
@@ -29,7 +30,7 @@ export default function App() {
   // without the shop chrome
   const isStandalone =
     pathname.startsWith('/admin') ||
-    ['/mainclone', '/misclone', '/aboutclone', '/newclone', '/contactclone'].includes(pathname)
+    ['/mainclone', '/misclone', '/aboutclone', '/newclone', '/contactclone', '/obclone'].includes(pathname)
 
   return (
     <>
@@ -41,6 +42,7 @@ export default function App() {
         <Route path="/aboutclone" element={<AboutClonePage />} />
         <Route path="/newclone" element={<NewClonePage />} />
         <Route path="/contactclone" element={<ContactClonePage />} />
+        <Route path="/obclone" element={<OBClonePage />} />
         <Route path="/shop" element={<AllProductsPage />} />
         <Route path="/category/:slug" element={<CategoryPage />} />
         <Route path="/product/:slug" element={<ProductPage />} />

@@ -52,8 +52,9 @@ const DELIVERY_TEAM = [
 function PhoneFrame({ src, label, alt }) {
   return (
     <figure className="flex flex-col items-center w-full">
-      <div className="relative w-full rounded-[2rem] bg-gradient-to-b from-[#e9ebee] via-[#c2c6cc] to-[#d6d9dd] p-[3.5%] shadow-[0_30px_60px_-18px_rgba(0,0,0,0.5)] ring-1 ring-black/10">
-        <div className="relative overflow-hidden rounded-[1.5rem] bg-black ring-1 ring-black/40">
+      {/* Thin titanium rail → hairline black edge → screen */}
+      <div className="relative w-full rounded-[2.2rem] bg-gradient-to-b from-[#dfe2e6] via-[#b9bdc3] to-[#cfd2d7] p-[1.6%] shadow-[0_30px_60px_-18px_rgba(0,0,0,0.5)] ring-1 ring-black/20">
+        <div className="relative overflow-hidden rounded-[1.95rem] bg-black ring-1 ring-black/60">
           <img src={src} alt={alt} loading="lazy" className="block w-full" />
           {/* Dynamic island */}
           <div className="absolute top-[2.5%] left-1/2 -translate-x-1/2 h-[3.5%] w-[32%] rounded-full bg-black" />

@@ -2,7 +2,7 @@
 // /misclone): navigation mirroring toplinemd.com/beaches-obgyn's menu and
 // a footer reproducing its content, both styled in the coastal palette.
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import logo from '../assets/toplinelogo.png'
 import allianceLogo from '../assets/topline-alliance.png'
 import Starfish from './Starfish'
@@ -37,6 +37,23 @@ const NAV = [
 
 export function PracticeHeader() {
   const [menuOpen, setMenuOpen] = useState(false)
+  // Collapse the lockup to the starfish mark once the page is scrolled, or
+  // whenever the lockup and full menu would collide (the lg–xl band)
+  const [compact, setCompact] = useState(false)
+
+  useEffect(() => {
+    const band = window.matchMedia('(min-width: 1024px) and (max-width: 1279px)')
+    const update = () => setCompact(window.scrollY > 40 || band.matches)
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
+    band.addEventListener('change', update)
+    return () => {
+      window.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
+      band.removeEventListener('change', update)
+    }
+  }, [])
 
   return (
     <>
@@ -62,15 +79,27 @@ export function PracticeHeader() {
 
       <header className="sticky top-0 z-40 bg-surface-container-lowest/95 backdrop-blur border-b border-outline-variant/40">
       <div className="max-w-[1240px] mx-auto px-5 md:px-10 h-20 md:h-24 flex items-center gap-6">
-        <a href="/mainclone" aria-label="Beaches OBGYN" className="shrink-0">
-          {/* Full lockup when there's room; compact starfish mark at the
-              lg–xl widths where the lockup and full menu would collide */}
+        {/* Full lockup at rest; crossfades to the starfish mark on scroll
+            (and in the lg–xl band where lockup + menu would collide) */}
+        <a
+          href="/mainclone"
+          aria-label="Beaches OBGYN"
+          className={`relative shrink-0 flex items-center h-[4.2rem] md:h-[4.8rem] transition-[width] duration-300 ${
+            compact ? 'w-12 md:w-14' : 'w-[11rem] md:w-[13rem]'
+          }`}
+        >
           <img
             src={logo}
             alt="Beaches OBGYN — TopLine MD Alliance"
-            className="h-[4.2rem] md:h-[4.8rem] w-auto block lg:hidden xl:block"
+            className={`absolute left-0 h-full w-auto max-w-none transition-opacity duration-300 ${
+              compact ? 'opacity-0' : 'opacity-100'
+            }`}
           />
-          <Starfish className="hidden lg:block xl:hidden w-14 h-14 text-primary" />
+          <Starfish
+            className={`absolute left-0 w-12 h-12 md:w-14 md:h-14 text-primary transition-opacity duration-300 ${
+              compact ? 'opacity-100' : 'opacity-0 pointer-events-none'
+            }`}
+          />
         </a>
 
         <nav className="hidden lg:flex items-center gap-6 ml-auto">

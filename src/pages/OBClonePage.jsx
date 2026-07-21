@@ -34,9 +34,9 @@ const APP_FEATURES = [
 ]
 
 const SCREENSHOTS = [
-  { src: '/app/home.png', alt: 'Prenatal Guide home screen showing gestational age, due date, and baby size' },
-  { src: '/app/timeline.png', alt: 'Timeline screen mapping prenatal visits, labs, and ultrasounds week by week' },
-  { src: '/app/meds.png', alt: 'Medication guide screen listing safe options and medications to avoid' },
+  { src: '/app/home.png', label: 'Track your week', alt: 'Prenatal Guide home screen showing gestational age, due date, and baby size' },
+  { src: '/app/timeline.png', label: 'Visit timeline', alt: 'Timeline screen mapping prenatal visits, labs, and ultrasounds week by week' },
+  { src: '/app/meds.png', label: 'Medication guide', alt: 'Medication guide screen listing safe options and medications to avoid' },
 ]
 
 const DELIVERY_TEAM = [
@@ -48,18 +48,23 @@ const DELIVERY_TEAM = [
   { name: 'Rakiya Miller', credentials: 'MD, FACOG', photo: '/providers/miller.jpg' },
 ]
 
-// Simulated iPhone: dark titanium bezel, rounded screen, dynamic-island pill
-function PhoneFrame({ src, alt, className = '' }) {
+// Simulated iPhone: brushed-silver titanium bezel, rounded screen, island
+function PhoneFrame({ src, label, alt }) {
   return (
-    <div className={`shrink-0 ${className}`}>
-      <div className="relative rounded-[2rem] bg-[#0e0e0e] p-[3%] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] ring-1 ring-white/10">
-        <div className="relative overflow-hidden rounded-[1.5rem] bg-black">
+    <figure className="flex flex-col items-center w-full">
+      <div className="relative w-full rounded-[2rem] bg-gradient-to-b from-[#e9ebee] via-[#c2c6cc] to-[#d6d9dd] p-[3.5%] shadow-[0_30px_60px_-18px_rgba(0,0,0,0.5)] ring-1 ring-black/10">
+        <div className="relative overflow-hidden rounded-[1.5rem] bg-black ring-1 ring-black/40">
           <img src={src} alt={alt} loading="lazy" className="block w-full" />
           {/* Dynamic island */}
           <div className="absolute top-[2.5%] left-1/2 -translate-x-1/2 h-[3.5%] w-[32%] rounded-full bg-black" />
         </div>
       </div>
-    </div>
+      {label && (
+        <figcaption className="mt-5 font-label text-[11px] tracking-[0.18em] uppercase text-on-primary/70">
+          {label}
+        </figcaption>
+      )}
+    </figure>
   )
 }
 
@@ -148,48 +153,44 @@ export default function OBClonePage() {
       <section className="relative overflow-hidden bg-primary text-on-primary">
         <Starfish className="absolute -bottom-32 -left-28 w-[26rem] h-[26rem] text-on-primary opacity-[0.05] -rotate-12 pointer-events-none" />
         <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-16 md:py-24">
-          <div className="grid lg:grid-cols-2 gap-14 lg:gap-16 items-center">
-            <div>
-              <p className="font-label text-xs tracking-[0.25em] uppercase text-primary-container mb-5">
-                For Our Patients
-              </p>
-              <h2 className="font-headline text-3xl md:text-5xl leading-[1.15]">
-                The Beaches OBGYN Prenatal Guide, in your pocket.
-              </h2>
-              <p className="mt-6 text-on-primary/80 md:text-lg leading-relaxed max-w-xl">
-                Every Beaches OBGYN patient gets our Prenatal Guide app — a
-                calm, week-by-week companion for your entire pregnancy, built
-                by the physicians who will deliver your baby.
-              </p>
-              <dl className="mt-9 space-y-5 max-w-xl">
-                {APP_FEATURES.map(f => (
-                  <div key={f.title} className="flex gap-4">
-                    <span className="mt-2 w-1.5 h-1.5 rounded-full bg-primary-container shrink-0" />
-                    <div>
-                      <dt className="font-headline text-lg leading-snug">{f.title}</dt>
-                      <dd className="mt-1 text-sm text-on-primary/70 leading-relaxed">{f.text}</dd>
-                    </div>
-                  </div>
-                ))}
-              </dl>
-              <p className="mt-9 text-sm text-on-primary/70">
-                Free for patients — ask for your invite at your first prenatal
-                visit.
-              </p>
-            </div>
-
-            {/* Simulated phones — center raised, sides lowered for depth */}
-            <div className="flex justify-center items-end gap-3 md:gap-5">
-              {SCREENSHOTS.map((s, i) => (
-                <PhoneFrame
-                  key={s.src}
-                  src={s.src}
-                  alt={s.alt}
-                  className={i === 1 ? 'w-1/3 -translate-y-6 z-10' : 'w-[30%] translate-y-4 opacity-95'}
-                />
-              ))}
-            </div>
+          {/* Centered intro */}
+          <div className="max-w-2xl mx-auto text-center">
+            <p className="font-label text-xs tracking-[0.25em] uppercase text-primary-container mb-5">
+              For Our Patients
+            </p>
+            <h2 className="font-headline text-3xl md:text-5xl leading-[1.15]">
+              The Beaches OBGYN Prenatal Guide, in your pocket.
+            </h2>
+            <p className="mt-6 text-on-primary/80 md:text-lg leading-relaxed">
+              Every Beaches OBGYN patient gets our Prenatal Guide app — a calm,
+              week-by-week companion for your entire pregnancy, built by the
+              physicians who will deliver your baby.
+            </p>
           </div>
+
+          {/* Even row of three phones, aligned */}
+          <div className="mt-16 flex justify-center items-start gap-4 sm:gap-6 md:gap-10 max-w-3xl mx-auto">
+            {SCREENSHOTS.map(s => (
+              <PhoneFrame key={s.src} src={s.src} label={s.label} alt={s.alt} />
+            ))}
+          </div>
+
+          {/* Feature grid */}
+          <dl className="mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-8 max-w-4xl mx-auto">
+            {APP_FEATURES.map(f => (
+              <div key={f.title} className="flex gap-4">
+                <span className="mt-2 w-1.5 h-1.5 rounded-full bg-primary-container shrink-0" />
+                <div>
+                  <dt className="font-headline text-lg leading-snug">{f.title}</dt>
+                  <dd className="mt-1 text-sm text-on-primary/70 leading-relaxed">{f.text}</dd>
+                </div>
+              </div>
+            ))}
+          </dl>
+
+          <p className="mt-12 text-center text-sm text-on-primary/70">
+            Free for patients — ask for your invite at your first prenatal visit.
+          </p>
         </div>
       </section>
 

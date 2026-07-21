@@ -3,6 +3,7 @@
 // Beaches OBGYN Prenatal Guide app. Not linked from anywhere; reachable
 // only at /obclone.
 
+import { useState } from 'react'
 import Starfish from '../components/Starfish'
 import { PracticeHeader, PracticeFooter, APPOINTMENT_URL } from '../components/PracticeChrome'
 
@@ -70,6 +71,9 @@ function PhoneFrame({ src, label, alt }) {
 }
 
 export default function OBClonePage() {
+  const [activeShot, setActiveShot] = useState(0)
+  const n = SCREENSHOTS.length
+
   return (
     <div className="bg-surface text-on-surface">
       <PracticeHeader />
@@ -169,11 +173,72 @@ export default function OBClonePage() {
             </p>
           </div>
 
-          {/* Even row of three phones, aligned */}
-          <div className="mt-16 flex justify-center items-start gap-4 sm:gap-6 md:gap-10 max-w-3xl mx-auto">
+          {/* Desktop: even aligned row */}
+          <div className="mt-16 hidden md:flex justify-center items-start gap-6 md:gap-10 max-w-3xl mx-auto">
             {SCREENSHOTS.map(s => (
               <PhoneFrame key={s.src} src={s.src} label={s.label} alt={s.alt} />
             ))}
+          </div>
+
+          {/* Mobile: overlapping carousel — center phone in front, others peek behind */}
+          <div className="mt-12 md:hidden">
+            <div className="relative mx-auto max-w-[20rem] h-[30rem]">
+              {SCREENSHOTS.map((s, i) => {
+                const rel = (i - activeShot + n) % n // 0 active, 1 right, 2 left
+                const isActive = rel === 0
+                const offset = rel === 1 ? 60 : -60
+                return (
+                  <div
+                    key={s.src}
+                    className={`absolute top-1/2 left-1/2 transition-all duration-300 ease-out ${
+                      isActive ? 'z-20 w-[64%]' : 'z-10 w-[58%] opacity-40'
+                    }`}
+                    style={{
+                      transform: isActive
+                        ? 'translate(-50%, -50%)'
+                        : `translate(calc(-50% + ${offset}%), -50%) scale(0.9)`,
+                    }}
+                    aria-hidden={!isActive}
+                  >
+                    <PhoneFrame src={s.src} alt={s.alt} />
+                  </div>
+                )
+              })}
+            </div>
+
+            {/* Carousel controls */}
+            <div className="mt-8 flex items-center justify-center gap-5">
+              <button
+                type="button"
+                onClick={() => setActiveShot((activeShot + n - 1) % n)}
+                aria-label="Previous screen"
+                className="w-11 h-11 rounded-full bg-white text-primary flex items-center justify-center shadow-lift hover:bg-primary-container transition"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 6l-6 6 6 6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+              </button>
+              <div className="flex gap-2">
+                {SCREENSHOTS.map((s, i) => (
+                  <button
+                    key={s.src}
+                    type="button"
+                    onClick={() => setActiveShot(i)}
+                    aria-label={`Show ${s.label}`}
+                    className={`w-2 h-2 rounded-full transition ${i === activeShot ? 'bg-primary-container' : 'bg-on-primary/30'}`}
+                  />
+                ))}
+              </div>
+              <button
+                type="button"
+                onClick={() => setActiveShot((activeShot + 1) % n)}
+                aria-label="Next screen"
+                className="w-11 h-11 rounded-full bg-white text-primary flex items-center justify-center shadow-lift hover:bg-primary-container transition"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+              </button>
+            </div>
+            <p className="mt-6 text-center font-label text-[11px] tracking-[0.18em] uppercase text-on-primary/80">
+              {SCREENSHOTS[activeShot].label}
+            </p>
           </div>
 
           {/* Feature grid */}

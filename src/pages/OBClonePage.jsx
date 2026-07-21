@@ -48,6 +48,21 @@ const DELIVERY_TEAM = [
   { name: 'Rakiya Miller', credentials: 'MD, FACOG', photo: '/providers/miller.jpg' },
 ]
 
+// Simulated iPhone: dark titanium bezel, rounded screen, dynamic-island pill
+function PhoneFrame({ src, alt, className = '' }) {
+  return (
+    <div className={`shrink-0 ${className}`}>
+      <div className="relative rounded-[2rem] bg-[#0e0e0e] p-[3%] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] ring-1 ring-white/10">
+        <div className="relative overflow-hidden rounded-[1.5rem] bg-black">
+          <img src={src} alt={alt} loading="lazy" className="block w-full" />
+          {/* Dynamic island */}
+          <div className="absolute top-[2.5%] left-1/2 -translate-x-1/2 h-[3.5%] w-[32%] rounded-full bg-black" />
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function OBClonePage() {
   return (
     <div className="bg-surface text-on-surface">
@@ -100,46 +115,48 @@ export default function OBClonePage() {
       </section>
 
       {/* ---------- Delivery team ---------- */}
-      <section className="max-w-[1240px] mx-auto px-5 md:px-10 py-12 md:py-16">
-        <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-5">Your Delivery Team</p>
-        <h2 className="font-headline text-3xl md:text-5xl leading-[1.15] max-w-2xl">
-          The only faces you&rsquo;ll see on delivery day.
-        </h2>
-        <p className="mt-6 text-on-surface-variant md:text-lg leading-relaxed max-w-2xl">
-          These six physicians practice obstetrics at Baptist Beaches — and
-          you&rsquo;ll meet each of them during your prenatal visits, so
-          whoever is on call when your baby arrives is already someone you
-          know.
-        </p>
-        <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-5">
-          {DELIVERY_TEAM.map(d => (
-            <div key={d.name}>
-              <img
-                src={d.photo}
-                alt={`Portrait of ${d.name}`}
-                loading="lazy"
-                className="w-full aspect-[4/5] object-cover shadow-lift"
-              />
-              <h3 className="mt-4 font-headline text-lg leading-snug">{d.name}</h3>
-              <p className="mt-0.5 text-sm text-on-surface-variant">{d.credentials}</p>
-            </div>
-          ))}
+      <section className="bg-surface-container-low">
+        <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-12 md:py-16">
+          <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-5">Your Delivery Team</p>
+          <h2 className="font-headline text-3xl md:text-5xl leading-[1.15] max-w-2xl">
+            The only faces you&rsquo;ll see on delivery day.
+          </h2>
+          <p className="mt-6 text-on-surface-variant md:text-lg leading-relaxed max-w-2xl">
+            These six physicians practice obstetrics at Baptist Beaches — and
+            you&rsquo;ll meet each of them during your prenatal visits, so
+            whoever is on call when your baby arrives is already someone you
+            know.
+          </p>
+          <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-5">
+            {DELIVERY_TEAM.map(d => (
+              <div key={d.name}>
+                <img
+                  src={d.photo}
+                  alt={`Portrait of ${d.name}`}
+                  loading="lazy"
+                  className="w-full aspect-[4/5] object-cover shadow-lift"
+                />
+                <h3 className="mt-4 font-headline text-lg leading-snug">{d.name}</h3>
+                <p className="mt-0.5 text-sm text-on-surface-variant">{d.credentials}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* ---------- Prenatal Guide app ---------- */}
-      <section className="relative overflow-hidden bg-surface-container-low">
-        <Starfish className="absolute -top-24 -right-24 w-96 h-96 text-primary-fixed-dim opacity-10 rotate-12 pointer-events-none" />
-        <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-12 md:py-16">
-          <div className="grid lg:grid-cols-[1fr_1.2fr] gap-12 lg:gap-16 items-center">
+      <section className="relative overflow-hidden bg-primary text-on-primary">
+        <Starfish className="absolute -bottom-32 -left-28 w-[26rem] h-[26rem] text-on-primary opacity-[0.05] -rotate-12 pointer-events-none" />
+        <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-16 md:py-24">
+          <div className="grid lg:grid-cols-2 gap-14 lg:gap-16 items-center">
             <div>
-              <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-5">
+              <p className="font-label text-xs tracking-[0.25em] uppercase text-primary-container mb-5">
                 For Our Patients
               </p>
               <h2 className="font-headline text-3xl md:text-5xl leading-[1.15]">
                 The Beaches OBGYN Prenatal Guide, in your pocket.
               </h2>
-              <p className="mt-6 text-on-surface-variant md:text-lg leading-relaxed max-w-xl">
+              <p className="mt-6 text-on-primary/80 md:text-lg leading-relaxed max-w-xl">
                 Every Beaches OBGYN patient gets our Prenatal Guide app — a
                 calm, week-by-week companion for your entire pregnancy, built
                 by the physicians who will deliver your baby.
@@ -147,29 +164,28 @@ export default function OBClonePage() {
               <dl className="mt-9 space-y-5 max-w-xl">
                 {APP_FEATURES.map(f => (
                   <div key={f.title} className="flex gap-4">
-                    <span className="mt-2 w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
+                    <span className="mt-2 w-1.5 h-1.5 rounded-full bg-primary-container shrink-0" />
                     <div>
                       <dt className="font-headline text-lg leading-snug">{f.title}</dt>
-                      <dd className="mt-1 text-sm text-on-surface-variant leading-relaxed">{f.text}</dd>
+                      <dd className="mt-1 text-sm text-on-primary/70 leading-relaxed">{f.text}</dd>
                     </div>
                   </div>
                 ))}
               </dl>
-              <p className="mt-9 text-sm text-on-surface-variant">
+              <p className="mt-9 text-sm text-on-primary/70">
                 Free for patients — ask for your invite at your first prenatal
                 visit.
               </p>
             </div>
 
-            {/* Three phones, center one raised */}
-            <div className="grid grid-cols-3 gap-3 md:gap-5 items-start">
+            {/* Simulated phones — center raised, sides lowered for depth */}
+            <div className="flex justify-center items-end gap-3 md:gap-5">
               {SCREENSHOTS.map((s, i) => (
-                <img
+                <PhoneFrame
                   key={s.src}
                   src={s.src}
                   alt={s.alt}
-                  loading="lazy"
-                  className={`w-full shadow-lift border border-outline-variant/40 ${i === 1 ? '' : 'mt-10'}`}
+                  className={i === 1 ? 'w-1/3 -translate-y-6 z-10' : 'w-[30%] translate-y-4 opacity-95'}
                 />
               ))}
             </div>

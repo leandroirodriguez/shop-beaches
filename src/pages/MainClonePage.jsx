@@ -230,7 +230,7 @@ export default function MainClonePage() {
 
       {/* ---------- Services (Apple-style tile grid) ---------- */}
       <section id="services" className="bg-surface-container-low">
-        <div className="max-w-[1680px] mx-auto px-4 md:px-6 py-4 md:py-6">
+        <div className="max-w-[1680px] mx-auto px-0 sm:px-4 md:px-6 py-4 md:py-6">
           <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
             {SERVICES.map(s => (
               <article

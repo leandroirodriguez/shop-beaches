@@ -39,6 +39,15 @@ const SCREENSHOTS = [
   { src: '/app/meds.png', alt: 'Medication guide screen listing safe options and medications to avoid' },
 ]
 
+const DELIVERY_TEAM = [
+  { name: 'Leandro Rodriguez', credentials: 'MD, FACOG', photo: '/providers/rodriguez.jpg' },
+  { name: 'Laura Peter', credentials: 'DO, FACOG', photo: '/providers/peter.jpg' },
+  { name: 'Kimberly Manek', credentials: 'MD, FACOG', photo: '/providers/manek.jpg' },
+  { name: 'Anita Patel', credentials: 'MD, FACOG', photo: '/providers/patel.jpg' },
+  { name: 'Joana Fischer', credentials: 'MD', photo: '/providers/fischer.jpg' },
+  { name: 'Rakiya Miller', credentials: 'MD, FACOG', photo: '/providers/miller.jpg' },
+]
+
 export default function OBClonePage() {
   return (
     <div className="bg-surface text-on-surface">
@@ -85,6 +94,34 @@ export default function OBClonePage() {
             <div key={j.title} className="border-t border-outline-variant/60 pt-7">
               <h3 className="font-headline text-xl leading-snug">{j.title}</h3>
               <p className="mt-3 text-sm md:text-base text-on-surface-variant leading-relaxed">{j.text}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ---------- Delivery team ---------- */}
+      <section className="max-w-[1240px] mx-auto px-5 md:px-10 py-12 md:py-16">
+        <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-5">Your Delivery Team</p>
+        <h2 className="font-headline text-3xl md:text-5xl leading-[1.15] max-w-2xl">
+          The only faces you&rsquo;ll see on delivery day.
+        </h2>
+        <p className="mt-6 text-on-surface-variant md:text-lg leading-relaxed max-w-2xl">
+          These six physicians practice obstetrics at Baptist Beaches — and
+          you&rsquo;ll meet each of them during your prenatal visits, so
+          whoever is on call when your baby arrives is already someone you
+          know.
+        </p>
+        <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-5">
+          {DELIVERY_TEAM.map(d => (
+            <div key={d.name}>
+              <img
+                src={d.photo}
+                alt={`Portrait of ${d.name}`}
+                loading="lazy"
+                className="w-full aspect-[4/5] object-cover shadow-lift"
+              />
+              <h3 className="mt-4 font-headline text-lg leading-snug">{d.name}</h3>
+              <p className="mt-0.5 text-sm text-on-surface-variant">{d.credentials}</p>
             </div>
           ))}
         </div>

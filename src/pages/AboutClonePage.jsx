@@ -9,32 +9,11 @@ import { PracticeHeader, PracticeFooter, APPOINTMENT_URL } from '../components/P
 
 const PHYSICIAN_BIOS = [
   {
-    name: 'John Bordelon', credentials: 'MD, FACOG', photo: '/providers/bordelon.jpg',
-    training: 'LSU School of Medicine; residency at LSU Medical Center. In private gynecologic practice in Jacksonville since 1991.',
-    interests: 'Endometrial ablation, laparoscopy, hysteroscopy, and da Vinci robotic surgery.',
-    personal: 'Gardener, cyclist, and admirer of antique automobiles.',
-    fullBio: 'Dr. Bordelon trained at Louisiana State University and has practiced gynecology in Jacksonville since 1991. His clinical interests encompass endometrial ablation, tubal occlusion, advanced laparoscopy, hysteroscopy, da Vinci robotic surgery, and adolescent gynecology. Outside of medicine, he enjoys gardening, biking, beachcombing, antique automobiles, and cruising the beaches with the top down.',
-  },
-  {
-    name: 'Kimberly Manek', credentials: 'MD, FACOG', photo: '/providers/manek.jpg',
-    training: 'University of Miami, magna cum laude; Florida State University College of Medicine; chief resident at Sacred Heart Hospital, Pensacola.',
-    interests: 'Gynecologic oncology and long-term patient relationships across every stage of care.',
-    personal: 'Has volunteered on medical service trips to India and the Philippines.',
-    fullBio: 'A Daytona Beach native, Dr. Manek earned her degree from the University of Miami with Magna Cum Laude honors and completed her residency at Sacred Heart Hospital in Pensacola as Chief Resident, where she was recognized as Outstanding Resident in Gynecologic Oncology. She values building long-term relationships with her patients across every stage of care, and has conducted medical volunteer work in India and the Philippines.',
-  },
-  {
-    name: 'Laura Peter', credentials: 'DO, FACOG', photo: '/providers/peter.jpg',
-    training: 'University of Florida; Nova Southeastern University College of Osteopathic Medicine; training at Summa Health Akron City.',
-    interests: 'Whole-person osteopathic approach to obstetrics and gynecology. Member, ACOG.',
-    personal: 'Jacksonville Beach resident who loves cooking and traveling.',
-    fullBio: 'Dr. Peter was born in Pennsylvania, raised in Virginia, and trained at Summa Health Akron City in Ohio. She earned her degree from Nova Southeastern University College of Osteopathic Medicine and brings a whole-person osteopathic approach to obstetrics and gynecology. She now resides in Jacksonville Beach and enjoys cooking, traveling, and spending time with family and friends.',
-  },
-  {
-    name: 'Anita Patel', credentials: 'MD, FACOG', photo: '/providers/patel.jpg',
-    training: 'Jacksonville native. University of Florida (microbiology); University of Central Florida College of Medicine; residency at Stony Brook University Hospital, where she earned the Golden Scalpel award for surgical excellence.',
-    interests: 'Minimally invasive surgery, abnormal uterine bleeding, pelvic pain, and menopause care.',
-    personal: 'Active in international medical mission work.',
-    fullBio: 'A Jacksonville native, Dr. Patel earned her medical degree on scholarship from the University of Central Florida College of Medicine and completed her residency at Stony Brook University Hospital, where she received the Golden Scalpel award. She specializes in minimally invasive surgery, abnormal uterine bleeding, pelvic pain, and menopause care, and participates in medical mission work through Global Health Ministries.',
+    name: 'Leandro Rodriguez', credentials: 'MD, FACOG', photo: '/providers/rodriguez.jpg',
+    training: 'Born in Puerto Rico. University of Puerto Rico School of Medicine, magna cum laude, Alpha Omega Alpha; residency at the University of Miami, serving as administrative chief resident.',
+    interests: 'Gynecologic ultrasound, minimally invasive treatment of heavy menstrual bleeding, and da Vinci robotic surgery.',
+    personal: 'Cyclist and golfer.',
+    fullBio: 'Born in Puerto Rico, Dr. Rodriguez graduated Magna Cum Laude from the University of Puerto Rico and completed his residency at the University of Miami as Administrative Chief Resident. He has practiced in Jacksonville Beach since 2005 and currently serves as Chief of the Medical Staff at Baptist Beaches. His clinical interests include gynecologic ultrasound, minimally invasive treatment of heavy menstrual bleeding, advanced laparoscopy, and da Vinci robotic surgery.',
   },
   {
     name: 'Rebekah Richmond', credentials: 'MD, FACOG', photo: '/providers/richmond.jpg',
@@ -44,11 +23,32 @@ const PHYSICIAN_BIOS = [
     fullBio: 'Dr. Richmond is a Jacksonville native who studied Neuroscience at the University of Florida and completed her OB/GYN training there. She serves as Chairman for the Department of Women and Children Services at Baptist Beaches Medical Center. Her expertise includes hormone replacement, contraceptive management, sexual dysfunction, and infertility. She enjoys fishing, skiing, and Gator football.',
   },
   {
-    name: 'Leandro Rodriguez', credentials: 'MD, FACOG', photo: '/providers/rodriguez.jpg',
-    training: 'Born in Puerto Rico. University of Puerto Rico School of Medicine, magna cum laude, Alpha Omega Alpha; residency at the University of Miami, serving as administrative chief resident.',
-    interests: 'Gynecologic ultrasound, minimally invasive treatment of heavy menstrual bleeding, and da Vinci robotic surgery.',
-    personal: 'Cyclist and golfer.',
-    fullBio: 'Born in Puerto Rico, Dr. Rodriguez graduated Magna Cum Laude from the University of Puerto Rico and completed his residency at the University of Miami as Administrative Chief Resident. He has practiced in Jacksonville Beach since 2005 and currently serves as Chief of the Medical Staff at Baptist Beaches. His clinical interests include gynecologic ultrasound, minimally invasive treatment of heavy menstrual bleeding, advanced laparoscopy, and da Vinci robotic surgery.',
+    name: 'Laura Peter', credentials: 'DO, FACOG', photo: '/providers/peter.jpg',
+    training: 'University of Florida; Nova Southeastern University College of Osteopathic Medicine; training at Summa Health Akron City.',
+    interests: 'Whole-person osteopathic approach to obstetrics and gynecology. Member, ACOG.',
+    personal: 'Jacksonville Beach resident who loves cooking and traveling.',
+    fullBio: 'Dr. Peter was born in Pennsylvania, raised in Virginia, and trained at Summa Health Akron City in Ohio. She earned her degree from Nova Southeastern University College of Osteopathic Medicine and brings a whole-person osteopathic approach to obstetrics and gynecology. She now resides in Jacksonville Beach and enjoys cooking, traveling, and spending time with family and friends.',
+  },
+  {
+    name: 'Kimberly Manek', credentials: 'MD, FACOG', photo: '/providers/manek.jpg',
+    training: 'University of Miami, magna cum laude; Florida State University College of Medicine; chief resident at Sacred Heart Hospital, Pensacola.',
+    interests: 'Gynecologic oncology and long-term patient relationships across every stage of care.',
+    personal: 'Has volunteered on medical service trips to India and the Philippines.',
+    fullBio: 'A Daytona Beach native, Dr. Manek earned her degree from the University of Miami with Magna Cum Laude honors and completed her residency at Sacred Heart Hospital in Pensacola as Chief Resident, where she was recognized as Outstanding Resident in Gynecologic Oncology. She values building long-term relationships with her patients across every stage of care, and has conducted medical volunteer work in India and the Philippines.',
+  },
+  {
+    name: 'Anita Patel', credentials: 'MD, FACOG', photo: '/providers/patel.jpg',
+    training: 'Jacksonville native. University of Florida (microbiology); University of Central Florida College of Medicine; residency at Stony Brook University Hospital, where she earned the Golden Scalpel award for surgical excellence.',
+    interests: 'Minimally invasive surgery, abnormal uterine bleeding, pelvic pain, and menopause care.',
+    personal: 'Active in international medical mission work.',
+    fullBio: 'A Jacksonville native, Dr. Patel earned her medical degree on scholarship from the University of Central Florida College of Medicine and completed her residency at Stony Brook University Hospital, where she received the Golden Scalpel award. She specializes in minimally invasive surgery, abnormal uterine bleeding, pelvic pain, and menopause care, and participates in medical mission work through Global Health Ministries.',
+  },
+  {
+    name: 'Rakiya Miller', credentials: 'MD, FACOG', photo: '/providers/miller.jpg',
+    training: 'Wofford College, cum laude; University of South Carolina School of Medicine; OBGYN residency at UF Health Jacksonville.',
+    interests: 'Minimally invasive gynecology — AAGL Excellence Award and Outstanding Resident in Gynecologic Oncology recipient. Committed to quality care for every community.',
+    personal: 'Mother of four who enjoys singing, restaurants, and the beach.',
+    fullBio: 'Dr. Miller graduated cum laude from Wofford College and completed her residency at the University of Florida in Jacksonville as Administrative Chief Resident. She received both the Outstanding Resident in Gynecologic Oncology award and the AAGL Excellence in Minimally Invasive Gynecology Award. She is committed to empowering women and ensuring quality care for minority populations. She has four children and enjoys singing, shopping, trying new restaurants, and time at the beach.',
   },
   {
     name: 'Joana Fischer', credentials: 'MD', photo: '/providers/fischer.jpg',
@@ -58,11 +58,11 @@ const PHYSICIAN_BIOS = [
     fullBio: 'A Huntsville, Alabama native, Dr. Fischer is bilingual and completed her residency at the University of Florida in Jacksonville. She has provided international medical services in Cameroon and the Dominican Republic, and is especially passionate about educating women on the complexities of female health — from menstrual cycles to contraception and family planning. She enjoys indoor gardening and spending time at Jacksonville Beach.',
   },
   {
-    name: 'Rakiya Miller', credentials: 'MD, FACOG', photo: '/providers/miller.jpg',
-    training: 'Wofford College, cum laude; University of South Carolina School of Medicine; OBGYN residency at UF Health Jacksonville.',
-    interests: 'Minimally invasive gynecology — AAGL Excellence Award and Outstanding Resident in Gynecologic Oncology recipient. Committed to quality care for every community.',
-    personal: 'Mother of four who enjoys singing, restaurants, and the beach.',
-    fullBio: 'Dr. Miller graduated cum laude from Wofford College and completed her residency at the University of Florida in Jacksonville as Administrative Chief Resident. She received both the Outstanding Resident in Gynecologic Oncology award and the AAGL Excellence in Minimally Invasive Gynecology Award. She is committed to empowering women and ensuring quality care for minority populations. She has four children and enjoys singing, shopping, trying new restaurants, and time at the beach.',
+    name: 'John Bordelon', credentials: 'MD, FACOG', photo: '/providers/bordelon.jpg',
+    training: 'LSU School of Medicine; residency at LSU Medical Center. In private gynecologic practice in Jacksonville since 1991.',
+    interests: 'Endometrial ablation, laparoscopy, hysteroscopy, and da Vinci robotic surgery.',
+    personal: 'Gardener, cyclist, and admirer of antique automobiles.',
+    fullBio: 'Dr. Bordelon trained at Louisiana State University and has practiced gynecology in Jacksonville since 1991. His clinical interests encompass endometrial ablation, tubal occlusion, advanced laparoscopy, hysteroscopy, da Vinci robotic surgery, and adolescent gynecology. Outside of medicine, he enjoys gardening, biking, beachcombing, antique automobiles, and cruising the beaches with the top down.',
   },
 ]
 

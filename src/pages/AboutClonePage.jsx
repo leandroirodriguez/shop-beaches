@@ -59,6 +59,7 @@ const PHYSICIAN_BIOS = [
   },
   {
     name: 'John Bordelon', credentials: 'MD, FACOG', photo: '/providers/bordelon.jpg',
+    badge: 'Founding member · Retired 8/2026',
     training: 'LSU School of Medicine; residency at LSU Medical Center. In private gynecologic practice in Jacksonville since 1991.',
     interests: 'Endometrial ablation, laparoscopy, hysteroscopy, and da Vinci robotic surgery.',
     personal: 'Gardener, cyclist, and admirer of antique automobiles.',
@@ -104,6 +105,9 @@ function BioRow({ bio, flip }) {
         <h3 className="font-headline text-2xl md:text-3xl leading-snug">
           {bio.name}, <span className="text-on-surface-variant text-xl md:text-2xl">{bio.credentials}</span>
         </h3>
+        {bio.badge && (
+          <p className="mt-2 font-label text-[11px] tracking-[0.18em] uppercase text-secondary">{bio.badge}</p>
+        )}
         <div className="w-10 h-px bg-secondary-fixed-dim my-5" />
         <dl className="space-y-4 max-w-xl">
           <div>

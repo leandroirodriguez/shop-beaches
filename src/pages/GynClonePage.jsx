@@ -51,9 +51,9 @@ export default function GynClonePage() {
       {/* ---------- Hero ---------- */}
       <section className="relative overflow-hidden min-h-[420px] h-[55vh] max-h-[640px]">
         <img
-          src="/hero/chapter.jpg"
-          alt="A woman walking along the shoreline at sunset"
-          className="absolute inset-0 w-full h-full object-cover object-[center_35%]"
+          src="/hero/gynhero.jpg"
+          alt="A woman standing on the beach at sunset"
+          className="absolute inset-0 w-full h-full object-cover object-[center_45%]"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#1e3a44]/80 via-[#1e3a44]/45 to-[#1e3a44]/10" />
         <div className="relative z-10 max-w-[1240px] mx-auto px-5 md:px-10 h-full flex items-center">
@@ -125,11 +125,12 @@ export default function GynClonePage() {
             </a>
           </div>
           <div className="relative">
+            {/* Transparent cutout floats directly on the teal band */}
             <img
-              src="/davinci/surgery-tile-teal.jpg"
+              src="/davinci/vessel-sealer-cutout.png"
               alt="A da Vinci robotic surgical instrument"
               loading="lazy"
-              className="w-full aspect-[4/3] object-cover rounded-2xl shadow-lift"
+              className="w-full object-contain [filter:drop-shadow(0_25px_35px_rgba(0,0,0,0.35))]"
             />
           </div>
         </div>

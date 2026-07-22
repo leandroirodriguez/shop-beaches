@@ -103,8 +103,11 @@ export default function GynClonePage() {
       {/* ---------- Minimally invasive surgery band ---------- */}
       <section className="relative overflow-hidden bg-primary text-on-primary">
         <Starfish className="absolute -bottom-32 -right-28 w-[26rem] h-[26rem] text-on-primary opacity-[0.05] rotate-12 pointer-events-none" />
-        <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-16 md:py-24 grid md:grid-cols-2 gap-10 md:gap-16 items-center">
-          <div>
+        {/* Right padding removed on md+ so the instrument bleeds to the
+            viewport edge; the 1728px cap restores a margin on very wide
+            screens, making the tool look like it exits the window border */}
+        <div className="max-w-[1728px] mx-auto px-5 md:pl-10 md:pr-0 py-16 md:py-24 grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+          <div className="max-w-xl md:pr-4">
             <p className="font-label text-xs tracking-[0.25em] uppercase text-primary-container mb-5">
               When Surgery Is the Answer
             </p>
@@ -125,12 +128,12 @@ export default function GynClonePage() {
             </a>
           </div>
           <div className="relative">
-            {/* Transparent cutout floats directly on the teal band */}
+            {/* Transparent cutout, anchored right so it runs off the edge */}
             <img
               src="/davinci/vessel-sealer-cutout.png"
               alt="A da Vinci robotic surgical instrument"
               loading="lazy"
-              className="w-full object-contain [filter:drop-shadow(0_25px_35px_rgba(0,0,0,0.35))]"
+              className="w-full object-contain object-right [filter:drop-shadow(0_25px_35px_rgba(0,0,0,0.35))]"
             />
           </div>
         </div>

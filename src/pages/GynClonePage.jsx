@@ -171,8 +171,11 @@ export default function GynClonePage() {
               Explore Minimally Invasive Surgery
             </a>
           </div>
-          <div className="relative">
-            {/* Transparent cutout, anchored right so it runs off the edge */}
+          <div className="relative -mr-5 md:mr-0">
+            {/* Transparent cutout, anchored right so it runs off the edge.
+                The -mr-5 cancels the container's px-5 right padding on mobile
+                so the instrument bleeds to the screen edge there too (md+
+                already bleeds via the container's pr-0). */}
             <img
               src="/davinci/vessel-sealer-cutout.png"
               alt="A da Vinci robotic surgical instrument"

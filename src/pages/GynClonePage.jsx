@@ -49,7 +49,7 @@ export default function GynClonePage() {
       <PracticeHeader />
 
       {/* ---------- Hero ---------- */}
-      <section className="relative overflow-hidden min-h-[420px] h-[55vh] max-h-[640px]">
+      <section className="relative overflow-hidden min-h-[560px] h-[60vh] max-h-[680px]">
         <img
           src="/hero/gynhero.jpg"
           alt="A woman standing on the beach at sunset"
@@ -97,6 +97,50 @@ export default function GynClonePage() {
               <p className="mt-3 text-sm md:text-base text-on-surface-variant leading-relaxed">{s.text}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* ---------- Wellness & weight-loss program ----------
+          NOTE: body copy is placeholder — the source Facebook post is
+          behind a login wall. Replace with the program's real specifics
+          (what's included, eligibility, any medications) before publish. */}
+      <section className="bg-surface-container-low">
+        <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-12 md:py-16 grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+          <figure className="max-w-sm mx-auto md:mx-0 w-full">
+            <img
+              src="/providers/dorsey.jpg"
+              alt="Katherine Dorsey, wellness and weight-loss program lead"
+              loading="lazy"
+              className="w-full aspect-square object-cover rounded-2xl shadow-lift"
+            />
+            <figcaption className="mt-4">
+              <p className="font-headline text-lg leading-snug">Katherine Dorsey</p>
+              <p className="mt-0.5 text-sm text-on-surface-variant">Wellness &amp; Weight-Loss Program Lead</p>
+            </figcaption>
+          </figure>
+          <div>
+            <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-5">Wellness &amp; Weight Loss</p>
+            <h2 className="font-headline text-3xl md:text-5xl leading-[1.15]">
+              Weight management isn&rsquo;t one-size-fits-all.
+            </h2>
+            <p className="mt-6 text-on-surface-variant md:text-lg leading-relaxed">
+              Our wellness and weight-loss program, led by Katherine Dorsey,
+              pairs you with a dedicated provider to build a plan around your
+              body, your history, and your goals — medically supervised,
+              sustainable, and designed for how you actually live.
+            </p>
+            <p className="mt-4 text-on-surface-variant md:text-lg leading-relaxed">
+              It&rsquo;s a whole-person approach that fits naturally alongside
+              your gynecologic care, so the team guiding your wellness already
+              knows your health story.
+            </p>
+            <a
+              href={APPOINTMENT_URL}
+              className="mt-10 inline-block font-label text-xs tracking-[0.2em] uppercase bg-primary text-on-primary px-8 py-4 rounded-full shadow-lift hover:bg-primary-container hover:text-on-primary-container transition"
+            >
+              Request an Appointment
+            </a>
+          </div>
         </div>
       </section>
 

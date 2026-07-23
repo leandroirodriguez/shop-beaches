@@ -3,7 +3,7 @@
 // the real portraits. Not linked from anywhere; reachable only at
 // /aboutclone.
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Starfish from '../components/Starfish'
 import { PracticeHeader, PracticeFooter, APPOINTMENT_URL } from '../components/PracticeChrome'
 
@@ -90,9 +90,12 @@ const APRN_BIOS = [
 
 function BioRow({ bio, flip }) {
   const [open, setOpen] = useState(false)
+  // Anchor id = last name lowercased; the Our Team nav submenu links here.
+  // scroll-mt clears the sticky header on fragment navigation.
+  const id = bio.name.split(' ').pop().toLowerCase()
 
   return (
-    <div className={`grid md:grid-cols-[2fr_3fr] gap-8 md:gap-16 items-center ${flip ? 'md:[direction:rtl]' : ''}`}>
+    <div id={id} className={`scroll-mt-28 grid md:grid-cols-[2fr_3fr] gap-8 md:gap-16 items-center ${flip ? 'md:[direction:rtl]' : ''}`}>
       <div className="[direction:ltr]">
         <img
           src={bio.photo}
@@ -161,6 +164,18 @@ function BioRow({ bio, flip }) {
 }
 
 export default function AboutClonePage() {
+  // This page is client-rendered, so on a fresh cross-route load to
+  // /aboutclone#<slug> the browser's native fragment scroll fires before
+  // React has rendered the bio rows and finds nothing. Scroll ourselves
+  // after mount. (Same-page hash clicks still scroll natively.)
+  useEffect(() => {
+    const hash = window.location.hash.slice(1)
+    if (!hash) return
+    requestAnimationFrame(() => {
+      document.getElementById(decodeURIComponent(hash))?.scrollIntoView()
+    })
+  }, [])
+
   return (
     <div className="bg-surface text-on-surface">
       <PracticeHeader />

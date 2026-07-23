@@ -9,18 +9,41 @@ import Starfish from './Starfish'
 
 export const APPOINTMENT_URL = 'https://www.toplinemd.com/beaches-obgyn/new-patients/#appoitment'
 
+// Providers, in the order they appear on /aboutclone. The slug is the
+// last name lowercased, which matches the anchor id on each bio row.
+const TEAM = [
+  'Leandro Rodriguez',
+  'Rebekah Richmond',
+  'Laura Peter',
+  'Kimberly Manek',
+  'Anita Patel',
+  'Rakiya Miller',
+  'Joana Fischer',
+  'John Bordelon',
+  'Malinda Moussa',
+  'Gabrielle Ahrens',
+  'Katherine Dorsey',
+]
+
 const NAV = [
-  { label: 'About', href: 'https://www.toplinemd.com/beaches-obgyn/about/' },
+  { label: 'About', href: '/aboutclone' },
   {
     label: 'Services',
     href: '/mainclone#services',
     children: [
-      { label: 'GYN Services', href: 'https://www.toplinemd.com/beaches-obgyn/gyn-services/' },
+      { label: 'GYN Services', href: '/gynclone' },
       { label: 'OB Services', href: '/obclone' },
       { label: 'Minimally Invasive Surgery', href: '/misclone' },
     ],
   },
-  { label: 'Our Team', href: '/mainclone#physicians' },
+  {
+    label: 'Our Team',
+    href: '/aboutclone',
+    children: TEAM.map(name => ({
+      label: name,
+      href: `/aboutclone#${name.split(' ').pop().toLowerCase()}`,
+    })),
+  },
   {
     label: 'Patient Resources',
     href: 'https://www.toplinemd.com/beaches-obgyn/new-patients/',
@@ -31,8 +54,8 @@ const NAV = [
     ],
   },
   { label: 'Shop', href: 'https://shop.beachesobgyn.com/' },
-  { label: 'Pay My Bill', href: 'https://www.toplinemd.com/beaches-obgyn/' },
-  { label: 'Contact', href: 'https://www.toplinemd.com/beaches-obgyn/contact/' },
+  { label: 'Pay My Bill', href: 'https://securelink-prod.valorpaytech.com:4430/?redirect=1&uid=ee7b47e6-1bc6-11f1-8df0-12a0879a85b1' },
+  { label: 'Contact', href: '/contactclone' },
 ]
 
 export function PracticeHeader() {

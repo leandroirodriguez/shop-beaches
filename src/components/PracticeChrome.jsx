@@ -5,6 +5,7 @@
 import { useState, useEffect } from 'react'
 import logo from '../assets/toplinelogo.png'
 import allianceLogo from '../assets/topline-alliance.png'
+import toplineHorizontal from '../assets/toplinehorizontal.webp'
 import Starfish from './Starfish'
 
 // The "Request an Appointment" CTA across the practice pages points at the
@@ -101,6 +102,22 @@ export function PracticeHeader() {
           </div>
         </div>
       </div>
+
+      {/* Alliance ribbon — a "proud member" strip beneath the contact bar,
+          mirroring the live TopLine MD site. Soft-neutral bg holds the
+          dark logo and separates it from the white sticky header below. */}
+      <a
+        href="https://www.toplinemd.com/"
+        aria-label="Proud member of the TopLine MD Alliance"
+        className="block bg-surface-container-low border-b border-outline-variant/40 hover:bg-surface-container transition"
+      >
+        <div className="max-w-[1240px] mx-auto px-5 md:px-10 h-9 md:h-10 flex items-center justify-center gap-2.5 md:gap-3">
+          <span className="font-label text-[9px] md:text-[10px] tracking-[0.18em] uppercase text-on-surface-variant whitespace-nowrap">
+            Proud member of the
+          </span>
+          <img src={toplineHorizontal} alt="TopLine MD Alliance" className="h-3.5 md:h-4 w-auto" />
+        </div>
+      </a>
 
       <header className="sticky top-0 z-40 bg-surface-container-lowest/95 backdrop-blur border-b border-outline-variant/40">
       <div className="max-w-[1240px] mx-auto px-5 md:px-10 h-20 md:h-24 flex items-center gap-6">

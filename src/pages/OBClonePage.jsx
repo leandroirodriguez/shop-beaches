@@ -30,6 +30,7 @@ const APP_FEATURES = [
   { title: 'Week-by-week tracker', text: 'Gestational age, due-date countdown, and how your baby is growing — updated every day.' },
   { title: 'Your visit timeline', text: 'Every appointment, lab, and ultrasound mapped by week, from your first OB visit to your anatomy scan and beyond.' },
   { title: 'Medication safety guide', text: 'Searchable, trimester-aware guidance on which everyday medications are safe — and which to avoid.' },
+  { title: 'Test & ultrasound explainers', text: 'Plain-language guides to every prenatal test and scan — what it measures, when it happens, and why it matters.' },
   { title: 'Tools for the big moments', text: 'A contraction timer and kick counter, plus diet guidance for every stage.' },
   { title: 'One tap to reach us', text: 'Call or message the practice directly from the app whenever a question comes up.' },
 ]
@@ -38,6 +39,7 @@ const SCREENSHOTS = [
   { src: '/app/home.png', label: 'Track your week', alt: 'Prenatal Guide home screen showing gestational age, due date, and baby size' },
   { src: '/app/timeline.png', label: 'Visit timeline', alt: 'Timeline screen mapping prenatal visits, labs, and ultrasounds week by week' },
   { src: '/app/meds.png', label: 'Medication guide', alt: 'Medication guide screen listing safe options and medications to avoid' },
+  { src: '/app/testing.png', label: 'Testing & ultrasounds', alt: 'Screen explaining the nuchal translucency ultrasound and what it measures' },
 ]
 
 const DELIVERY_TEAM = [
@@ -174,19 +176,33 @@ export default function OBClonePage() {
           </div>
 
           {/* Desktop: even aligned row */}
-          <div className="mt-16 hidden md:flex justify-center items-start gap-6 md:gap-10 max-w-3xl mx-auto">
+          <div className="mt-16 hidden md:flex justify-center items-start gap-5 lg:gap-8 max-w-5xl mx-auto">
             {SCREENSHOTS.map(s => (
               <PhoneFrame key={s.src} src={s.src} label={s.label} alt={s.alt} />
             ))}
           </div>
 
-          {/* Mobile: overlapping carousel — center phone in front, others peek behind */}
+          {/* Mobile: overlapping carousel — center phone in front, neighbors peek */}
           <div className="mt-12 md:hidden">
-            <div className="relative mx-auto max-w-[20rem] h-[30rem]">
+            <div className="relative mx-auto max-w-[20rem] h-[32rem]">
               {SCREENSHOTS.map((s, i) => {
-                const rel = (i - activeShot + n) % n // 0 active, 1 right, 2 left
+                const rel = (i - activeShot + n) % n // 0 active, 1 right, n-1 left
                 const isActive = rel === 0
-                const offset = rel === 1 ? 60 : -60
+                const isRight = rel === 1
+                const isLeft = rel === n - 1
+                if (!isActive && !isRight && !isLeft) {
+                  return (
+                    <div
+                      key={s.src}
+                      className="absolute top-1/2 left-1/2 opacity-0 pointer-events-none"
+                      style={{ transform: 'translate(-50%, -50%) scale(0.9)' }}
+                      aria-hidden="true"
+                    >
+                      <PhoneFrame src={s.src} alt={s.alt} />
+                    </div>
+                  )
+                }
+                const offset = isRight ? 60 : -60
                 return (
                   <div
                     key={s.src}

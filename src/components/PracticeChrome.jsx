@@ -63,6 +63,9 @@ const NAV = [
 
 export function PracticeHeader() {
   const [menuOpen, setMenuOpen] = useState(false)
+  // Which mobile submenu is expanded (accordion — only one at a time so the
+  // menu stays short enough that every top-level item is reachable)
+  const [openSub, setOpenSub] = useState(null)
   // Collapse the lockup to the starfish mark once the page is scrolled, or
   // whenever the lockup and full menu would collide (the lg–xl band)
   const [compact, setCompact] = useState(false)
@@ -182,7 +185,7 @@ export function PracticeHeader() {
           type="button"
           className="lg:hidden ml-auto p-2 text-on-surface"
           aria-label="Toggle menu"
-          onClick={() => setMenuOpen(o => !o)}
+          onClick={() => { setMenuOpen(o => !o); setOpenSub(null) }}
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
             {menuOpen
@@ -193,20 +196,68 @@ export function PracticeHeader() {
       </div>
 
       {menuOpen && (
-        <nav className="lg:hidden border-t border-outline-variant/40 bg-surface-container-lowest px-5 py-4">
+        <nav className="lg:hidden border-t border-outline-variant/40 bg-surface-container-lowest px-5 py-3 max-h-[calc(100dvh-11rem)] overflow-y-auto overscroll-contain">
           {NAV.map(item => (
-            <div key={item.label} className="py-1">
-              <a href={item.href} onClick={() => setMenuOpen(false)} className="block py-2 font-label text-xs tracking-[0.18em] uppercase text-on-surface">
-                {item.label}
-              </a>
-              {item.children?.map(c => (
-                <a key={c.label} href={c.href} onClick={() => setMenuOpen(false)} className="block py-1.5 pl-4 font-label text-[11px] tracking-[0.12em] uppercase text-on-surface-variant">
-                  {c.label}
+            <div key={item.label} className="border-b border-outline-variant/30 last:border-0">
+              {item.children ? (
+                <>
+                  {/* Label navigates; the chevron toggles the submenu */}
+                  <div className="flex items-center">
+                    <a
+                      href={item.href}
+                      onClick={() => setMenuOpen(false)}
+                      className="flex-1 py-3 font-label text-xs tracking-[0.18em] uppercase text-on-surface"
+                    >
+                      {item.label}
+                    </a>
+                    <button
+                      type="button"
+                      onClick={() => setOpenSub(openSub === item.label ? null : item.label)}
+                      aria-expanded={openSub === item.label}
+                      aria-label={`Toggle ${item.label} submenu`}
+                      className="p-3 -mr-3 text-on-surface-variant"
+                    >
+                      <svg
+                        width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+                        className={`transition-transform duration-300 ${openSub === item.label ? 'rotate-180' : ''}`}
+                        aria-hidden="true"
+                      >
+                        <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </button>
+                  </div>
+                  <div
+                    className="grid transition-[grid-template-rows] duration-300 ease-in-out"
+                    style={{ gridTemplateRows: openSub === item.label ? '1fr' : '0fr' }}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="pb-2">
+                        {item.children.map(c => (
+                          <a
+                            key={c.label}
+                            href={c.href}
+                            onClick={() => setMenuOpen(false)}
+                            className="block py-1.5 pl-4 font-label text-[11px] tracking-[0.12em] uppercase text-on-surface-variant"
+                          >
+                            {c.label}
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <a
+                  href={item.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="block py-3 font-label text-xs tracking-[0.18em] uppercase text-on-surface"
+                >
+                  {item.label}
                 </a>
-              ))}
+              )}
             </div>
           ))}
-          <a href={APPOINTMENT_URL} className="mt-3 inline-block font-label text-xs tracking-[0.18em] uppercase bg-primary text-on-primary px-5 py-3 rounded-full">
+          <a href={APPOINTMENT_URL} className="mt-4 inline-block font-label text-xs tracking-[0.18em] uppercase bg-primary text-on-primary px-5 py-3 rounded-full">
             Request an Appointment
           </a>
         </nav>

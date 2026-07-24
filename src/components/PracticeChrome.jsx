@@ -7,7 +7,9 @@ import logo from '../assets/toplinelogo.png'
 import allianceLogo from '../assets/topline-alliance.png'
 import Starfish from './Starfish'
 
-export const APPOINTMENT_URL = 'https://www.toplinemd.com/beaches-obgyn/new-patients/#appoitment'
+// The "Request an Appointment" CTA across the practice pages points at the
+// newclone New Patients prototype's appointment section.
+export const APPOINTMENT_URL = '/newclone#appointment'
 
 // Providers, in the order they appear on /aboutclone. The slug is the
 // last name lowercased, which matches the anchor id on each bio row.
@@ -49,7 +51,7 @@ const NAV = [
     href: 'https://www.toplinemd.com/beaches-obgyn/new-patients/',
     children: [
       { label: 'Blog', href: 'https://www.toplinemd.com/beaches-obgyn/blog/' },
-      { label: 'New Patients', href: 'https://www.toplinemd.com/beaches-obgyn/new-patients/' },
+      { label: 'New Patients', href: '/newclone' },
       { label: 'Terms and Policies', href: 'https://www.toplinemd.com/practice-terms-policies/' },
     ],
   },

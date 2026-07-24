@@ -2,6 +2,7 @@
 // page in the coastal palette and type system. Not linked from anywhere;
 // reachable only at /newclone.
 
+import { useEffect } from 'react'
 import Starfish from '../components/Starfish'
 import { PracticeHeader, PracticeFooter } from '../components/PracticeChrome'
 
@@ -43,15 +44,30 @@ const VISIT_STEPS = [
   },
 ]
 
+// Real PDFs hosted on the live TopLine MD site. Filenames are verbatim,
+// including the "Relase" typo in the medical-records URL (the corrected
+// spelling 404s).
+const FORMS_BASE = 'https://www.toplinemd.com/beaches-obgyn/wp-content/uploads/sites/166/2021/06'
 const FORMS = [
-  { name: 'Beaches OBGYN New Patient Package', note: 'The complete intake packet for your first visit.' },
-  { name: 'Medical Records Release Authorization', note: 'Lets us request records from your previous providers.' },
-  { name: 'Minor Consent Form', note: 'Required for patients under age 18.' },
-  { name: 'Baptist Medical Center Beaches Campus Map', note: 'Find your way around the hospital campus.' },
-  { name: 'Privacy Notice', note: 'How your health information is protected and used.' },
+  { name: 'Beaches OBGYN New Patient Package', note: 'The complete intake packet for your first visit.', href: `${FORMS_BASE}/New-Patient-Package-1.pdf` },
+  { name: 'Medical Records Release Authorization', note: 'Lets us request records from your previous providers.', href: `${FORMS_BASE}/Medical-Records-Relase.pdf` },
+  { name: 'Minor Consent Form', note: 'Required for patients under age 18.', href: `${FORMS_BASE}/Minor-Consent.pdf` },
+  { name: 'Baptist Medical Center Beaches Campus Map', note: 'Find your way around the hospital campus.', href: `${FORMS_BASE}/bchCampusMap.pdf` },
+  { name: 'Privacy Notice', note: 'How your health information is protected and used.', href: `${FORMS_BASE}/Privacy-Notice.pdf` },
 ]
 
 export default function NewClonePage() {
+  // On a cross-route load to /newclone#appointment the browser's native
+  // fragment scroll fires before React renders the section, so scroll
+  // ourselves after mount. (Same-page hash clicks still scroll natively.)
+  useEffect(() => {
+    const hash = window.location.hash.slice(1)
+    if (!hash) return
+    requestAnimationFrame(() => {
+      document.getElementById(decodeURIComponent(hash))?.scrollIntoView({ behavior: 'smooth' })
+    })
+  }, [])
+
   return (
     <div className="bg-surface text-on-surface">
       <PracticeHeader />
@@ -140,7 +156,9 @@ export default function NewClonePage() {
           {FORMS.map(f => (
             <a
               key={f.name}
-              href={LIVE_NEW_PATIENTS}
+              href={f.href}
+              target="_blank"
+              rel="noopener noreferrer"
               className="group flex items-center gap-6 bg-surface-container-low p-7 hover:shadow-lift transition"
             >
               <span className="shrink-0 w-12 h-12 rounded-full bg-primary-container/60 text-primary flex items-center justify-center">

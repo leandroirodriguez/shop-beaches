@@ -77,16 +77,15 @@ const REVIEWS = {
   ],
 }
 
-// The first review stays featured on top; two distinct reviews from the
-// rest are chosen at random once per mount for the cards below.
-const FEATURED_REVIEW = REVIEWS.pool[0]
-
-function pickTwoReviews() {
-  const pool = REVIEWS.pool.slice(1)
-  const i = Math.floor(Math.random() * pool.length)
-  let j = Math.floor(Math.random() * (pool.length - 1))
-  if (j >= i) j += 1
-  return [pool[i], pool[j]]
+// Three distinct reviews are chosen at random once per mount: the first
+// is featured on top, the other two fill the cards below.
+function pickThreeReviews() {
+  const pool = REVIEWS.pool.slice()
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[pool[i], pool[j]] = [pool[j], pool[i]]
+  }
+  return pool.slice(0, 3)
 }
 
 function Stars({ className = '' }) {
@@ -103,7 +102,8 @@ function Stars({ className = '' }) {
 
 export default function MainClonePage() {
   const trackRef = useRef(null)
-  const [shownReviews] = useState(pickTwoReviews)
+  const [reviews] = useState(pickThreeReviews)
+  const [featuredReview, ...shownReviews] = reviews
 
   function scrollTrack(dir) {
     const el = trackRef.current
@@ -302,10 +302,10 @@ export default function MainClonePage() {
 
           <blockquote className="mt-14 max-w-3xl">
             <p className="font-headline text-2xl md:text-4xl leading-[1.3]">
-              &ldquo;{FEATURED_REVIEW.quote}&rdquo;
+              &ldquo;{featuredReview.quote}&rdquo;
             </p>
             <footer className="mt-6 font-label text-[11px] tracking-[0.2em] uppercase text-on-primary/70">
-              {FEATURED_REVIEW.author}
+              {featuredReview.author}
             </footer>
           </blockquote>
 

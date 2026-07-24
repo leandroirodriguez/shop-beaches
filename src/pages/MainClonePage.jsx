@@ -7,11 +7,11 @@ import Starfish from '../components/Starfish'
 import { PracticeHeader, PracticeFooter, APPOINTMENT_URL } from '../components/PracticeChrome'
 
 const PHYSICIANS = [
-  { name: 'Leandro Rodriguez', photo: '/providers/rodriguez.jpg', credentials: 'MD, FACOG', interests: 'Gynecologic ultrasound, minimally invasive procedures; Chief of Medical Staff at Baptist Beaches', tenure: 'Practicing since 2005' },
-  { name: 'Rebekah Richmond', photo: '/providers/richmond.jpg', credentials: 'MD, FACOG', interests: 'Hormone replacement, contraceptive management; Chair, Women & Children Services at Baptist Beaches', tenure: 'Jacksonville native' },
-  { name: 'Laura Peter', photo: '/providers/peter.jpg', credentials: 'DO, FACOG', interests: 'Whole-person osteopathic approach to obstetrics and gynecology', tenure: null },
-  { name: 'Kimberly Manek', photo: '/providers/manek.jpg', credentials: 'MD, FACOG', interests: 'Gynecologic oncology, comprehensive obstetric care', tenure: null },
-  { name: 'Anita Patel', photo: '/providers/patel.jpg', credentials: 'MD, FACOG', interests: 'Minimally invasive surgery, abnormal uterine bleeding, pelvic pain, menopause care', tenure: 'Jacksonville native' },
+  { name: 'Leandro Rodriguez', photo: '/providers/rodriguez.jpg', credentials: 'MD, FACOG', interests: 'Gynecologic ultrasound, minimally invasive procedures; Past Chief of the Medical Staff at Baptist Beaches · Bilingual, English & Spanish', tenure: 'Practicing since 2005' },
+  { name: 'Rebekah Richmond', photo: '/providers/richmond.jpg', credentials: 'MD, FACOG', interests: 'Hormone replacement, contraceptive management; Past Chair, Women & Children Services at Baptist Beaches', tenure: 'Jacksonville native' },
+  { name: 'Laura Peter', photo: '/providers/peter.jpg', credentials: 'DO, FACOG', interests: 'Whole-person osteopathic approach to obstetrics and gynecology; Current Chair, Women & Children Services at Baptist Beaches', tenure: null },
+  { name: 'Kimberly Manek', photo: '/providers/manek.jpg', credentials: 'MD, FACOG', interests: 'Comprehensive obstetric care; builds lasting relationships with patients through every stage of life', tenure: null },
+  { name: 'Anita Patel', photo: '/providers/patel.jpg', credentials: 'MD, FACOG', interests: 'Obstetrics, minimally invasive surgery, abnormal uterine bleeding, pelvic pain, menopause care', tenure: 'Jacksonville native' },
   { name: 'Joana Fischer', photo: '/providers/fischer.jpg', credentials: 'MD', interests: 'Menstrual health education, family planning · Bilingual, English & Spanish', tenure: null },
   { name: 'Rakiya Miller', photo: '/providers/miller.jpg', credentials: 'MD, FACOG', interests: 'Minimally invasive gynecology — AAGL Excellence Award recipient', tenure: null },
   { name: 'John Bordelon', photo: '/providers/bordelon.jpg', credentials: 'MD, FACOG', interests: 'Founding physician of Beaches OBGYN; endometrial ablation, laparoscopy, hysteroscopy, da Vinci robotic surgery', tenure: 'Founding physician · Retired 8/2026' },

@@ -117,9 +117,8 @@ export default function MainClonePage() {
       {/* ---------- Hero ---------- */}
       <section id="top" className="relative overflow-hidden min-h-[560px] h-[calc(100vh-5rem)] md:h-[calc(100vh-6rem)] max-h-[900px]">
         <img
-          src="/hero/chapter.jpg"
-          alt="A woman walking along the shoreline at sunrise in Jacksonville Beach"
-          className="absolute inset-0 w-full h-full object-cover object-[center_35%]"
+          src="/hero/newhero.jpg" alt="Three women of different ages walking together on the beach at sunset"
+          className="absolute inset-0 w-full h-full object-cover object-[center_55%]"
         />
         {/* Teal scrim keeps the overlaid text readable against the bright sky */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#1e3a44]/75 via-[#1e3a44]/35 to-transparent" />
@@ -131,7 +130,7 @@ export default function MainClonePage() {
               Beaches OBGYN · Jacksonville Beach
             </p>
             <h1 className="font-headline text-5xl md:text-6xl xl:text-7xl leading-[1.05] text-white">
-              Women&rsquo;s Healthcare for Every Chapter of Life
+              Trusted Women&rsquo;s Healthcare for Every Chapter of Life
             </h1>
             <p className="mt-7 text-lg md:text-xl text-white/85 leading-relaxed max-w-lg">
               Personalized obstetric and gynecologic care from Jacksonville
@@ -228,6 +227,53 @@ export default function MainClonePage() {
         </div>
       </section>
 
+      {/* ---------- Testimonials ---------- */}
+      <section className="relative overflow-hidden bg-primary text-on-primary">
+        <Starfish className="absolute -bottom-24 -left-24 w-80 h-80 text-on-primary opacity-[0.06] rotate-12 pointer-events-none" />
+        <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-12 md:py-16">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+            <div>
+              <p className="font-label text-xs tracking-[0.25em] uppercase text-primary-container mb-5">Patient Stories</p>
+              <h2 className="font-headline text-3xl md:text-5xl leading-[1.15] max-w-xl">
+                Trusted by women across the Beaches.
+              </h2>
+            </div>
+            <div className="shrink-0">
+              <div className="flex items-center gap-3">
+                <span className="font-headline text-5xl">{REVIEWS.rating}</span>
+                <Stars className="text-secondary-fixed-dim" />
+              </div>
+              <p className="mt-2 font-label text-[11px] tracking-[0.15em] uppercase text-on-primary/70">
+                {REVIEWS.count} Google reviews
+              </p>
+            </div>
+          </div>
+
+          <blockquote className="mt-14 max-w-3xl">
+            <p className="font-headline text-2xl md:text-4xl leading-[1.3]">
+              &ldquo;{featuredReview.quote}&rdquo;
+            </p>
+            <footer className="mt-6 font-label text-[11px] tracking-[0.2em] uppercase text-on-primary/70">
+              {featuredReview.author}
+            </footer>
+          </blockquote>
+
+          <div className="mt-14 grid md:grid-cols-2 gap-5">
+            {shownReviews.map(r => (
+              <figure key={r.quote} className="flex flex-col bg-on-primary/[0.06] p-8 md:p-10 border border-on-primary/10">
+                <Stars className="text-secondary-fixed-dim mb-5" />
+                <blockquote className="font-headline text-xl md:text-2xl leading-[1.4] text-on-primary/95">
+                  &ldquo;{r.quote}&rdquo;
+                </blockquote>
+                <figcaption className="mt-6 font-label text-[10px] tracking-[0.2em] uppercase text-on-primary/60">
+                  {r.author}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ---------- Services (Apple-style tile grid) ---------- */}
       <section id="services" className="bg-surface-container-low">
         <div className="max-w-[1680px] mx-auto px-0 sm:px-4 md:px-6 py-4 md:py-6">
@@ -273,53 +319,6 @@ export default function MainClonePage() {
                   />
                 </div>
               </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ---------- Testimonials ---------- */}
-      <section className="relative overflow-hidden bg-primary text-on-primary">
-        <Starfish className="absolute -bottom-24 -left-24 w-80 h-80 text-on-primary opacity-[0.06] rotate-12 pointer-events-none" />
-        <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-12 md:py-16">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-            <div>
-              <p className="font-label text-xs tracking-[0.25em] uppercase text-primary-container mb-5">Patient Stories</p>
-              <h2 className="font-headline text-3xl md:text-5xl leading-[1.15] max-w-xl">
-                Trusted by women across the Beaches.
-              </h2>
-            </div>
-            <div className="shrink-0">
-              <div className="flex items-center gap-3">
-                <span className="font-headline text-5xl">{REVIEWS.rating}</span>
-                <Stars className="text-secondary-fixed-dim" />
-              </div>
-              <p className="mt-2 font-label text-[11px] tracking-[0.15em] uppercase text-on-primary/70">
-                {REVIEWS.count} Google reviews
-              </p>
-            </div>
-          </div>
-
-          <blockquote className="mt-14 max-w-3xl">
-            <p className="font-headline text-2xl md:text-4xl leading-[1.3]">
-              &ldquo;{featuredReview.quote}&rdquo;
-            </p>
-            <footer className="mt-6 font-label text-[11px] tracking-[0.2em] uppercase text-on-primary/70">
-              {featuredReview.author}
-            </footer>
-          </blockquote>
-
-          <div className="mt-14 grid md:grid-cols-2 gap-5">
-            {shownReviews.map(r => (
-              <figure key={r.quote} className="flex flex-col bg-on-primary/[0.06] p-8 md:p-10 border border-on-primary/10">
-                <Stars className="text-secondary-fixed-dim mb-5" />
-                <blockquote className="font-headline text-xl md:text-2xl leading-[1.4] text-on-primary/95">
-                  &ldquo;{r.quote}&rdquo;
-                </blockquote>
-                <figcaption className="mt-6 font-label text-[10px] tracking-[0.2em] uppercase text-on-primary/60">
-                  {r.author}
-                </figcaption>
-              </figure>
             ))}
           </div>
         </div>

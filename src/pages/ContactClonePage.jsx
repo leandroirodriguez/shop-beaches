@@ -37,10 +37,15 @@ export default function ContactClonePage() {
 
       {/* ---------- Hero ---------- */}
       <section className="relative overflow-hidden min-h-[420px] h-[55vh] max-h-[640px]">
-        <img
-          src="/hero/pier.jpg"
-          alt="The Jacksonville Beach pier at sunrise"
+        <video
           className="absolute inset-0 w-full h-full object-cover object-[center_60%]"
+          src="/hero/jax-flyover.mp4"
+          poster="/hero/pier.jpg"
+          autoPlay
+          muted
+          loop
+          playsInline
+          aria-hidden="true"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#1e3a44]/80 via-[#1e3a44]/45 to-[#1e3a44]/10" />
         <div className="relative z-10 max-w-[1240px] mx-auto px-5 md:px-10 h-full flex items-center">

@@ -54,22 +54,6 @@ const APPROACH = [
   },
 ]
 
-// Physicians whose stated clinical interests cover this area.
-const CLINICIANS = [
-  {
-    name: 'Rebekah Richmond',
-    credentials: 'MD, FACOG',
-    photo: '/providers/richmond.jpg',
-    focus: 'Hormone replacement, contraceptive management, and sexual dysfunction. Chair, Department of Women and Children Services at Baptist Beaches.',
-  },
-  {
-    name: 'Anita Patel',
-    credentials: 'MD, FACOG',
-    photo: '/providers/patel.jpg',
-    focus: 'Menopause care, abnormal uterine bleeding, and pelvic pain, alongside minimally invasive surgery.',
-  },
-]
-
 export default function HRTClonePage() {
   return (
     <div className="bg-surface text-on-surface">
@@ -190,36 +174,26 @@ export default function HRTClonePage() {
       {/* ---------- Who you'll see ---------- */}
       <section className="bg-surface-container-low">
         <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-12 md:py-16">
-          <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-5">
-            Who You&rsquo;ll See
-          </p>
-          <h2 className="font-headline text-3xl md:text-5xl leading-[1.15] max-w-2xl">
-            Physicians who focus on this work.
-          </h2>
-          <div className="mt-12 grid sm:grid-cols-2 gap-8 md:gap-12 max-w-3xl">
-            {CLINICIANS.map(c => (
-              <article key={c.name} className="flex gap-6">
-                <img
-                  src={c.photo}
-                  alt={`Portrait of ${c.name}`}
-                  loading="lazy"
-                  className="w-32 md:w-40 aspect-[4/5] object-cover shadow-lift shrink-0"
-                />
-                <div>
-                  <h3 className="font-headline text-xl leading-snug">
-                    {c.name},{' '}
-                    <span className="text-on-surface-variant text-lg">{c.credentials}</span>
-                  </h3>
-                  <div className="w-8 h-px bg-secondary-fixed-dim my-4" />
-                  <p className="text-sm text-on-surface-variant leading-relaxed">{c.focus}</p>
-                </div>
-              </article>
-            ))}
+          <div className="max-w-3xl">
+            <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-5">
+              Who You&rsquo;ll See
+            </p>
+            <h2 className="font-headline text-3xl md:text-5xl leading-[1.15]">
+              Every provider here manages hormone health.
+            </h2>
+            <p className="mt-7 text-on-surface-variant md:text-lg leading-relaxed">
+              This isn&rsquo;t a sub-specialty you get referred out for. Whoever
+              you already see for your annual visit can evaluate your symptoms
+              and talk through whether treatment makes sense — the same familiar
+              face, in the same office.
+            </p>
+            <a
+              href="/aboutclone"
+              className="mt-8 inline-block font-label text-xs tracking-[0.2em] uppercase text-primary hover:underline"
+            >
+              Meet our providers &rarr;
+            </a>
           </div>
-          <p className="mt-10 text-sm text-on-surface-variant max-w-2xl">
-            Every physician in the practice manages hormonal health — these two
-            list it among their primary clinical interests.
-          </p>
         </div>
       </section>
 

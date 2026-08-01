@@ -37,6 +37,7 @@ const NAV = [
       { label: 'GYN Services', href: '/gynclone' },
       { label: 'OB Services', href: '/obclone' },
       { label: 'Minimally Invasive Surgery', href: '/misclone' },
+      { label: 'Hormone Health', href: '/hrtclone' },
     ],
   },
   {

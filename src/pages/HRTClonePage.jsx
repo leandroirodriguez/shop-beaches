@@ -138,11 +138,12 @@ export default function HRTClonePage() {
         </div>
       </section>
 
-      {/* ---------- Our approach ---------- */}
-      <section className="max-w-[1240px] mx-auto px-5 md:px-10 py-12 md:py-16">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      {/* ---------- Our approach — the page's teal anchor. The portrait's
+           studio backdrop is this same teal, so it blends into the band. ---------- */}
+      <section className="bg-primary text-on-primary">
+        <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-16 md:py-24 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div>
-            <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-5">
+            <p className="font-label text-xs tracking-[0.25em] uppercase text-primary-container mb-5">
               How We Approach It
             </p>
             <h2 className="font-headline text-3xl md:text-5xl leading-[1.15]">
@@ -151,10 +152,10 @@ export default function HRTClonePage() {
             <dl className="mt-10 space-y-7 max-w-xl">
               {APPROACH.map(a => (
                 <div key={a.title} className="flex gap-4">
-                  <span className="mt-2.5 w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
+                  <span className="mt-2.5 w-1.5 h-1.5 rounded-full bg-primary-container shrink-0" />
                   <div>
                     <dt className="font-headline text-lg leading-snug">{a.title}</dt>
-                    <dd className="mt-1 text-sm text-on-surface-variant leading-relaxed">{a.text}</dd>
+                    <dd className="mt-1 text-sm text-on-primary/70 leading-relaxed">{a.text}</dd>
                   </div>
                 </div>
               ))}
@@ -165,40 +166,15 @@ export default function HRTClonePage() {
               src="/services/meno.jpg"
               alt="A woman in her fifties, smiling"
               loading="lazy"
-              className="w-full aspect-[4/5] object-cover shadow-lift"
+              className="w-full aspect-[4/5] object-cover"
             />
           </div>
         </div>
       </section>
 
-      {/* ---------- Who you'll see ---------- */}
+      {/* ---------- Shop cross-link ---------- */}
       <section className="bg-surface-container-low">
         <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-12 md:py-16">
-          <div className="max-w-3xl">
-            <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-5">
-              Who You&rsquo;ll See
-            </p>
-            <h2 className="font-headline text-3xl md:text-5xl leading-[1.15]">
-              Every provider here manages hormone health.
-            </h2>
-            <p className="mt-7 text-on-surface-variant md:text-lg leading-relaxed">
-              This isn&rsquo;t a sub-specialty you get referred out for. Whoever
-              you already see for your annual visit can evaluate your symptoms
-              and talk through whether treatment makes sense — the same familiar
-              face, in the same office.
-            </p>
-            <a
-              href="/aboutclone"
-              className="mt-8 inline-block font-label text-xs tracking-[0.2em] uppercase text-primary hover:underline"
-            >
-              Meet our providers &rarr;
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* ---------- Shop cross-link ---------- */}
-      <section className="max-w-[1240px] mx-auto px-5 md:px-10 py-12 md:py-16">
         <div className="grid lg:grid-cols-[1fr_1.4fr] gap-10 lg:gap-16 items-end">
           <div>
             <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-5">
@@ -229,10 +205,11 @@ export default function HRTClonePage() {
             ))}
           </div>
         </div>
+        </div>
       </section>
 
       {/* ---------- Closing CTA ---------- */}
-      <section className="bg-surface-container-low">
+      <section>
         <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-12 md:py-16 text-center">
           <Starfish className="w-12 h-12 mx-auto mb-6 text-primary" />
           <h2 className="font-headline text-3xl md:text-5xl leading-[1.15] max-w-2xl mx-auto">

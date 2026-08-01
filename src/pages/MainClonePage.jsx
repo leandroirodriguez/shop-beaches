@@ -28,7 +28,7 @@ const SERVICES = [
     label: 'Obstetrics', dark: false, bg: '#D9CFC3',
     tagline: 'Personal pregnancy care, from first visit to delivery.',
     image: '/services/pregnancy.jpg',
-    learnHref: 'https://www.toplinemd.com/beaches-obgyn/ob-services/',
+    learnHref: '/obclone',
   },
   {
     label: 'Minimally Invasive Surgery', dark: true, bg: '#16242C',
@@ -40,13 +40,13 @@ const SERVICES = [
     label: 'Gynecology', dark: false, bg: '#BFCEC7',
     tagline: 'Preventive and wellness care built on lasting relationships.',
     image: '/services/gyn.jpg',
-    learnHref: 'https://www.toplinemd.com/beaches-obgyn/gyn-services/',
+    learnHref: '/gynclone',
   },
   {
     label: 'Menopause & Hormone Health', dark: true, bg: '#2F5665',
     tagline: 'Evidence-based hormone therapy, tailored to how you feel.',
     image: '/services/meno.jpg',
-    learnHref: 'https://www.toplinemd.com/beaches-obgyn/gyn-services/',
+    learnHref: '/hrtclone',
   },
 ]
 
@@ -121,8 +121,8 @@ export default function MainClonePage() {
           className="absolute inset-0 w-full h-full object-cover object-[center_55%]"
         />
         {/* Teal scrim keeps the overlaid text readable against the bright sky */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#1e3a44]/75 via-[#1e3a44]/35 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1e3a44]/40 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#2c2825]/75 via-[#2c2825]/35 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#2c2825]/40 via-transparent to-transparent" />
 
         <div className="relative z-10 max-w-[1240px] mx-auto px-5 md:px-10 h-full flex items-center">
           <div className="max-w-2xl">

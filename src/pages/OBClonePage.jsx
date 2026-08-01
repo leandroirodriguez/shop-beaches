@@ -87,7 +87,7 @@ export default function OBClonePage() {
           alt="An expectant mother standing on the shoreline at sunset"
           className="absolute inset-0 w-full h-full object-cover object-[center_40%]"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#1e3a44]/80 via-[#1e3a44]/45 to-[#1e3a44]/10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#2c2825]/80 via-[#2c2825]/45 to-[#2c2825]/10" />
         <div className="relative z-10 max-w-[1240px] mx-auto px-5 md:px-10 h-full flex items-center">
           <div className="max-w-2xl">
             <p className="font-label text-xs tracking-[0.25em] uppercase text-primary-container mb-6">

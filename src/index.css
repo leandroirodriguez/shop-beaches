@@ -92,22 +92,11 @@ body {
     0 8px 24px rgba(47, 86, 100, 0.08);
 }
 
-/* Subtle coastal radial gradient for the hero sections. Hand-tuned so the
-   seafoam tint is soft at the top center and fades to nothing well before
-   reaching the section's bottom — adds depth without competing with the
-   off-white body. */
+/* Flat warm ground with a hairline base. Sections separate by tone and a
+   rule rather than a gradient wash, which reads closer to print. */
 .hero-radial {
-  background:
-    radial-gradient(
-      ellipse 100% 80% at 50% 0%,
-      color-mix(in srgb, var(--color-primary-container) 45%, transparent) 0%,
-      transparent 55%
-    ),
-    linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--color-primary-container) 40%, transparent) 0%,
-      transparent 45%
-    );
+  background: var(--color-surface-container-low);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-outline-variant) 60%, transparent);
 }
 
 /* Admin form input baseline */

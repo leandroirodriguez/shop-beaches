@@ -111,7 +111,7 @@ export default function MainClonePage() {
   }
 
   return (
-    <div className="bg-surface text-on-surface">
+    <div className="text-on-surface">
       <PracticeHeader />
 
       {/* ---------- Hero ---------- */}
@@ -147,7 +147,7 @@ export default function MainClonePage() {
       </section>
 
       {/* ---------- Why Beaches OBGYN ---------- */}
-      <section className="relative overflow-hidden bg-surface-container-low">
+      <section className="relative overflow-hidden glass-band">
         <Starfish className="absolute -top-20 -left-24 w-72 h-72 text-primary-fixed-dim opacity-10 rotate-12 pointer-events-none" />
         <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-12 md:py-16">
           <div className="max-w-3xl">
@@ -275,7 +275,7 @@ export default function MainClonePage() {
       </section>
 
       {/* ---------- Services (Apple-style tile grid) ---------- */}
-      <section id="services" className="bg-surface-container-low">
+      <section id="services" className="glass-band">
         <div className="max-w-[1680px] mx-auto px-0 sm:px-4 md:px-6 py-4 md:py-6">
           <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
             {SERVICES.map(s => (

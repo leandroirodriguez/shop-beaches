@@ -9,9 +9,9 @@ export default function AdminLayout({ children, backTo, backLabel }) {
   const isLogin = location.pathname === '/admin'
 
   return (
-    <div className="min-h-svh bg-surface">
+    <div className="min-h-svh">
       {!isLogin && (
-        <header className="sticky top-0 z-40 bg-surface-container-low border-b border-outline-variant/40">
+        <header className="sticky top-0 z-40 bg-white/55 backdrop-blur-2xl backdrop-saturate-150 shadow-[0_1px_3px_rgb(47_86_100_/_0.07)]">
           <div className="max-w-[960px] mx-auto px-5 md:px-10 h-14 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <Link to="/admin/dashboard" className="font-headline text-lg text-on-surface">

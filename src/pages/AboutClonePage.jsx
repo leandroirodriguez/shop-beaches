@@ -177,11 +177,11 @@ export default function AboutClonePage() {
   }, [])
 
   return (
-    <div className="bg-surface text-on-surface">
+    <div className="text-on-surface">
       <PracticeHeader />
 
       {/* ---------- Hero ---------- */}
-      <section className="relative overflow-hidden bg-surface-container-low">
+      <section className="relative overflow-hidden glass-band">
         <Starfish className="absolute -top-24 -right-24 w-96 h-96 text-primary-fixed-dim opacity-10 rotate-12 pointer-events-none" />
         <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-24 md:py-36">
           <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-6">
@@ -229,7 +229,7 @@ export default function AboutClonePage() {
       </section>
 
       {/* ---------- APRNs ---------- */}
-      <section className="bg-surface-container-low">
+      <section className="glass-band">
         <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-24 md:py-32">
           <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-5">Advanced Practice Providers</p>
           <h2 className="font-headline text-3xl md:text-5xl leading-[1.15] max-w-2xl">

@@ -21,7 +21,9 @@ const aboutLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-surface-container-low">
+    // relative z-10: the footer renders outside App's wrapper, and a static
+    // element would paint under the fixed z-0 backdrop.
+    <footer className="glass-band relative z-10">
       <div className="max-w-[1140px] mx-auto px-5 md:px-16 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16">
           {/* Brand column */}

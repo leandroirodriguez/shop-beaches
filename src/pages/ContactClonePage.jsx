@@ -32,7 +32,7 @@ const HOURS = [
 
 export default function ContactClonePage() {
   return (
-    <div className="bg-surface text-on-surface">
+    <div className="text-on-surface">
       <PracticeHeader />
 
       {/* ---------- Hero ---------- */}
@@ -114,7 +114,7 @@ export default function ContactClonePage() {
       </section>
 
       {/* ---------- Locations ---------- */}
-      <section className="bg-surface-container-low">
+      <section className="glass-band">
         <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-24 md:py-32">
           <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-5">Our Locations</p>
           <h2 className="font-headline text-3xl md:text-5xl leading-[1.15] max-w-2xl">
@@ -122,7 +122,7 @@ export default function ContactClonePage() {
           </h2>
           <div className="mt-14 grid md:grid-cols-2 gap-8">
             {LOCATIONS.map(l => (
-              <div key={l.name} className="bg-surface-container-lowest shadow-lift overflow-hidden">
+              <div key={l.name} className="card-soft overflow-hidden">
                 <iframe
                   title={`Map to our ${l.name} office`}
                   src={`https://maps.google.com/maps?q=${encodeURIComponent(l.query)}&z=14&output=embed`}

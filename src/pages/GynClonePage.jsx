@@ -86,7 +86,7 @@ export default function GynClonePage() {
   const n = APP_SHOTS.length
 
   return (
-    <div className="bg-surface text-on-surface">
+    <div className="text-on-surface">
       <PracticeHeader />
 
       {/* ---------- Hero ---------- */}
@@ -187,7 +187,7 @@ export default function GynClonePage() {
           NOTE: body copy is placeholder — the source Facebook post is
           behind a login wall. Replace with the program's real specifics
           (what's included, eligibility, any medications) before publish. */}
-      <section className="bg-surface-container-low">
+      <section className="glass-band">
         <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-12 md:py-16 grid md:grid-cols-2 gap-10 md:gap-16 items-center">
           <figure className="max-w-sm mx-auto md:mx-0 w-full">
             <img

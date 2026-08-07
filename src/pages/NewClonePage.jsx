@@ -69,11 +69,11 @@ export default function NewClonePage() {
   }, [])
 
   return (
-    <div className="bg-surface text-on-surface">
+    <div className="text-on-surface">
       <PracticeHeader />
 
       {/* ---------- Hero ---------- */}
-      <section className="relative overflow-hidden bg-surface-container-low">
+      <section className="relative overflow-hidden glass-band">
         <Starfish className="absolute -top-24 -right-24 w-96 h-96 text-primary-fixed-dim opacity-10 rotate-12 pointer-events-none" />
         <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-24 md:py-36">
           <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-6">
@@ -107,7 +107,7 @@ export default function NewClonePage() {
             <a
               key={m.label}
               href={m.href}
-              className="group bg-surface-container-low p-8 md:p-10 hover:shadow-lift transition"
+              className="group card-soft p-8 md:p-10 hover:shadow-lift transition"
             >
               <p className="font-label text-[10px] tracking-[0.2em] uppercase text-secondary">{m.label}</p>
               <p className="mt-3 font-headline text-2xl text-primary group-hover:underline">{m.value}</p>
@@ -125,7 +125,7 @@ export default function NewClonePage() {
       </section>
 
       {/* ---------- First visit ---------- */}
-      <section className="relative overflow-hidden bg-surface-container-low">
+      <section className="relative overflow-hidden glass-band">
         <Starfish className="absolute -bottom-24 -left-24 w-80 h-80 text-primary-fixed-dim opacity-10 -rotate-12 pointer-events-none" />
         <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-24 md:py-32">
           <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-5">Your First Visit</p>
@@ -159,7 +159,7 @@ export default function NewClonePage() {
               href={f.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-6 bg-surface-container-low p-7 hover:shadow-lift transition"
+              className="group flex items-center gap-6 card-soft p-7 hover:shadow-lift transition"
             >
               <span className="shrink-0 w-12 h-12 rounded-full bg-primary-container/60 text-primary flex items-center justify-center">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -176,7 +176,7 @@ export default function NewClonePage() {
       </section>
 
       {/* ---------- Closing CTA ---------- */}
-      <section className="bg-surface-container-low">
+      <section className="glass-band">
         <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-24 md:py-32 text-center">
           <Starfish className="w-12 h-12 mx-auto mb-6 text-primary" />
           <h2 className="font-headline text-3xl md:text-5xl leading-[1.15] max-w-2xl mx-auto">

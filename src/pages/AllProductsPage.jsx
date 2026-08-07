@@ -5,7 +5,7 @@ import { formatPrice } from '../lib/format'
 
 function ProductSkeleton() {
   return (
-    <div className="rounded-lg bg-surface-container-low shadow-lift overflow-hidden animate-pulse">
+    <div className="card-soft rounded-lg overflow-hidden animate-pulse">
       <div className="aspect-square bg-surface-container-lowest" />
       <div className="p-5">
         <div className="h-2 bg-surface-container-high rounded w-1/3 mb-3" />
@@ -127,7 +127,7 @@ export default function AllProductsPage() {
 
       {/* Empty */}
       {products && products.length === 0 && (
-        <div className="mt-10 p-10 rounded-lg bg-surface-container-low border border-dashed border-outline-variant/60 text-center">
+        <div className="mt-10 p-10 rounded-lg bg-white/45 backdrop-blur border border-dashed border-outline-variant/60 text-center">
           <p className="font-headline text-xl text-on-surface">No products in this category yet</p>
           <p className="text-on-surface-variant text-sm mt-2">
             We're still curating this list — check back soon.
@@ -197,7 +197,7 @@ function ProductCard({ product: p }) {
   return (
     <Link
       to={`/product/${p.slug}`}
-      className="group block rounded-lg bg-surface-container-low shadow-lift overflow-hidden transition hover:-translate-y-0.5 hover:shadow-md"
+      className="group block card-soft rounded-lg overflow-hidden transition hover:-translate-y-0.5 hover:shadow-md"
     >
       {p.amazon_image_urls?.[0] && (
         <img
@@ -228,8 +228,10 @@ function FilterPill({ active, onClick, children }) {
       onClick={onClick}
       className={`px-4 py-2 rounded-full font-label text-xs tracking-wider transition ${
         active
+          // Active stays fully opaque — a translucent selected state doesn't
+          // hold enough contrast against the blob field to read as "on".
           ? 'bg-primary text-on-primary shadow-lift'
-          : 'bg-surface-container text-on-surface hover:bg-surface-container-high'
+          : 'bg-white/45 backdrop-blur border border-white/50 text-on-surface hover:bg-white/70'
       }`}
     >
       {children}

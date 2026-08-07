@@ -75,7 +75,7 @@ export default function AdminProducts() {
         </div>
 
         {!loading && products.length === 0 ? (
-          <div className="mt-10 p-10 rounded-xl bg-surface-container-low border border-dashed border-outline-variant/60 text-center">
+          <div className="mt-10 p-10 rounded-xl bg-white/45 backdrop-blur border border-dashed border-outline-variant/60 text-center">
             <p className="font-headline text-xl text-on-surface">No products yet</p>
             <p className="text-on-surface-variant text-sm mt-2 max-w-md mx-auto">
               Click <strong>Add New Product</strong> to paste an Amazon URL and let AI draft the curated page. You'll review and edit before it publishes.

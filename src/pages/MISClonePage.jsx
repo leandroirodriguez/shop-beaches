@@ -35,7 +35,7 @@ const CONDITIONS = [
 
 export default function MISClonePage() {
   return (
-    <div className="bg-surface text-on-surface">
+    <div className="text-on-surface">
       <PracticeHeader />
 
       {/* ---------- Hero ---------- */}
@@ -84,7 +84,7 @@ export default function MISClonePage() {
             Schedule an Appointment
           </a>
         </div>
-        <div className="bg-surface-container-low p-8 md:p-10 self-start">
+        <div className="card-soft p-8 md:p-10 self-start">
           <h3 className="font-headline text-xl">Conditions We Treat</h3>
           <div className="w-8 h-px bg-secondary-fixed-dim my-5" />
           <ul className="space-y-3">
@@ -99,7 +99,7 @@ export default function MISClonePage() {
       </section>
 
       {/* ---------- Benefits ---------- */}
-      <section className="relative overflow-hidden bg-surface-container-low">
+      <section className="relative overflow-hidden glass-band">
         <Starfish className="absolute -top-24 -right-24 w-80 h-80 text-primary-fixed-dim opacity-10 -rotate-12 pointer-events-none" />
         <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-24 md:py-32">
           <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-5">Why Minimally Invasive</p>
@@ -108,7 +108,7 @@ export default function MISClonePage() {
           </h2>
           <div className="mt-16 grid sm:grid-cols-2 lg:grid-cols-5 gap-5">
             {BENEFITS.map(b => (
-              <div key={b.title} className="bg-surface-container-lowest shadow-lift p-7">
+              <div key={b.title} className="card-soft p-7">
                 <h3 className="font-headline text-lg leading-snug">{b.title}</h3>
                 <div className="w-8 h-px bg-secondary-fixed-dim my-4" />
                 <p className="text-sm text-on-surface-variant leading-relaxed">{b.text}</p>
@@ -138,7 +138,7 @@ export default function MISClonePage() {
                 immersive 3D-HD visualization.
               </p>
             </div>
-            <div className="bg-surface-container-lowest shadow-lift overflow-hidden">
+            <div className="card-soft overflow-hidden">
               <img
                 src="/davinci/xi-front.jpg"
                 alt="The da Vinci Xi surgical system patient cart"
@@ -147,7 +147,7 @@ export default function MISClonePage() {
             </div>
           </div>
           <div className="mt-8 grid md:grid-cols-2 gap-8">
-            <figure className="bg-surface-container-lowest shadow-lift overflow-hidden">
+            <figure className="card-soft overflow-hidden">
               <img
                 src="/davinci/arms-fan.jpg"
                 alt="The da Vinci Xi's four articulated arms converging on a single small workspace"
@@ -157,7 +157,7 @@ export default function MISClonePage() {
                 Four arms, one tiny workspace
               </figcaption>
             </figure>
-            <figure className="bg-surface-container-lowest shadow-lift overflow-hidden">
+            <figure className="card-soft overflow-hidden">
               <img
                 src="/davinci/instrument.jpg"
                 alt="A wristed da Vinci instrument articulating at its tip"
@@ -239,7 +239,7 @@ export default function MISClonePage() {
       </section>
 
       {/* ---------- Closing CTA ---------- */}
-      <section className="bg-surface-container-low">
+      <section className="glass-band">
         <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-24 md:py-32 text-center">
           <Starfish className="w-12 h-12 mx-auto mb-6 text-primary" />
           <h2 className="font-headline text-3xl md:text-5xl leading-[1.15] max-w-2xl mx-auto">

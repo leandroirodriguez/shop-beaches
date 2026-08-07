@@ -56,11 +56,11 @@ const APPROACH = [
 
 export default function HRTClonePage() {
   return (
-    <div className="bg-surface text-on-surface">
+    <div className="text-on-surface">
       <PracticeHeader />
 
       {/* ---------- Hero ---------- */}
-      <section className="relative overflow-hidden bg-surface-container-low">
+      <section className="relative overflow-hidden glass-band">
         <Starfish className="absolute -top-24 -right-24 w-96 h-96 text-primary-fixed-dim opacity-10 rotate-12 pointer-events-none" />
         <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-16 md:py-24">
           <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-6">
@@ -114,7 +114,7 @@ export default function HRTClonePage() {
       </section>
 
       {/* ---------- Three stages ---------- */}
-      <section className="bg-surface-container-low">
+      <section className="glass-band">
         <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-12 md:py-16">
           <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-5">
             Where You Are
@@ -173,7 +173,7 @@ export default function HRTClonePage() {
       </section>
 
       {/* ---------- Shop cross-link ---------- */}
-      <section className="bg-surface-container-low">
+      <section className="glass-band">
         <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-12 md:py-16">
         <div className="grid lg:grid-cols-[1fr_1.4fr] gap-10 lg:gap-16 items-end">
           <div>

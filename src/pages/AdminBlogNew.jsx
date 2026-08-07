@@ -87,7 +87,7 @@ export default function AdminBlogNew() {
           Give Claude a topic. It will draft a full article in the practice's voice.
         </p>
 
-        <form onSubmit={handleGenerate} className="mt-8 rounded-xl bg-surface-container-low p-6 shadow-lift space-y-4">
+        <form onSubmit={handleGenerate} className="mt-8 glass rounded-xl p-6 space-y-4">
           <label className="block">
             <span className="font-label text-xs tracking-wider uppercase text-on-surface-variant">Topic</span>
             <input
@@ -158,7 +158,7 @@ export default function AdminBlogNew() {
 
         {draft && (
           <div className="mt-8 space-y-6">
-            <section className="rounded-xl bg-surface-container-low p-6 shadow-lift space-y-4">
+            <section className="glass rounded-xl p-6 space-y-4">
               <label className="block">
                 <span className="font-label text-xs tracking-wider uppercase text-on-surface-variant">Title</span>
                 <input
@@ -188,7 +188,7 @@ export default function AdminBlogNew() {
               </label>
             </section>
 
-            <section className="rounded-xl bg-surface-container-low p-6 shadow-lift">
+            <section className="glass rounded-xl p-6">
               <div className="flex items-center justify-between mb-3">
                 <h2 className="font-headline text-xl text-on-surface">Body</h2>
                 <p className="font-label text-[11px] tracking-wider uppercase text-on-surface-variant">
@@ -203,7 +203,7 @@ export default function AdminBlogNew() {
               />
             </section>
 
-            <section className="rounded-xl bg-surface-container-low p-6 shadow-lift">
+            <section className="glass rounded-xl p-6">
               <h2 className="font-headline text-xl text-on-surface mb-4">Preview</h2>
               <article className="prose max-w-none">
                 <h1 className="font-headline text-3xl text-on-surface mb-3">{draft.title}</h1>
@@ -215,7 +215,7 @@ export default function AdminBlogNew() {
         )}
 
         {draft && (
-          <div className="fixed bottom-0 inset-x-0 z-30 bg-surface-container border-t border-outline-variant/40">
+          <div className="fixed bottom-0 inset-x-0 z-30 bg-white/70 backdrop-blur-2xl backdrop-saturate-150 shadow-[0_-1px_3px_rgb(47_86_100_/_0.07)]">
             <div className="max-w-[960px] mx-auto px-5 md:px-10 py-3 flex items-center justify-end gap-3">
               <button
                 type="button"

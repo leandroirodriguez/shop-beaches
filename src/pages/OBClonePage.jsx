@@ -77,7 +77,7 @@ export default function OBClonePage() {
   const n = SCREENSHOTS.length
 
   return (
-    <div className="bg-surface text-on-surface">
+    <div className="text-on-surface">
       <PracticeHeader />
 
       {/* ---------- Hero ---------- */}
@@ -127,7 +127,7 @@ export default function OBClonePage() {
       </section>
 
       {/* ---------- Delivery team ---------- */}
-      <section className="bg-surface-container-low">
+      <section className="glass-band">
         <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-12 md:py-16">
           <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-5">Your Delivery Team</p>
           <h2 className="font-headline text-3xl md:text-5xl leading-[1.15] max-w-2xl">

@@ -65,7 +65,7 @@ export default function AdminLogin() {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="bg-surface-container-low rounded-xl p-6 shadow-lift space-y-4">
+          <form onSubmit={handleSubmit} className="glass rounded-xl p-6 space-y-4">
             <label className="block">
               <span className="font-label text-xs tracking-wider uppercase text-on-surface-variant">
                 Email

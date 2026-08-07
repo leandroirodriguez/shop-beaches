@@ -5,33 +5,14 @@ import { formatPrice } from '../lib/format'
 import Starfish from '../components/Starfish'
 import Reveal from '../components/Reveal'
 
-// Reusable curved divider. `tone` selects which color the SVG fills with,
-// which should match the BACKGROUND of the section immediately below.
-// `flipY` flips the curve vertically (use when transitioning OUT of a
-// tinted band back to the base surface).
-function CurvedDivider({ tone = 'surface-container-low', flipY = false }) {
-  const colorClass = {
-    'surface-container-low': 'text-surface-container-low',
-    'surface': 'text-surface',
-    'surface-container': 'text-surface-container',
-  }[tone] || 'text-surface-container-low'
-
-  return (
-    <svg
-      viewBox="0 0 1440 80"
-      preserveAspectRatio="none"
-      className={`block w-full h-10 md:h-14 ${colorClass}`}
-      style={{ transform: flipY ? 'scaleY(-1)' : undefined }}
-      aria-hidden="true"
-    >
-      <path fill="currentColor" d="M0,0 C360,72 1080,72 1440,0 L1440,80 L0,80 Z" />
-    </svg>
-  )
-}
+// The curved dividers that used to stitch the opaque section bands together
+// were removed with the move to glass: sections now separate by translucency
+// over the fixed blob field, and a solid-filled curve can't sit on a
+// translucent band without reading as a seam.
 
 function CategorySkeleton() {
   return (
-    <div className="rounded-lg bg-surface-container-low shadow-lift overflow-hidden animate-pulse">
+    <div className="card-soft rounded-lg overflow-hidden animate-pulse">
       <div className="aspect-[16/10] bg-secondary-container/40" />
       <div className="p-5">
         <div className="h-5 bg-secondary-container/40 rounded w-1/2 mb-3" />
@@ -44,7 +25,7 @@ function CategorySkeleton() {
 
 function ProductSkeleton() {
   return (
-    <div className="rounded-lg bg-surface-container-low shadow-lift overflow-hidden animate-pulse">
+    <div className="card-soft rounded-lg overflow-hidden animate-pulse">
       <div className="aspect-square bg-surface-container-lowest" />
       <div className="p-5">
         <div className="h-2 bg-surface-container-high rounded w-1/3 mb-3" />
@@ -148,18 +129,20 @@ export default function HomePage() {
                 height="1024"
                 fetchPriority="high"
                 decoding="async"
-                className="w-full h-auto"
+                // The source webp has a near-white ground, which read as a
+                // pale rectangle once the page behind it became tinted.
+                // Multiply drops it into the blob field; the figures are light
+                // enough that the darkening is imperceptible.
+                className="w-full h-auto mix-blend-multiply"
               />
             </div>
           </div>
         </div>
 
-        {/* Curve flowing into the tinted Categories band */}
-        <CurvedDivider tone="surface-container-low" />
       </section>
 
-      {/* Categories — tinted band */}
-      <section className="bg-surface-container-low">
+      {/* Categories — glass band over the blob field */}
+      <section className="glass-band">
         <div className="max-w-[1140px] mx-auto px-5 md:px-16 pt-12 md:pt-20 pb-6 md:pb-12">
           <Reveal>
             <div className="text-center md:text-left">
@@ -182,7 +165,7 @@ export default function HomePage() {
               <Link
                 key={c.id}
                 to={`/category/${c.slug}`}
-                className="group relative block rounded-lg bg-surface-container-low shadow-lift overflow-hidden transition hover:-translate-y-0.5 hover:shadow-md"
+                className="group relative block card-soft rounded-lg overflow-hidden transition hover:-translate-y-0.5 hover:shadow-md"
               >
                 {c.hero_image_url ? (
                   <div className="aspect-[16/10] overflow-hidden">
@@ -207,13 +190,9 @@ export default function HomePage() {
             ))}
           </Reveal>
         </div>
-
-        {/* Curve back out to the base surface — belly points down (same
-            orientation as the divider at the top of this band) */}
-        <CurvedDivider tone="surface" />
       </section>
 
-      {/* Everything below sits on the base surface */}
+      {/* Everything below sits directly on the blob field */}
       <main className="max-w-[1140px] mx-auto px-5 md:px-16 pb-16 md:pb-24">
         {/* Featured products — render skeletons while loading, hide section entirely if loaded-empty.
             Hidden on mobile (Shop Now in the hero already covers product discovery). */}
@@ -233,7 +212,7 @@ export default function HomePage() {
                 <Link
                   key={p.id}
                   to={`/product/${p.slug}`}
-                  className="group block rounded-lg bg-surface-container-low shadow-lift overflow-hidden transition hover:-translate-y-0.5 hover:shadow-md"
+                  className="group block card-soft rounded-lg overflow-hidden transition hover:-translate-y-0.5 hover:shadow-md"
                 >
                   {p.amazon_image_urls?.[0] && (
                     <img
@@ -261,7 +240,7 @@ export default function HomePage() {
 
         {/* Provider's Promise */}
         <Reveal>
-          <section className="mt-16 md:mt-24 rounded-2xl bg-surface-container-low p-8 md:p-12 text-center shadow-lift">
+          <section className="mt-16 md:mt-24 glass rounded-2xl p-8 md:p-12 text-center">
             <Starfish className="w-10 h-10 mx-auto mb-4 text-primary" />
             <p className="font-label text-xs tracking-[0.2em] uppercase text-secondary mb-3">
               Provider's Promise

@@ -5,26 +5,8 @@ import { formatPrice } from '../lib/format'
 import Reveal from '../components/Reveal'
 import Starfish from '../components/Starfish'
 
-// Reusable curved divider — matches the one on the homepage so the
-// transitions feel consistent across landing pages.
-function CurvedDivider({ tone = 'surface-container-low', flipY = false }) {
-  const colorClass = {
-    'surface-container-low': 'text-surface-container-low',
-    surface: 'text-surface',
-  }[tone] || 'text-surface-container-low'
-
-  return (
-    <svg
-      viewBox="0 0 1440 80"
-      preserveAspectRatio="none"
-      className={`block w-full h-10 md:h-14 ${colorClass}`}
-      style={{ transform: flipY ? 'scaleY(-1)' : undefined }}
-      aria-hidden="true"
-    >
-      <path fill="currentColor" d="M0,0 C360,72 1080,72 1440,0 L1440,80 L0,80 Z" />
-    </svg>
-  )
-}
+// The curved divider was removed alongside the homepage's — see the note in
+// HomePage.jsx. Sections separate by translucency over the blob field now.
 
 export default function CategoryPage() {
   const { slug } = useParams()
@@ -166,13 +148,12 @@ export default function CategoryPage() {
           </div>
         </div>
 
-        {category.intro_paragraph && <CurvedDivider tone="surface-container-low" />}
       </section>
 
-      {/* "Why we curate" intro — tinted band, only renders if filled in */}
+      {/* "Why we curate" intro — glass band, only renders if filled in */}
       {category.intro_paragraph && (
         <>
-          <section className="bg-surface-container-low">
+          <section className="glass-band">
             <div className="max-w-[760px] mx-auto px-5 md:px-16 py-14 md:py-20 text-center">
               <Reveal>
                 <p className="font-label text-xs tracking-[0.25em] uppercase text-secondary mb-5">
@@ -183,7 +164,6 @@ export default function CategoryPage() {
                 </p>
               </Reveal>
             </div>
-            <CurvedDivider tone="surface" />
           </section>
         </>
       )}
@@ -192,7 +172,7 @@ export default function CategoryPage() {
       {useSpotlight && (
         <section className="max-w-[1140px] mx-auto px-5 md:px-16 pt-10 md:pt-16">
           <Reveal>
-            <div className="rounded-xl bg-surface-container-low shadow-lift overflow-hidden lg:grid lg:grid-cols-2 lg:items-center">
+            <div className="glass rounded-xl overflow-hidden lg:grid lg:grid-cols-2 lg:items-center">
               {topProduct.amazon_image_urls?.[0] && (
                 <Link to={`/product/${topProduct.slug}`} className="block bg-surface-container-lowest">
                   <img
@@ -245,7 +225,7 @@ export default function CategoryPage() {
       <section className={`max-w-[1140px] mx-auto px-5 md:px-16 pt-10 md:pt-16 ${recentPosts.length > 0 ? 'pb-4 md:pb-8' : 'pb-16 md:pb-24'}`}>
         {products.length === 0 ? (
           <Reveal>
-            <div className="rounded-xl bg-surface-container-low shadow-lift px-6 py-12 md:py-16 text-center">
+            <div className="glass rounded-xl px-6 py-12 md:py-16 text-center">
               <Starfish className="w-12 h-12 mx-auto text-secondary opacity-60 mb-5" />
               <p className="font-headline text-2xl md:text-3xl text-on-surface">
                 Curated picks coming soon
@@ -276,7 +256,7 @@ export default function CategoryPage() {
               {gridProducts.map(p => (
                 <article
                   key={p.id}
-                  className="rounded-lg bg-surface-container-low shadow-lift overflow-hidden relative flex flex-col transition hover:-translate-y-0.5 hover:shadow-md"
+                  className="card-soft rounded-lg overflow-hidden relative flex flex-col transition hover:-translate-y-0.5 hover:shadow-md"
                 >
                   {p.badge && (
                     <span className="absolute top-0 left-6 z-10 inline-flex items-center px-3 py-1.5 rounded-b-md bg-secondary-container text-on-secondary-container font-label text-[11px] tracking-[0.12em] uppercase">

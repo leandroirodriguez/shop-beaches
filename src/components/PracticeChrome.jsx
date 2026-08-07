@@ -123,7 +123,11 @@ export function PracticeHeader() {
         </div>
       </a>
 
-      <header className="sticky top-0 z-40 bg-surface-container-lowest/95 backdrop-blur border-b border-outline-variant/40">
+      {/* No bottom border: a white hairline is the usual glass edge, but this
+          header travels over dark photo heroes and the teal bands, where it
+          reads as a bright line. A soft shadow separates it on light content
+          and disappears on dark. */}
+      <header className="sticky top-0 z-40 bg-white/55 backdrop-blur-2xl backdrop-saturate-150 shadow-[0_1px_3px_rgb(47_86_100_/_0.07)]">
       <div className="max-w-[1240px] mx-auto px-5 md:px-10 h-20 md:h-24 flex items-center gap-6">
         {/* Full lockup at rest; crossfades to the starfish mark on scroll
             (and in the lg–xl band where lockup + menu would collide) */}
@@ -159,12 +163,12 @@ export function PracticeHeader() {
               </a>
               {item.children && (
                 <div className="absolute left-1/2 -translate-x-1/2 top-full pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition">
-                  <div className="bg-surface-container-lowest shadow-lift border border-outline-variant/40 py-2 min-w-56">
+                  <div className="glass rounded-md py-2 min-w-56">
                     {item.children.map(c => (
                       <a
                         key={c.label}
                         href={c.href}
-                        className="block px-5 py-2.5 font-label text-[11px] tracking-[0.12em] uppercase text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition whitespace-nowrap"
+                        className="block px-5 py-2.5 font-label text-[11px] tracking-[0.12em] uppercase text-on-surface-variant hover:text-primary hover:bg-white/60 transition whitespace-nowrap"
                       >
                         {c.label}
                       </a>
@@ -197,7 +201,10 @@ export function PracticeHeader() {
       </div>
 
       {menuOpen && (
-        <nav className="lg:hidden border-t border-outline-variant/40 bg-surface-container-lowest px-5 py-3 max-h-[calc(100dvh-11rem)] overflow-y-auto overscroll-contain">
+        // Held at /85 rather than the /55 used elsewhere: this is a scrolling
+        // list of links, and content sliding underneath a lighter glass makes
+        // the labels swim.
+        <nav className="lg:hidden border-t border-outline-variant/40 bg-white/85 backdrop-blur-2xl backdrop-saturate-150 px-5 py-3 max-h-[calc(100dvh-11rem)] overflow-y-auto overscroll-contain">
           {NAV.map(item => (
             <div key={item.label} className="border-b border-outline-variant/30 last:border-0">
               {item.children ? (
@@ -278,7 +285,7 @@ function HomeIcon() {
 
 export function PracticeFooter() {
   return (
-    <footer className="bg-surface-container-low text-on-surface border-t border-outline-variant/40">
+    <footer className="glass-band text-on-surface">
       <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-16">
         <div className="grid lg:grid-cols-[1.9fr_1fr] gap-12 lg:gap-16">
           {/* Left region — co-branded lockup + info columns */}

@@ -72,7 +72,7 @@ export default function AdminDashboard() {
               <Link
                 key={t.to}
                 to={t.to}
-                className="p-6 rounded-xl bg-surface-container-low hover:bg-surface-container transition shadow-lift block"
+                className="glass p-6 rounded-xl hover:bg-white/70 transition block"
               >
                 <div className="flex items-start justify-between">
                   <div className="w-11 h-11 rounded-md bg-primary text-on-primary grid place-items-center">

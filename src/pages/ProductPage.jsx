@@ -275,7 +275,7 @@ export default function ProductPage() {
             {p.how_to_use.map(s => (
               <li
                 key={s.step}
-                className="flex items-start gap-4 lg:block lg:rounded-lg lg:bg-surface-container-low lg:shadow-lift lg:p-6"
+                className="flex items-start gap-4 lg:block lg:card-soft lg:rounded-lg lg:p-6"
               >
                 <span className="w-8 h-8 rounded-full border-2 border-primary text-primary font-label font-semibold grid place-items-center shrink-0 lg:mb-3">
                   {s.step}
@@ -303,7 +303,7 @@ export default function ProductPage() {
               <Link
                 key={rp.id}
                 to={`/product/${rp.slug}`}
-                className="group block rounded-lg bg-surface-container-low shadow-lift overflow-hidden transition hover:-translate-y-0.5 hover:shadow-md"
+                className="group block card-soft rounded-lg overflow-hidden transition hover:-translate-y-0.5 hover:shadow-md"
               >
                 {rp.amazon_image_urls?.[0] && (
                   <img
@@ -366,7 +366,7 @@ export default function ProductPage() {
       )}
 
       {/* Sticky bottom CTA — mobile only */}
-      <div className="md:hidden fixed bottom-0 inset-x-0 z-30 bg-surface-container border-t border-outline-variant/40">
+      <div className="md:hidden fixed bottom-0 inset-x-0 z-30 bg-white/55 backdrop-blur-2xl backdrop-saturate-150 shadow-[0_-1px_3px_rgb(47_86_100_/_0.07)]">
         <div className="max-w-[720px] mx-auto px-5 py-3 flex items-center gap-4">
           <div className="flex-1">
             {p.amazon_price && (

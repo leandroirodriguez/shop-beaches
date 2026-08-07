@@ -388,7 +388,7 @@ export default function AdminProductEdit() {
         </div>
 
         {/* Sticky save bar */}
-        <div className="fixed bottom-0 inset-x-0 z-30 bg-surface-container border-t border-outline-variant/40">
+        <div className="fixed bottom-0 inset-x-0 z-30 bg-white/70 backdrop-blur-2xl backdrop-saturate-150 shadow-[0_-1px_3px_rgb(47_86_100_/_0.07)]">
           <div className="max-w-[960px] mx-auto px-5 md:px-10 py-3 flex items-center justify-end gap-3">
             {form.published ? (
               <button
@@ -426,7 +426,7 @@ export default function AdminProductEdit() {
 
 function Section({ title, children }) {
   return (
-    <section className="rounded-xl bg-surface-container-low p-6 shadow-lift">
+    <section className="glass rounded-xl p-6">
       <h2 className="font-headline text-xl text-on-surface mb-4">{title}</h2>
       {children}
     </section>

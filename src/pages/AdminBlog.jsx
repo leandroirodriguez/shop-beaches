@@ -60,7 +60,7 @@ export default function AdminBlog() {
         </div>
 
         {!loading && posts.length === 0 ? (
-          <div className="mt-10 p-10 rounded-xl bg-surface-container-low border border-dashed border-outline-variant/60 text-center">
+          <div className="mt-10 p-10 rounded-xl bg-white/45 backdrop-blur border border-dashed border-outline-variant/60 text-center">
             <p className="font-headline text-xl text-on-surface">No posts yet</p>
             <p className="text-on-surface-variant text-sm mt-2 max-w-md mx-auto">
               Click <strong>Generate New Post</strong>, give Claude a topic, and an article will be drafted in your house voice.

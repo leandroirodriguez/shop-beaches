@@ -13,7 +13,10 @@
   --color-surface-container-high: #e4ddd3;
   --color-surface-container-highest: #ded6ca;
   --color-on-surface: #1e2a30;
-  --color-on-surface-variant: #55636a;
+  /* Darkened from #55636a: secondary text now sits on translucent white over a
+     camel blob rather than an opaque tint, which cost ~0.5 of contrast ratio.
+     This holds AA (4.5:1) at the worst-case blob overlap. */
+  --color-on-surface-variant: #4a575e;
   --color-inverse-surface: #2b3b43;
   --color-inverse-on-surface: #f2f0ec;
   --color-outline: #766d63;
@@ -60,6 +63,11 @@
   --color-on-background: #1e2a30;
   --color-surface-variant: #e4ddd3;
 
+  /* Mid-teal between primary and the seafoam container. Only use is the
+     backdrop blob field — the glass surfaces need something with more chroma
+     than #2f5664 to blur over or the whole page reads flat beige. */
+  --color-brand-500: #3d6e7e;
+
   /* Fonts from DESIGN.md */
   --font-headline: "Newsreader", serif;
   --font-body: "Manrope", system-ui, sans-serif;
@@ -92,11 +100,61 @@ body {
     0 8px 24px rgba(47, 86, 100, 0.08);
 }
 
-/* Flat warm ground with a hairline base. Sections separate by tone and a
-   rule rather than a gradient wash, which reads closer to print. */
+/* Unchanged from before the glass work. The blob field starts one viewport
+   down, so the hero always sits in the clean zone and keeps its original flat
+   warm ground with a hairline base. */
 .hero-radial {
   background: var(--color-surface-container-low);
   border-bottom: 1px solid color-mix(in srgb, var(--color-outline-variant) 60%, transparent);
+}
+
+/* ── Glass surfaces ────────────────────────────────────────────────────────
+   Three tiers, in descending weight. Each covers the SURFACE only (bg,
+   border, blur, shadow, radius) — padding and layout stay on the element.
+
+   Tier is chosen by what the surface does, not by how important it is:
+   .glass       floats over other content (chrome, menus, sticky bars) or is
+                a single large panel — blur has something to bite on
+   .glass-band  full-bleed section band — thin enough that blobs read through
+   .card-soft   repeated grid cards — NO blur. Card content is a photo on
+                white, so a backdrop-filter costs GPU for no visible gain at
+                20+ cards per screen. */
+@utility glass {
+  border-radius: var(--radius-lg);
+  border: 1px solid rgb(255 255 255 / 0.6);
+  background: rgb(255 255 255 / 0.55);
+  box-shadow:
+    0 1px 2px rgb(47 86 100 / 0.04),
+    0 8px 24px rgb(47 86 100 / 0.08);
+  /* Standard property only — lightningcss adds the -webkit- prefix from the
+     build targets. Writing both by hand makes it drop the unprefixed one. */
+  backdrop-filter: blur(40px) saturate(1.5);
+}
+
+@utility glass-band {
+  background: rgb(255 255 255 / 0.35);
+  backdrop-filter: blur(24px) saturate(1.4);
+  border-top: 1px solid rgb(255 255 255 / 0.5);
+  border-bottom: 1px solid rgb(255 255 255 / 0.5);
+}
+
+@utility card-soft {
+  border: 1px solid rgb(255 255 255 / 0.5);
+  background: rgb(255 255 255 / 0.6);
+  box-shadow:
+    0 1px 2px rgb(47 86 100 / 0.04),
+    0 8px 24px rgb(47 86 100 / 0.08);
+}
+
+/* Users who ask for less transparency get flat opaque surfaces. Without this
+   the whole site depends on backdrop-filter for its section structure. */
+@media (prefers-reduced-transparency: reduce) {
+  .glass,
+  .glass-band,
+  .card-soft {
+    backdrop-filter: none;
+    background: #fbfaf8;
+  }
 }
 
 /* Admin form input baseline */

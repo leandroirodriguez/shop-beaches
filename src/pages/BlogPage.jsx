@@ -33,7 +33,7 @@ export default function BlogPage() {
       {loading ? (
         <p className="mt-12 text-on-surface-variant">Loading articles…</p>
       ) : posts.length === 0 ? (
-        <div className="mt-10 p-10 rounded-lg bg-surface-container-low border border-dashed border-outline-variant/60 text-center">
+        <div className="mt-10 p-10 rounded-lg bg-white/45 backdrop-blur border border-dashed border-outline-variant/60 text-center">
           <p className="font-headline text-xl text-on-surface">No posts yet</p>
           <p className="text-on-surface-variant text-sm mt-2">Articles will appear here once published.</p>
         </div>

@@ -3,13 +3,16 @@ import logo from '../assets/logo.svg'
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-40 bg-surface-container-lowest/95 backdrop-blur border-b border-outline-variant/40">
+    <header className="sticky top-0 z-40 bg-white/55 backdrop-blur-2xl backdrop-saturate-150 shadow-[0_1px_3px_rgb(47_86_100_/_0.07)]">
       <div className="max-w-[1140px] mx-auto px-5 md:px-16 h-20 md:h-24 flex items-center">
         {/* Mobile-only spacer to keep the logo symmetrically centered.
             Removed on desktop so the logo hugs the left edge. */}
         <div className="flex-1 md:hidden" />
 
-        <Link to="/" aria-label="Beaches OBGYN home" className="shrink-0">
+        {/* Logo returns to the practice site, not the shop home — the shop is
+            a section of the practice, so the wordmark belongs to the parent.
+            "Shop" in the nav is the way back to the shop's own landing page. */}
+        <Link to="/mainclone" aria-label="Beaches OBGYN practice site" className="shrink-0">
           <img
             src={logo}
             alt="Beaches OBGYN"
@@ -31,6 +34,12 @@ export default function Header() {
             className="hidden md:inline-block font-label text-xs tracking-[0.2em] uppercase text-on-surface hover:text-primary transition"
           >
             Blog
+          </Link>
+          <Link
+            to="/mainclone"
+            className="hidden md:inline-block font-label text-xs tracking-[0.2em] uppercase text-on-surface hover:text-primary transition"
+          >
+            Practice
           </Link>
         </nav>
       </div>

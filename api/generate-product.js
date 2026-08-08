@@ -100,13 +100,14 @@ ${featuresList.length ? featuresList.map(f => `- ${f}`).join('\n') : '(none prov
 Write the curated page for this product.`
 
     const response = await claude.messages.create({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 2000,
+      model: 'claude-opus-5',
+      max_tokens: 8000,
+      output_config: { effort: 'low' },
       system: SYSTEM_PROMPT,
       messages: [{ role: 'user', content: prompt }],
     })
 
-    const text = response.content[0].text
+    const text = response.content.find(b => b.type === 'text')?.text ?? ''
     const jsonMatch = text.match(/\{[\s\S]*\}/)
     if (!jsonMatch) return res.status(500).json({ error: 'Failed to parse AI response' })
     draft = JSON.parse(jsonMatch[0])

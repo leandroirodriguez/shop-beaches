@@ -61,13 +61,14 @@ ${style ? `Style notes from the editor: ${style}` : ''}`
 
   try {
     const response = await claude.messages.create({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 4000,
+      model: 'claude-opus-5',
+      max_tokens: 16000,
+      output_config: { effort: 'medium' },
       system: SYSTEM_PROMPT,
       messages: [{ role: 'user', content: prompt }],
     })
 
-    const text = response.content[0].text
+    const text = response.content.find(b => b.type === 'text')?.text ?? ''
     const jsonMatch = text.match(/\{[\s\S]*\}/)
     if (!jsonMatch) return res.status(500).json({ error: 'Failed to parse AI response' })
     const draft = JSON.parse(jsonMatch[0])

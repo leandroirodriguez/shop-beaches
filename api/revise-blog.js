@@ -56,13 +56,14 @@ ${instruction}`
 
   try {
     const response = await claude.messages.create({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 4000,
+      model: 'claude-opus-5',
+      max_tokens: 16000,
+      output_config: { effort: 'medium' },
       system: SYSTEM_PROMPT,
       messages: [{ role: 'user', content: prompt }],
     })
 
-    let revised = response.content[0].text.trim()
+    let revised = (response.content.find(b => b.type === 'text')?.text ?? '').trim()
 
     // Strip accidental code fences if Claude wraps the output
     if (revised.startsWith('```')) {

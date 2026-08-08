@@ -1,4 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk'
+import { CLAUDE_MODEL, textFrom } from './_model.js'
 import { createClient } from '@supabase/supabase-js'
 
 const claude = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
@@ -100,14 +101,14 @@ ${featuresList.length ? featuresList.map(f => `- ${f}`).join('\n') : '(none prov
 Write the curated page for this product.`
 
     const response = await claude.messages.create({
-      model: 'claude-opus-5',
+      model: CLAUDE_MODEL,
       max_tokens: 8000,
       output_config: { effort: 'low' },
       system: SYSTEM_PROMPT,
       messages: [{ role: 'user', content: prompt }],
     })
 
-    const text = response.content.find(b => b.type === 'text')?.text ?? ''
+    const text = textFrom(response)
     const jsonMatch = text.match(/\{[\s\S]*\}/)
     if (!jsonMatch) return res.status(500).json({ error: 'Failed to parse AI response' })
     draft = JSON.parse(jsonMatch[0])

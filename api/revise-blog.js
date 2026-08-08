@@ -1,4 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk'
+import { CLAUDE_MODEL, textFrom } from './_model.js'
 import { createClient } from '@supabase/supabase-js'
 
 const claude = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
@@ -56,14 +57,14 @@ ${instruction}`
 
   try {
     const response = await claude.messages.create({
-      model: 'claude-opus-5',
+      model: CLAUDE_MODEL,
       max_tokens: 16000,
       output_config: { effort: 'medium' },
       system: SYSTEM_PROMPT,
       messages: [{ role: 'user', content: prompt }],
     })
 
-    let revised = (response.content.find(b => b.type === 'text')?.text ?? '').trim()
+    let revised = textFrom(response).trim()
 
     // Strip accidental code fences if Claude wraps the output
     if (revised.startsWith('```')) {

@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../assets/logo.svg'
+import Starfish from './Starfish'
 
 // Shop nav — flat, so the mobile menu is a simple list (no accordion
 // like the practice chrome needs).
@@ -12,6 +13,16 @@ const NAV = [
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
+  // Collapse the wordmark to the starfish mark once the page is scrolled,
+  // matching the practice pages' header behavior.
+  const [compact, setCompact] = useState(false)
+
+  useEffect(() => {
+    const update = () => setCompact(window.scrollY > 40)
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    return () => window.removeEventListener('scroll', update)
+  }, [])
 
   return (
     <header className="sticky top-0 z-40 bg-white/55 backdrop-blur-2xl backdrop-saturate-150 shadow-[0_1px_3px_rgb(47_86_100_/_0.07)]">
@@ -23,11 +34,26 @@ export default function Header() {
         {/* Logo returns to the practice site, not the shop home — the shop is
             a section of the practice, so the wordmark belongs to the parent.
             "Shop" in the nav is the way back to the shop's own landing page. */}
-        <Link to="/mainclone" aria-label="Beaches OBGYN practice site" className="shrink-0">
+        {/* Wordmark at rest; crossfades to the starfish mark on scroll. The
+            anchor animates its width so the nav closes the gap smoothly. */}
+        <Link
+          to="/mainclone"
+          aria-label="Beaches OBGYN practice site"
+          className={`relative shrink-0 flex items-center h-[3.78rem] md:h-[4.32rem] transition-[width] duration-300 ${
+            compact ? 'w-[3.4rem] md:w-[3.9rem]' : 'w-[12.25rem] md:w-[14rem]'
+          }`}
+        >
           <img
             src={logo}
             alt="Beaches OBGYN"
-            className="block h-[3.78rem] md:h-[4.32rem] w-auto"
+            className={`absolute left-0 h-full w-auto max-w-none transition-opacity duration-300 ${
+              compact ? 'opacity-0' : 'opacity-100'
+            }`}
+          />
+          <Starfish
+            className={`absolute left-0 w-[3.4rem] h-[3.4rem] md:w-[3.9rem] md:h-[3.9rem] text-primary transition-opacity duration-300 ${
+              compact ? 'opacity-100' : 'opacity-0 pointer-events-none'
+            }`}
           />
         </Link>
 

@@ -87,9 +87,9 @@ export function PracticeHeader() {
 
   return (
     <>
-      {/* Utility bar — phone/text on the left, alliance membership on the right */}
+      {/* Utility bar — call/text, centered at every width */}
       <div className="bg-primary text-on-primary">
-        <div className="max-w-[1240px] mx-auto px-5 md:px-10 h-10 flex items-center justify-between gap-4">
+        <div className="max-w-[1240px] mx-auto px-5 md:px-10 h-10 flex items-center justify-center gap-4">
           <div className="flex items-center gap-4 sm:gap-5 font-label text-[11px] tracking-[0.12em]">
             <a href="tel:9042419775" className="flex items-center gap-2 hover:text-primary-container transition whitespace-nowrap">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -129,13 +129,17 @@ export function PracticeHeader() {
           and disappears on dark. */}
       <header className="sticky top-0 z-40 bg-white/55 backdrop-blur-2xl backdrop-saturate-150 shadow-[0_1px_3px_rgb(47_86_100_/_0.07)]">
       <div className="max-w-[1240px] mx-auto px-5 md:px-10 h-20 md:h-24 flex items-center gap-6">
+        {/* Mobile-only spacer; paired with the hamburger's flex-1 wrapper it
+            keeps the logo optically centered below lg. */}
+        <div className="flex-1 lg:hidden" />
+
         {/* Full lockup at rest; crossfades to the starfish mark on scroll
             (and in the lg–xl band where lockup + menu would collide) */}
         <a
           href="/mainclone"
           aria-label="Beaches OBGYN"
           className={`relative shrink-0 flex items-center h-[4.2rem] md:h-[4.8rem] transition-[width] duration-300 ${
-            compact ? 'w-12 md:w-14' : 'w-[11rem] md:w-[13rem]'
+            compact ? 'w-12 md:w-14' : 'w-[168px] md:w-[193px]'
           }`}
         >
           <img
@@ -186,18 +190,20 @@ export function PracticeHeader() {
           </a>
         </nav>
 
-        <button
-          type="button"
-          className="lg:hidden ml-auto p-2 text-on-surface"
-          aria-label="Toggle menu"
-          onClick={() => { setMenuOpen(o => !o); setOpenSub(null) }}
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-            {menuOpen
-              ? <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
-              : <path d="M4 7h16M4 12h16M4 17h16" strokeLinecap="round" />}
-          </svg>
-        </button>
+        <div className="flex-1 lg:hidden flex justify-end">
+          <button
+            type="button"
+            className="p-2 -mr-2 text-on-surface"
+            aria-label="Toggle menu"
+            onClick={() => { setMenuOpen(o => !o); setOpenSub(null) }}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              {menuOpen
+                ? <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
+                : <path d="M4 7h16M4 12h16M4 17h16" strokeLinecap="round" />}
+            </svg>
+          </button>
+        </div>
       </div>
 
       {menuOpen && (

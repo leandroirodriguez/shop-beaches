@@ -129,10 +129,6 @@ export function PracticeHeader() {
           and disappears on dark. */}
       <header className="sticky top-0 z-40 bg-white/55 backdrop-blur-2xl backdrop-saturate-150 shadow-[0_1px_3px_rgb(47_86_100_/_0.07)]">
       <div className="max-w-[1240px] mx-auto px-5 md:px-10 h-20 md:h-24 flex items-center gap-6">
-        {/* Mobile-only spacer; paired with the hamburger's flex-1 wrapper it
-            keeps the logo optically centered below lg. */}
-        <div className="flex-1 lg:hidden" />
-
         {/* Full lockup at rest; crossfades to the starfish mark on scroll
             (and in the lg–xl band where lockup + menu would collide) */}
         <a
@@ -190,20 +186,18 @@ export function PracticeHeader() {
           </a>
         </nav>
 
-        <div className="flex-1 lg:hidden flex justify-end">
-          <button
-            type="button"
-            className="p-2 -mr-2 text-on-surface"
-            aria-label="Toggle menu"
-            onClick={() => { setMenuOpen(o => !o); setOpenSub(null) }}
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              {menuOpen
-                ? <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
-                : <path d="M4 7h16M4 12h16M4 17h16" strokeLinecap="round" />}
-            </svg>
-          </button>
-        </div>
+        <button
+          type="button"
+          className="lg:hidden ml-auto p-2 text-on-surface"
+          aria-label="Toggle menu"
+          onClick={() => { setMenuOpen(o => !o); setOpenSub(null) }}
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            {menuOpen
+              ? <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
+              : <path d="M4 7h16M4 12h16M4 17h16" strokeLinecap="round" />}
+          </svg>
+        </button>
       </div>
 
       {menuOpen && (

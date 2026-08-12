@@ -109,12 +109,14 @@ body {
 }
 
 /* ── Glass surfaces ────────────────────────────────────────────────────────
-   Three tiers, in descending weight. Each covers the SURFACE only (bg,
+   Four tiers, in descending weight. Each covers the SURFACE only (bg,
    border, blur, shadow, radius) — padding and layout stay on the element.
 
    Tier is chosen by what the surface does, not by how important it is:
-   .glass       floats over other content (chrome, menus, sticky bars) or is
-                a single large panel — blur has something to bite on
+   .glass       floats over other content (chrome, sticky bars) or is a
+                single large panel — blur has something to bite on
+   .glass-menu  dropdown panels that hang OUT of blurred chrome — opaque,
+                see the note on the utility below
    .glass-band  full-bleed section band — thin enough that blobs read through
    .card-soft   repeated grid cards — NO blur. Card content is a photo on
                 white, so a backdrop-filter costs GPU for no visible gain at
@@ -129,6 +131,25 @@ body {
   /* Standard property only — lightningcss adds the -webkit- prefix from the
      build targets. Writing both by hand makes it drop the unprefixed one. */
   backdrop-filter: blur(40px) saturate(1.5);
+}
+
+/* Opaque on purpose — do NOT give this a backdrop-filter.
+   These panels are descendants of the sticky header, which has its own
+   backdrop-filter and therefore establishes a backdrop root. A descendant can
+   only sample the backdrop WITHIN that root, and the panel hangs below the
+   header's box, so its own blur samples nothing and silently does nothing.
+   The panel then renders as bare translucent white over whatever it covers —
+   hero photography, headlines, provider portraits — and the labels swim (the
+   same reason the mobile menu sits at /85 rather than /55).
+   Fill matches the prefers-reduced-transparency fallback, so the menu looks
+   identical in both modes. on-surface-variant lands at ~7.4:1 here. */
+@utility glass-menu {
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-outline-variant);
+  background: #fbfaf8;
+  box-shadow:
+    0 1px 2px rgb(47 86 100 / 0.04),
+    0 8px 24px rgb(47 86 100 / 0.12);
 }
 
 @utility glass-band {

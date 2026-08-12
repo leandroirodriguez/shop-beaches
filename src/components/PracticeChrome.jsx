@@ -163,12 +163,15 @@ export function PracticeHeader() {
               </a>
               {item.children && (
                 <div className="absolute left-1/2 -translate-x-1/2 top-full pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition">
-                  <div className="glass rounded-md py-2 min-w-56">
+                  {/* glass-menu, not glass: the panel hangs outside the
+                      header's backdrop root, so a backdrop-filter here is a
+                      no-op and the labels end up bare on the hero */}
+                  <div className="glass-menu rounded-md py-2 min-w-56">
                     {item.children.map(c => (
                       <a
                         key={c.label}
                         href={c.href}
-                        className="block px-5 py-2.5 font-label text-[11px] tracking-[0.12em] uppercase text-on-surface-variant hover:text-primary hover:bg-white/60 transition whitespace-nowrap"
+                        className="block px-5 py-2.5 font-label text-[11px] tracking-[0.12em] uppercase text-on-surface-variant hover:text-primary hover:bg-primary-container/40 transition whitespace-nowrap"
                       >
                         {c.label}
                       </a>

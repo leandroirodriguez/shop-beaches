@@ -2,6 +2,7 @@ import { Routes, Route, useLocation } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import BackgroundDecor from './components/BackgroundDecor'
+import RouteMeta from './components/RouteMeta'
 import HomePage from './pages/HomePage'
 import AllProductsPage from './pages/AllProductsPage'
 import CategoryPage from './pages/CategoryPage'
@@ -40,6 +41,7 @@ export default function App() {
     // so the wrapper has to span the full document height. No overflow here —
     // clipping would break the sticky headers inside.
     <div className="relative">
+      <RouteMeta />
       {/* Mounted once, outside the router, so the blob field is continuous
           across shop, clone and admin routes. Everything else is lifted to
           z-10 to sit above it. */}

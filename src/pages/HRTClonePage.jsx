@@ -4,7 +4,9 @@
 // gives it a page of its own. Reachable only at /hrtclone.
 
 import Starfish from '../components/Starfish'
+import FAQSection from '../components/FAQSection'
 import { PracticeHeader, PracticeFooter, APPOINTMENT_URL } from '../components/PracticeChrome'
+import { HRT_FAQS } from '../content/faqs'
 
 // Verbatim from the practice's GYN Services page: the symptoms hormonal
 // change can bring on through perimenopause and menopause.
@@ -207,6 +209,14 @@ export default function HRTClonePage() {
         </div>
         </div>
       </section>
+
+      {/* ---------- FAQ — no band: the shop cross-link above is already one ---------- */}
+      <FAQSection
+        heading="What women ask us about menopause."
+        intro="General guidance on hormonal change and treatment. Whether hormone therapy is right for you depends on your own history — that is the conversation to have with your physician."
+        items={HRT_FAQS}
+        band={false}
+      />
 
       {/* ---------- Closing CTA ---------- */}
       <section>

@@ -278,6 +278,60 @@ export function PracticeHeader() {
   )
 }
 
+// Structured data for the practice itself, emitted on every practice page.
+// Mirrors exactly what the footer below already states in prose — addresses,
+// phone, and hours — so an AI crawler gets the office details unambiguously
+// instead of having to parse them out of the markup. Two offices, so two
+// nodes in a @graph rather than one clinic with a second address bolted on.
+const OFFICE_HOURS = [
+  {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday'],
+    opens: '09:00',
+    closes: '12:00',
+  },
+  {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday'],
+    opens: '14:00',
+    closes: '17:00',
+  },
+  {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: 'Friday',
+    opens: '09:00',
+    closes: '12:00',
+  },
+]
+
+function clinic(id, street, locality, postalCode) {
+  return {
+    '@type': 'MedicalClinic',
+    '@id': id,
+    name: 'Beaches OBGYN',
+    medicalSpecialty: ['Obstetric', 'Gynecologic'],
+    telephone: '+1-904-241-9775',
+    faxNumber: '+1-904-249-3638',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: street,
+      addressLocality: locality,
+      addressRegion: 'FL',
+      postalCode,
+      addressCountry: 'US',
+    },
+    openingHoursSpecification: OFFICE_HOURS,
+  }
+}
+
+const PRACTICE_JSON_LD = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    clinic('#office-jax-beach', '1577 Roberts Drive, Suite 323', 'Jacksonville Beach', '32250'),
+    clinic('#office-skinner', '9010 RG Skinner Parkway, Suite 102', 'Jacksonville', '32256'),
+  ],
+}
+
 function HomeIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="shrink-0 mt-0.5 text-primary" aria-hidden="true">
@@ -289,6 +343,10 @@ function HomeIcon() {
 export function PracticeFooter() {
   return (
     <footer className="glass-band text-on-surface">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(PRACTICE_JSON_LD) }}
+      />
       <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-16">
         <div className="grid lg:grid-cols-[1.9fr_1fr] gap-12 lg:gap-16">
           {/* Left region — co-branded lockup + info columns */}

@@ -3,7 +3,9 @@
 // Not linked from anywhere; reachable only at /misclone.
 
 import Starfish from '../components/Starfish'
+import FAQSection from '../components/FAQSection'
 import { PracticeHeader, PracticeFooter, APPOINTMENT_URL } from '../components/PracticeChrome'
+import { MIS_FAQS } from '../content/faqs'
 
 const BENEFITS = [
   { title: 'Less Pain', text: 'Smaller incisions mean gentler recoveries and less postoperative discomfort.' },
@@ -237,6 +239,14 @@ export default function MISClonePage() {
           ))}
         </div>
       </section>
+
+      {/* ---------- FAQ — no band: the closing CTA below is already one ---------- */}
+      <FAQSection
+        heading="Questions patients ask before surgery."
+        intro="General guidance on gynecologic surgery at our practice. Recovery times and candidacy vary — your surgeon will give you specifics for your own procedure."
+        items={MIS_FAQS}
+        band={false}
+      />
 
       {/* ---------- Closing CTA ---------- */}
       <section className="glass-band">

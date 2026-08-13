@@ -5,7 +5,9 @@
 
 import { useState } from 'react'
 import Starfish from '../components/Starfish'
+import FAQSection from '../components/FAQSection'
 import { PracticeHeader, PracticeFooter, APPOINTMENT_URL } from '../components/PracticeChrome'
+import { OB_FAQS } from '../content/faqs'
 
 const JOURNEY = [
   {
@@ -275,6 +277,13 @@ export default function OBClonePage() {
           </p>
         </div>
       </section>
+
+      {/* ---------- FAQ ---------- */}
+      <FAQSection
+        heading="Questions expectant mothers ask us."
+        intro="General guidance for pregnancy care at our Jacksonville Beach practice. It is not a substitute for advice from your own physician — if something concerns you, call us."
+        items={OB_FAQS}
+      />
 
       {/* ---------- Closing CTA ---------- */}
       <section className="max-w-[1240px] mx-auto px-5 md:px-10 py-12 md:py-16 text-center">

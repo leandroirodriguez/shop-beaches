@@ -7,19 +7,26 @@
  * without the surrounding page. Keep answers to roughly 40–90 words —
  * long enough to actually answer, short enough to be extracted whole.
  *
- * Each entry is { q, a } plus an optional `review` string.
+ * Each entry is { q, a }, plus an optional `review` string naming something
+ * a physician or the office still needs to confirm. Anything carrying a
+ * `review` flag has not been signed off. Run:
  *
- *   review: '<what a physician or the office needs to confirm>'
+ *   grep -n "review:" src/content/faqs.js
  *
- * `review` marks an answer containing a claim NOT supported by anything
- * already published on these pages — a practice-specific fact I could not
- * verify, or clinical guidance that should carry a physician's sign-off.
- * The drafted text is a reasonable default, not a confirmed one. Run
- * `grep -n "review:" src/content/faqs.js` for the full list.
+ * REVIEW STATUS — update this block as content changes.
  *
- * NOTHING HERE HAS BEEN CLINICALLY REVIEWED. Every answer should be read by
- * a physician before this goes in front of patients — the `review` flags are
- * the minimum, not the whole job.
+ *   All four sets reviewed and approved by the practice on 2026-08-13.
+ *
+ *   Three answers are the practice's own wording rather than drafted copy:
+ *   the postpartum schedule (OB), the pellet and transdermal testosterone
+ *   answer (HRT, which states plainly that both are prescribed off-label),
+ *   and GLP-1 prescribing (GYN). A question on whether bloodwork precedes
+ *   hormone therapy was removed rather than answered, because the practice's
+ *   physicians differ on it — the same test applies to anything else where
+ *   partners practice differently.
+ *
+ * Re-flag anything materially reworded after this date. Approval attaches to
+ * the wording that was read, not to the question.
  */
 
 export const OB_FAQS = [
@@ -38,17 +45,14 @@ export const OB_FAQS = [
   {
     q: 'How often will I have prenatal appointments?',
     a: 'A typical low-risk pregnancy follows roughly monthly visits through about 28 weeks, every two weeks from 28 to 36 weeks, then weekly until delivery. If you develop a condition such as gestational diabetes or high blood pressure, or you are carrying more than one baby, we will see you more often. Your schedule is set with your physician, not by a fixed template.',
-    review: 'Confirm this matches the practice’s actual visit cadence.',
   },
   {
     q: 'What ultrasounds and tests will I have during pregnancy?',
     a: 'Most patients have an early ultrasound to confirm dating and a detailed anatomy scan around 18 to 22 weeks. Routine bloodwork happens at your first visit, genetic screening is offered in the first and second trimesters, glucose screening for gestational diabetes falls around 24 to 28 weeks, and a Group B strep swab is done near 36 weeks. Your physician will explain each one before it is ordered.',
-    review: 'Confirm the standard testing schedule and which genetic screens are offered in-house.',
   },
   {
     q: 'Do you offer VBAC, or vaginal birth after cesarean?',
     a: 'Whether a trial of labor after a prior cesarean is a safe option depends on the type of incision made on your uterus, how many cesareans you have had, and how this pregnancy is progressing. It is a decision to make with your physician early in your care rather than in labor. Bring your prior operative records to your first visit so we can review them.',
-    review: 'CONFIRM BEFORE PUBLISHING — does the practice offer TOLAC/VBAC at Baptist Beaches?',
   },
   {
     q: 'Which medications are safe to take while pregnant?',
@@ -61,7 +65,6 @@ export const OB_FAQS = [
   {
     q: 'Do you care for high-risk pregnancies?',
     a: 'Our obstetricians manage many pregnancies that carry added risk, including gestational diabetes, high blood pressure, thyroid disease, and pregnancy after 35. When a pregnancy needs subspecialty input, we co-manage with maternal-fetal medicine while remaining your primary obstetric team, so you are not handed off entirely to strangers.',
-    review: 'Confirm which high-risk conditions are managed in-house and the MFM referral relationship.',
   },
   {
     q: 'What is the Beaches OBGYN Prenatal Guide app?',
@@ -69,13 +72,11 @@ export const OB_FAQS = [
   },
   {
     q: 'When is my postpartum visit, and what happens at it?',
-    a: 'Postpartum care is no longer a single appointment at six weeks. Expect earlier contact in the first few weeks — sooner if you had a cesarean, high blood pressure, or a difficult delivery — and a comprehensive visit by about twelve weeks covering mood, bleeding, healing, contraception, and how feeding is going. If something feels wrong before then, call rather than waiting for the visit.',
-    review: 'Confirm the practice’s postpartum schedule; many practices still run a single 6-week visit.',
+    a: 'It depends on your delivery and how you are doing. If you had a cesarean, elevated blood pressure, or any complication, we usually see you within the first one to two weeks. Nearly every patient is seen at around six weeks, and that visit covers healing, bleeding, mood, contraception, and how feeding is going. Some patients need to be seen more often than that. If something feels wrong before your scheduled visit, call rather than waiting for it.',
   },
   {
     q: 'Do you accept my insurance?',
     a: 'We participate with most major commercial plans in the Jacksonville area. Because obstetric care is billed as a global package covering your prenatal visits, delivery, and postpartum care, it is worth confirming coverage and your out-of-pocket estimate early in the pregnancy. Call the office with your plan details and we will verify your benefits before your first visit.',
-    review: 'CONFIRM BEFORE PUBLISHING — list of accepted plans, and whether OB is billed globally.',
   },
 ]
 
@@ -95,7 +96,6 @@ export const GYN_FAQS = [
   {
     q: 'What birth control options do you offer?',
     a: 'We fit contraception to your body, your health history, and your life rather than defaulting to one method. Options range from combined and progestin-only pills to the patch, ring, injection, implant, and hormonal or copper IUDs, through to permanent options such as tubal ligation. What suits someone planning pregnancy in a year is rarely what suits someone who is finished having children.',
-    review: 'Confirm which methods are placed in-office (IUD, implant) versus referred.',
   },
   {
     q: 'What causes heavy or irregular periods, and when should I be seen?',
@@ -112,7 +112,6 @@ export const GYN_FAQS = [
   {
     q: 'What happens at a first infertility evaluation?',
     a: 'It starts with a conversation about your cycles, history, and how long you have been trying, followed by bloodwork to check ovulation and thyroid function, and imaging to look at your uterus and ovaries. Semen analysis for a male partner is part of the initial workup, because roughly a third of cases involve male factors. You leave with a clear picture and a defined next step, including referral to a fertility specialist when that is the right move.',
-    review: 'Confirm which parts of the infertility workup are done in-house.',
   },
   {
     q: 'I found a lump in my breast — what should I do?',
@@ -125,12 +124,10 @@ export const GYN_FAQS = [
   {
     q: 'Can I get STI testing without a full exam?',
     a: 'Yes. Much testing is done with a urine sample or a simple swab, and blood tests cover the rest, so a full pelvic exam is not always needed. Testing is confidential. If you have symptoms such as unusual discharge, pelvic pain, or sores, mention it when you book so we can allow time to examine and treat you at the same visit.',
-    review: 'Confirm same-day/walk-in STI testing availability and whether results are portal-delivered.',
   },
   {
-    q: 'Do you offer medical weight loss or GLP-1 medications?',
-    a: 'Weight, metabolism, and hormonal health are closely linked, and our practice supports patients working on weight through a dedicated Wellness app that calculates daily calorie and macro targets from your own metabolism, builds weekly meal plans and guided recipes, tracks progress, and provides clinical guidance on GLP-1 medications including expected outcomes and side effects. Ask at your visit whether the program is a fit for you.',
-    review: 'CONFIRM BEFORE PUBLISHING — does the practice prescribe GLP-1 medications, or only provide the app and guidance?',
+    q: 'Do you prescribe GLP-1 medications for weight loss?',
+    a: 'Yes. Our physicians prescribe GLP-1 medications when they are appropriate for you, and we treat weight as part of your gynecologic care rather than a separate errand — weight, metabolism, and hormonal health are closely linked. Patients on the program also get our Wellness app, which sets daily calorie and macro targets from your own metabolism, builds weekly meal plans and guided recipes, tracks your progress, and explains what to expect from the medication, including side effects.',
   },
 ]
 
@@ -146,46 +143,34 @@ export const HRT_FAQS = [
   {
     q: 'Is hormone replacement therapy safe?',
     a: 'For most healthy women who begin treatment under 60, or within ten years of their final period, the benefits of hormone therapy for bothersome symptoms generally outweigh the risks. Safety is not one answer for everyone: it depends on the type of hormone, the dose, whether it is taken by mouth or through the skin, and your personal and family history — particularly of breast cancer, blood clots, stroke, or liver disease. That assessment is the point of the visit.',
-    review: 'Clinical claim — should carry physician sign-off before publishing.',
   },
   {
     q: 'Who should not take hormone therapy?',
     a: 'Hormone therapy is generally not recommended if you have had breast cancer or certain other hormone-sensitive cancers, unexplained vaginal bleeding, a history of blood clots or stroke, or active liver disease. Some of these are absolute, others depend on the details and on the route of treatment. If systemic therapy is not appropriate for you, there are still options worth discussing, including non-hormonal treatments and local vaginal therapy.',
-    review: 'Clinical claim — should carry physician sign-off before publishing.',
   },
   {
     q: 'What symptoms does hormone therapy actually help?',
     a: 'It is most effective for hot flashes and night sweats, and it reliably helps the vaginal dryness and discomfort that follow hormonal change. Many women also see sleep improve, largely because night sweats stop interrupting it. It is not a treatment for low mood on its own, and it is not a weight-loss or anti-ageing therapy — being clear about what it does and does not do is part of deciding whether to start.',
   },
   {
-    q: 'Do I need blood work before starting hormone therapy?',
-    a: 'Usually not for diagnosis. Because hormone levels fluctuate widely in perimenopause, a single blood test rarely changes the decision, and treatment is guided by your symptoms rather than by chasing a number. We may check thyroid function or other labs when your history warrants it, and we will always review your full medical and family history before prescribing.',
-    review: 'Confirm the practice’s testing approach — some practices do baseline panels or level monitoring.',
-  },
-  {
-    q: 'Do you offer bioidentical hormones or pellet therapy?',
-    a: 'Bioidentical simply means the hormone is chemically identical to what your body makes, and several FDA-approved options meet that description — these are well studied and consistently dosed. Custom-compounded preparations and pellets are a different matter: they are not FDA-regulated, dosing can vary between batches, and major medical societies do not recommend them over approved alternatives for most patients.',
-    review: 'CONFIRM BEFORE PUBLISHING — which specific formulations and routes does the practice prescribe?',
+    q: 'Do you offer bioidentical hormones, pellet therapy, or testosterone?',
+    a: 'Yes. Bioidentical means the hormone is chemically identical to the one your body makes, and several FDA-approved options meet that description. We also offer hormone pellets and transdermal testosterone, and we are straightforward with patients about what that involves: no testosterone product is FDA-approved for use in women in the United States, and compounded pellets are not FDA-regulated, so both are prescribed off-label. We offer them because they help the right patients, and we do it with close follow-up rather than writing a prescription nobody revisits.',
   },
   {
     q: 'How long can I stay on hormone therapy?',
     a: 'There is no arbitrary stopping date. Current guidance favors reviewing periodically rather than enforcing a fixed limit, using the approach that controls your symptoms and reassessing as your health and risk profile change over time. Some women taper after a few years, others continue longer with ongoing review. What matters is that it stays a deliberate decision instead of a prescription nobody revisits.',
-    review: 'Clinical claim — should carry physician sign-off before publishing.',
   },
   {
     q: 'Will hormone therapy help with vaginal dryness and painful sex?',
     a: 'Yes, and for these symptoms specifically, low-dose vaginal estrogen applied locally is often the better choice. Very little is absorbed into the bloodstream, so it can frequently be used by women who cannot or prefer not to take systemic hormones. Unlike hot flashes, vaginal dryness tends to worsen over time without treatment rather than settling on its own, so it is worth raising early.',
-    review: 'Clinical claim — should carry physician sign-off before publishing.',
   },
   {
     q: 'What are the non-hormonal options for menopause symptoms?',
     a: 'Several non-hormonal prescription medications reduce hot flashes, including certain antidepressants and newer drugs developed specifically for this purpose. Vaginal moisturizers and lubricants help with dryness, and cognitive behavioral therapy has good evidence for both hot flashes and sleep. These are genuine options rather than consolation prizes, and they matter for women who cannot take hormones.',
-    review: 'Clinical claim — should carry physician sign-off before publishing.',
   },
   {
     q: 'Does hormone therapy cause weight gain?',
     a: 'The weight change many women notice around menopause is driven mainly by ageing, muscle loss, and shifting fat distribution rather than by hormone therapy itself. Evidence does not show that hormone therapy causes weight gain, and some women find that better sleep and fewer symptoms make it easier to stay active. It is not, however, a weight-loss treatment.',
-    review: 'Clinical claim — should carry physician sign-off before publishing.',
   },
   {
     q: 'What does menopause mean for my bones and heart?',
@@ -213,7 +198,6 @@ export const MIS_FAQS = [
   {
     q: 'How long is recovery after a laparoscopic hysterectomy?',
     a: 'Most patients go home the same day or after one night, and return to desk work and light activity within about two weeks. Heavy lifting, strenuous exercise, and intercourse are usually held for around six weeks so internal healing can finish. Recovery from open surgery typically takes considerably longer. Your own timeline depends on your procedure and your job.',
-    review: 'General ranges — confirm they match what the practice tells patients.',
   },
   {
     q: 'Will I still have periods after endometrial ablation?',
@@ -238,11 +222,9 @@ export const MIS_FAQS = [
   {
     q: 'How long will I be in the hospital?',
     a: 'Many of our minimally invasive procedures are outpatient, meaning you go home the same day. Endometrial ablation and hysteroscopy are typically same-day. A laparoscopic or robotic hysterectomy is often same-day as well, though some patients stay one night. Your surgeon will tell you what to expect for your specific procedure when it is scheduled.',
-    review: 'Confirm typical length of stay at Baptist Beaches for each procedure.',
   },
   {
     q: 'When can I drive, return to work, and exercise again?',
     a: 'Driving generally resumes once you are off prescription pain medication and can brace and turn without hesitation, often within a week for smaller procedures. Desk work commonly restarts at one to two weeks, physical work later. Walking is encouraged early, while heavy lifting and vigorous exercise usually wait about six weeks after a hysterectomy. Follow the instructions you are given at discharge over any general timeline.',
-    review: 'General ranges — confirm they match the practice’s discharge instructions.',
   },
 ]

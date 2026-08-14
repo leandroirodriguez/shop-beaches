@@ -16,6 +16,29 @@
 // that do not exist.
 export const SITE_URL = 'https://shop.beachesobgyn.com'
 
+/**
+ * Whether the practice pages may be indexed by search engines.
+ *
+ * FALSE while these remain prototypes. They reproduce the content of the live
+ * toplinemd.com/beaches-obgyn site, and two pages competing for the same
+ * queries splits the practice's own search presence rather than growing it.
+ * So every practice route ships `noindex, nofollow` and no sitemap is written.
+ *
+ * ── TO GO LIVE, when these pages become the practice's real website ──
+ *   1. flip this to true
+ *   2. set SITE_URL above to the domain they will actually be served from
+ *   3. rebuild — the robots tags disappear and sitemap.xml starts being
+ *      written, listing every route in PRACTICE_ROUTES
+ *   4. submit that sitemap in Google Search Console, and retire or redirect
+ *      the toplinemd pages so the two never compete
+ *
+ * Note this deliberately does NOT block crawling — no robots.txt Disallow.
+ * A disallowed page is never fetched, so the noindex tag is never read, and
+ * the URL can still surface bare in results. Letting crawlers in to read
+ * "noindex" is what actually keeps these pages out.
+ */
+export const PRACTICE_PAGES_INDEXABLE = false
+
 const DEFAULT_META = {
   title: 'Beaches OBGYN Shop',
   description:
@@ -98,7 +121,7 @@ export const ROUTE_META = {
 // Those routes still get correct per-route <head> tags at runtime via
 // <RouteMeta>. Prerendering them properly means fetching Supabase at build
 // time — a reasonable next step, but a separate one.
-export const PRERENDER_ROUTES = [
+export const PRACTICE_ROUTES = [
   '/mainclone',
   '/obclone',
   '/gynclone',
@@ -109,6 +132,19 @@ export const PRERENDER_ROUTES = [
   '/contactclone',
 ]
 
+export const PRERENDER_ROUTES = PRACTICE_ROUTES
+
 export function metaForPath(pathname) {
   return ROUTE_META[pathname] || DEFAULT_META
+}
+
+/**
+ * The robots directive for a route, or null to emit no tag at all.
+ *
+ * Returns a value only for the practice pages, and only while they are held
+ * back. The shop routes are never touched by this.
+ */
+export function robotsFor(pathname) {
+  if (PRACTICE_PAGES_INDEXABLE) return null
+  return PRACTICE_ROUTES.includes(pathname) ? 'noindex, nofollow' : null
 }

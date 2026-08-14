@@ -30,9 +30,14 @@ import { fileURLToPath } from 'node:url'
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const dist = join(root, 'dist')
 
-const { render, PRERENDER_ROUTES, ROUTE_META, SITE_URL } = await import(
-  join(root, 'dist-ssr', 'entry-server.js')
-)
+const {
+  render,
+  PRERENDER_ROUTES,
+  ROUTE_META,
+  SITE_URL,
+  PRACTICE_PAGES_INDEXABLE,
+  robotsFor,
+} = await import(join(root, 'dist-ssr', 'entry-server.js'))
 
 const template = readFileSync(join(dist, 'index.html'), 'utf-8')
 
@@ -48,7 +53,9 @@ const attr = s =>
 function headFor(pathname) {
   const { title, description } = ROUTE_META[pathname]
   const canonical = `${SITE_URL}${pathname}`
+  const robots = robotsFor(pathname)
   return [
+    ...(robots ? [`<meta name="robots" content="${attr(robots)}" />`] : []),
     `<title>${attr(title)}</title>`,
     `<meta name="description" content="${attr(description)}" />`,
     `<link rel="canonical" href="${canonical}" />`,
@@ -89,14 +96,22 @@ for (const pathname of PRERENDER_ROUTES) {
 // invites crawlers to index it, so it deliberately tracks PRERENDER_ROUTES
 // rather than every route in ROUTE_META — no point advertising pages that
 // still serve an empty shell to anything that does not run JavaScript.
-const sitemap = [
-  '<?xml version="1.0" encoding="UTF-8"?>',
-  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-  ...PRERENDER_ROUTES.map(p => `  <url><loc>${SITE_URL}${p}</loc></url>`),
-  '</urlset>',
-].join('\n')
+//
+// Skipped entirely while the practice pages are held back: a sitemap that
+// lists noindex pages is a contradictory signal, asking to have indexed
+// exactly what each page then refuses.
+if (PRACTICE_PAGES_INDEXABLE) {
+  const sitemap = [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    ...PRERENDER_ROUTES.map(p => `  <url><loc>${SITE_URL}${p}</loc></url>`),
+    '</urlset>',
+  ].join('\n')
 
-writeFileSync(join(dist, 'sitemap.xml'), sitemap)
-console.log(`  wrote sitemap.xml (${PRERENDER_ROUTES.length} urls)`)
+  writeFileSync(join(dist, 'sitemap.xml'), sitemap)
+  console.log(`  wrote sitemap.xml (${PRERENDER_ROUTES.length} urls)`)
+} else {
+  console.log('  no sitemap — practice pages are noindex (PRACTICE_PAGES_INDEXABLE)')
+}
 
 console.log(`\nprerender: wrote ${written} page${written === 1 ? '' : 's'}`)

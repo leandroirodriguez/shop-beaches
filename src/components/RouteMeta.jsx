@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom'
-import { SITE_URL, metaForPath } from '../seo/routeMeta'
+import { SITE_URL, metaForPath, robotsFor } from '../seo/routeMeta'
 
 /**
  * Keeps <head> in step with the current route.
@@ -20,11 +20,13 @@ export default function RouteMeta() {
 
   const { title, description } = metaForPath(pathname)
   const canonical = `${SITE_URL}${pathname}`
+  const robots = robotsFor(pathname)
 
   return (
     <>
       <title>{title}</title>
       <meta name="description" content={description} />
+      {robots && <meta name="robots" content={robots} />}
       <link rel="canonical" href={canonical} />
       <meta property="og:type" content="website" />
       <meta property="og:title" content={title} />

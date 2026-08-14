@@ -4,9 +4,11 @@ import { renderToString } from 'react-dom/server'
 import { StaticRouter } from 'react-router'
 import App from './App.jsx'
 
-// Re-exported so the prerender script can read the route map out of the same
-// SSR bundle instead of needing a second one built just for it.
-export { PRERENDER_ROUTES, ROUTE_META, SITE_URL } from './seo/routeMeta.js'
+// Re-exported wholesale so the prerender script can read the route map out of
+// the same SSR bundle instead of needing a second one built just for it.
+// Star-exported rather than named: a hand-maintained list silently goes stale
+// the moment routeMeta grows an export the script wants.
+export * from './seo/routeMeta.js'
 
 /**
  * Server entry, used only by scripts/prerender.js at build time. The browser

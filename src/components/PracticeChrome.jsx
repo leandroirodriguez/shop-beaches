@@ -428,7 +428,7 @@ export function PracticeFooter() {
 
       <div className="border-t border-outline-variant/40">
         <div className="max-w-[1240px] mx-auto px-5 md:px-10 py-6 flex flex-col md:flex-row gap-3 items-center justify-between text-xs text-on-surface-variant">
-          <p>© Copyright 2012</p>
+          <p>© 1997–{new Date().getFullYear()} Beaches OBGYN</p>
           <div className="flex gap-6">
             <a href="https://www.toplinemd.com/practice-terms-policies/" className="hover:text-primary transition">Terms and Policies</a>
             <a href="https://www.toplinemd.com/affiliation-disclaimer/" className="hover:text-primary transition">Affiliation Disclaimer</a>
